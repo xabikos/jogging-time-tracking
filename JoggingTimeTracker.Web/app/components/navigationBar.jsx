@@ -1,4 +1,4 @@
-﻿var ReactBootstrap = require('react-bootstrap');
+﻿import ReactBootstrap from 'react-bootstrap';
 
 class NavigationBar extends React.Component {
 	render() {
@@ -21,4 +21,4 @@ class NavigationBar extends React.Component {
   }
 }
 
-module.exports = NavigationBar;
+export default NavigationBar;

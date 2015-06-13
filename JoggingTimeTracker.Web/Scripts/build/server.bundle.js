@@ -72,15 +72,29 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
-	var ReactBootstrap = __webpack_require__(4);
+	var _reactBootstrap = __webpack_require__(4);
 	
-	var NavigationBar = __webpack_require__(78);
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var _navigationBar = __webpack_require__(78);
+	
+	var _navigationBar2 = _interopRequireDefault(_navigationBar);
+	
+	var _securityController = __webpack_require__(79);
+	
+	var _securityController2 = _interopRequireDefault(_securityController);
 	
 	var App = (function (_React$Component) {
 		function App() {
@@ -96,14 +110,14 @@
 		_createClass(App, [{
 			key: 'render',
 			value: function render() {
-				var Grid = ReactBootstrap.Grid;
-				var Row = ReactBootstrap.Row;
-				var Col = ReactBootstrap.Col;
+				var Grid = _reactBootstrap2['default'].Grid;
+				var Row = _reactBootstrap2['default'].Row;
+				var Col = _reactBootstrap2['default'].Col;
 	
 				return React.createElement(
 					'div',
 					null,
-					React.createElement(NavigationBar, null),
+					React.createElement(_navigationBar2['default'], null),
 					React.createElement(
 						Grid,
 						{ fluid: false },
@@ -119,7 +133,7 @@
 							React.createElement(
 								Col,
 								{ xs: 12, md: 3 },
-								'last'
+								React.createElement(_securityController2['default'], { isAuthenticated: 'false' })
 							)
 						)
 					)
@@ -130,7 +144,8 @@
 		return App;
 	})(React.Component);
 	
-	module.exports = App;
+	exports['default'] = App;
+	module.exports = exports['default'];
 
 /***/ },
 /* 4 */
@@ -8008,13 +8023,21 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
-	var ReactBootstrap = __webpack_require__(4);
+	var _reactBootstrap = __webpack_require__(4);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
 	
 	var NavigationBar = (function (_React$Component) {
 		function NavigationBar() {
@@ -8035,14 +8058,14 @@
 					{ href: '/' },
 					'Jogging Time Tracking'
 				);
-				var Navbar = ReactBootstrap.Navbar;
-				var NavItem = ReactBootstrap.NavItem;
+				var Navbar = _reactBootstrap2['default'].Navbar;
+				var NavItem = _reactBootstrap2['default'].NavItem;
 	
 				return React.createElement(
 					Navbar,
 					{ fixedTop: true, brand: navBarHeader },
 					React.createElement(
-						ReactBootstrap.Nav,
+						_reactBootstrap2['default'].Nav,
 						{ navbar: true, right: true },
 						React.createElement(
 							NavItem,
@@ -8062,7 +8085,162 @@
 		return NavigationBar;
 	})(React.Component);
 	
-	module.exports = NavigationBar;
+	exports['default'] = NavigationBar;
+	module.exports = exports['default'];
+
+/***/ },
+/* 79 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _RegistrationForm = __webpack_require__(80);
+	
+	var _RegistrationForm2 = _interopRequireDefault(_RegistrationForm);
+	
+	var SecurityController = (function (_React$Component) {
+		function SecurityController(props) {
+			_classCallCheck(this, SecurityController);
+	
+			_get(Object.getPrototypeOf(SecurityController.prototype), 'constructor', this).call(this, props);
+			this.state = { isAuthenticated: props.isAuthenticated };
+		}
+	
+		_inherits(SecurityController, _React$Component);
+	
+		_createClass(SecurityController, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					'div',
+					null,
+					React.createElement(_RegistrationForm2['default'], null)
+				);
+			}
+		}, {
+			key: 'onChange',
+			value: function onChange(status) {
+				this.setState({
+					isAuthenticated: status.isAuthenticated,
+					user: status.user
+				});
+			}
+		}]);
+	
+		return SecurityController;
+	})(React.Component);
+	
+	exports['default'] = SecurityController;
+	module.exports = exports['default'];
+
+	//security.addChangeListener(this.onChange);
+
+/***/ },
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _reactBootstrap = __webpack_require__(4);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var RegistrationForm = (function (_React$Component) {
+		function RegistrationForm(props) {
+			_classCallCheck(this, RegistrationForm);
+	
+			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this, props);
+			this.state = {
+				userName: '',
+				email: '',
+				password: '',
+				confirmPassword: ''
+			};
+		}
+	
+		_inherits(RegistrationForm, _React$Component);
+	
+		_createClass(RegistrationForm, [{
+			key: 'handleChange',
+			value: function handleChange(e) {
+				switch (e.target.id) {
+					case 'registrationUserName':
+						this.setState({ userName: e.target.value });
+						break;
+					case 'registrationEmail':
+						this.setState({ email: e.target.value });
+						break;
+					case 'registrationPassword':
+						this.setState({
+							password: e.target.value,
+							confirmPassword: e.target.value
+						});
+						break;
+				}
+			}
+		}, {
+			key: 'register',
+			value: function register() {}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					_reactBootstrap2['default'].Panel,
+					{ header: 'Registration', bsStyle: 'primary' },
+					React.createElement(
+						'form',
+						{ className: 'form-horizontal' },
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'text', id: 'registrationUserName', value: this.state.userName, onChange: this.handleChange, label: 'Username', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'email', id: 'registrationEmail', value: this.state.email, onChange: this.handleChange, label: 'Email', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'password', id: 'registrationPassword', value: this.state.password, onChange: this.handleChange, label: 'Password', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(
+							_reactBootstrap2['default'].Button,
+							{ onClick: this.register, bsStyle: 'primary' },
+							'Register'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return RegistrationForm;
+	})(React.Component);
+	
+	exports['default'] = RegistrationForm;
+	module.exports = exports['default'];
+
+	//security.register(this.state);
 
 /***/ }
 /******/ ]);

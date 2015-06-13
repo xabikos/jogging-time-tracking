@@ -1,14 +1,16 @@
-﻿var ReactBootstrap = require('react-bootstrap');
+﻿import ReactBootstrap from 'react-bootstrap';
 
-var NavigationBar = require('./navigationBar');
+import NavigationBar from './navigationBar';
+import SecurityController from './securityController';
 
 class App extends React.Component {
   render() {
-	var Grid = ReactBootstrap.Grid;
-	var Row = ReactBootstrap.Row;
-	var Col = ReactBootstrap.Col;
+	let Grid = ReactBootstrap.Grid;
+	let Row = ReactBootstrap.Row;
+	let Col = ReactBootstrap.Col;
 	
-	return (
+
+	return (		
 		<div>
 			<NavigationBar />
 			<Grid fluid={false} >
@@ -18,7 +20,7 @@ class App extends React.Component {
 						<img className="img-responsive" src="/Content/images/jogging.jpg" alt="jogging activity"/>
 					</Col>					
 					<Col xs={12} md={3}>
-						last
+						<SecurityController isAuthenticated={false} />
 					</Col>
 				</Row>
 			</Grid>
@@ -27,4 +29,4 @@ class App extends React.Component {
   }
 }
 
-module.exports = App;
+export default App;

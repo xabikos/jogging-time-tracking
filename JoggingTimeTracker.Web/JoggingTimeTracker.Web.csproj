@@ -273,11 +273,14 @@
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="app\components\app.jsx" />
+    <Content Include="Content\images\jogging.jpg" />
     <Content Include="Scripts\build\index.js" />
     <Content Include="Scripts\build\server.bundle.js" />
     <Content Include="Scripts\build\server.js" />
     <Content Include="webpack.config.js" />
     <Content Include="app\components\navigationBar.jsx" />
+    <Content Include="app\components\securityController.jsx" />
+    <Content Include="app\components\registrationForm.jsx" />
     <None Include="ClearScript.V8\ClearScriptV8-32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
