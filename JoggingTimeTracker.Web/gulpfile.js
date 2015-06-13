@@ -41,7 +41,7 @@ gulp.task('development', [], function () {
       .pipe(gulp.dest(dest));
 });
 
-gulp.task('watch', ['webpack'], function () {
+gulp.task('watch', function () {
   gulp.watch(path.join(src, '**/*.*')).on('change', function (event) {
     if (event.type === 'changed') {
       gulp.src(event.path, { base: path.resolve(src) })

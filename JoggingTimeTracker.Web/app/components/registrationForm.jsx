@@ -3,16 +3,15 @@
 import UserActions from '../actions/userActions';
 import UserStore from '../stores/usersStore';
 
-let RegistrationForm = React.createClass({
+class RegistrationForm extends React.Component {
 	
-	getInitialState(){
-		return {
-			userName: '',			
-			email: '',
-			password: '',
-			confirmPassword: ''
-		};
-	},
+	constructor(props) {
+		super(props);
+		this.state = {isAuthenticated: props.isAuthenticated};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.register = this.register.bind(this);
+	}
 
 	handleChange(e) {
 		switch (e.target.id) {
@@ -29,11 +28,11 @@ let RegistrationForm = React.createClass({
 				});
 				break;
 		}
-	},
+	}
 
 	register() {
 		UserActions.register(this.state);
-	},
+	}
 
 	render() {
 		return(
@@ -47,6 +46,6 @@ let RegistrationForm = React.createClass({
 			</ReactBootstrap.Panel>
 		);
 	}
-});
+}
 
 export default RegistrationForm;

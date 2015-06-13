@@ -8108,7 +8108,11 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
-	var _RegistrationForm = __webpack_require__(80);
+	var _storesUsersStore = __webpack_require__(80);
+	
+	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
+	
+	var _RegistrationForm = __webpack_require__(90);
 	
 	var _RegistrationForm2 = _interopRequireDefault(_RegistrationForm);
 	
@@ -8118,17 +8122,30 @@
 	
 			_get(Object.getPrototypeOf(SecurityController.prototype), 'constructor', this).call(this, props);
 			this.state = { isAuthenticated: props.isAuthenticated };
+	
+			this.onChange = this.onChange.bind(this);
 		}
 	
 		_inherits(SecurityController, _React$Component);
 	
 		_createClass(SecurityController, [{
 			key: 'componentDidMount',
-			value: function componentDidMount() {}
+			value: function componentDidMount() {
+				_storesUsersStore2['default'].addChangeListener(this.onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_storesUsersStore2['default'].removeChangeListener(this.onChange);
+			}
 		}, {
 			key: 'render',
 			value: function render() {
-				return React.createElement(
+				return this.state.isAuthenticated ? React.createElement(
+					'div',
+					null,
+					'Authenticated'
+				) : React.createElement(
 					'div',
 					null,
 					React.createElement(_RegistrationForm2['default'], null)
@@ -8136,10 +8153,11 @@
 			}
 		}, {
 			key: 'onChange',
-			value: function onChange(status) {
+			value: function onChange() {
+				var storeState = _storesUsersStore2['default'].getState();
 				this.setState({
-					isAuthenticated: status.isAuthenticated,
-					user: status.user
+					isAuthenticated: storeState.isAuthenticated,
+					user: storeState.user
 				});
 			}
 		}]);
@@ -8150,8 +8168,6 @@
 	exports['default'] = SecurityController;
 	module.exports = exports['default'];
 
-	//security.addChangeListener(this.onChange);
-
 /***/ },
 /* 80 */
 /***/ function(module, exports, __webpack_require__) {
@@ -8159,77 +8175,66 @@
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
-		value: true
+	  value: true
 	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _reactBootstrap = __webpack_require__(4);
+	var _appDispatcher = __webpack_require__(81);
 	
-	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
 	
-	var _actionsUserActions = __webpack_require__(81);
+	var _StoreWithEvents = __webpack_require__(87);
+	
+	var _StoreWithEvents2 = _interopRequireDefault(_StoreWithEvents);
+	
+	var _actionsUserActions = __webpack_require__(89);
 	
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
-	var _storesUsersStore = __webpack_require__(88);
+	var _constants = __webpack_require__(82);
 	
-	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
+	var _constants2 = _interopRequireDefault(_constants);
 	
-	var RegistrationForm = React.createClass({
-		displayName: 'RegistrationForm',
+	var changeEvent = 'USERS_CHANGE';
 	
-		getInitialState: function getInitialState() {
-			return {
-				userName: '',
-				email: '',
-				password: '',
-				confirmPassword: ''
-			};
-		},
+	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
 	
-		handleChange: function handleChange(e) {
-			switch (e.target.id) {
-				case 'registrationUserName':
-					this.setState({ userName: e.target.value });
-					break;
-				case 'registrationEmail':
-					this.setState({ email: e.target.value });
-					break;
-				case 'registrationPassword':
-					this.setState({
-						password: e.target.value,
-						confirmPassword: e.target.value
-					});
-					break;
-			}
-		},
+	var registeredCallback = function registeredCallback(payload) {
+	  var actionTypes = _constants2['default'].ActionTypes;
 	
-		register: function register() {
-			_actionsUserActions2['default'].register(this.state);
-		},
+	  switch (payload.action.type) {
+	    case actionTypes.registerUser:
+	      console.log(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
 	
-		render: function render() {
-			return React.createElement(
-				_reactBootstrap2['default'].Panel,
-				{ header: 'Registration', bsStyle: 'primary' },
-				React.createElement(
-					'form',
-					{ className: 'form-horizontal' },
-					React.createElement(_reactBootstrap2['default'].Input, { type: 'text', id: 'registrationUserName', value: this.state.userName, onChange: this.handleChange, label: 'Username', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
-					React.createElement(_reactBootstrap2['default'].Input, { type: 'email', id: 'registrationEmail', value: this.state.email, onChange: this.handleChange, label: 'Email', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
-					React.createElement(_reactBootstrap2['default'].Input, { type: 'password', id: 'registrationPassword', value: this.state.password, onChange: this.handleChange, label: 'Password', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
-					React.createElement(
-						_reactBootstrap2['default'].Button,
-						{ onClick: this.register, bsStyle: 'primary' },
-						'Register'
-					)
-				)
-			);
-		}
-	});
+	    default:
+	    // do nothing
+	  }
+	};
 	
-	exports['default'] = RegistrationForm;
+	_appDispatcher2['default'].register(registeredCallback);
+	
+	var UsersStore = {
+	  // Public methods
+	  addChangeListener: function addChangeListener(callback) {
+	    storeWithEvents.addChangeListener(callback);
+	  },
+	
+	  removeChangeListener: function removeChangeListener(callback) {
+	    storeWithEvents.removeChangeListener(callback);
+	  },
+	
+	  getState: function getState() {
+	    return {
+	      isAuthenticated: true,
+	      user: {}
+	    };
+	  }
+	};
+	
+	exports['default'] = UsersStore;
 	module.exports = exports['default'];
 
 /***/ },
@@ -8244,50 +8249,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _appDispatcher = __webpack_require__(82);
-	
-	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
-	
-	var _constants = __webpack_require__(83);
+	var _constants = __webpack_require__(82);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
-	var actionTypes = _constants2['default'].ActionTypes;
-	
-	var UserActions = {
-	  register: function register(userInfo) {
-	    _appDispatcher2['default'].handleViewAction({
-	      type: actionTypes.registerUser,
-	      data: userInfo
-	    });
-	  }
-	
-	};
-	
-	exports['default'] = UserActions;
-	module.exports = exports['default'];
-
-/***/ },
-/* 82 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _constants = __webpack_require__(83);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	var _flux = __webpack_require__(84);
+	var _flux = __webpack_require__(83);
 	
 	var _flux2 = _interopRequireDefault(_flux);
 	
-	var _objectAssign = __webpack_require__(87);
+	var _objectAssign = __webpack_require__(86);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -8321,7 +8291,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 83 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8344,7 +8314,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 84 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8356,11 +8326,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(85)
+	module.exports.Dispatcher = __webpack_require__(84)
 
 
 /***/ },
-/* 85 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -8377,7 +8347,7 @@
 	
 	"use strict";
 	
-	var invariant = __webpack_require__(86);
+	var invariant = __webpack_require__(85);
 	
 	var _lastID = 1;
 	var _prefix = 'ID_';
@@ -8616,7 +8586,7 @@
 
 
 /***/ },
-/* 86 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8675,7 +8645,7 @@
 
 
 /***/ },
-/* 87 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8720,69 +8690,7 @@
 
 
 /***/ },
-/* 88 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _appDispatcher = __webpack_require__(82);
-	
-	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
-	
-	var _StoreWithEvents = __webpack_require__(89);
-	
-	var _StoreWithEvents2 = _interopRequireDefault(_StoreWithEvents);
-	
-	var _actionsUserActions = __webpack_require__(81);
-	
-	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
-	
-	var _constants = __webpack_require__(83);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	var changeEvent = 'USERS_CHANGE';
-	
-	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
-	
-	var registeredCallback = function registeredCallback(payload) {
-	  var actionTypes = _constants2['default'].ActionTypes;
-	
-	  switch (payload.action.type) {
-	    case actionTypes.registerUser:
-	      console.log(payload.action.data);
-	      storeWithEvents.emitChange();
-	      break;
-	
-	    default:
-	    // do nothing
-	  }
-	};
-	
-	_appDispatcher2['default'].register(registeredCallback);
-	
-	var UsersStore = {
-	  // Public methods
-	  addChangeListener: function addChangeListener(callback) {
-	    storeWithEvents.addChangeListener(callback);
-	  },
-	
-	  removeChangeListener: function removeChangeListener(callback) {
-	    storeWithEvents.removeChangeListener(callback);
-	  }
-	};
-	
-	exports['default'] = UsersStore;
-	module.exports = exports['default'];
-
-/***/ },
-/* 89 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8799,7 +8707,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
-	var _events = __webpack_require__(90);
+	var _events = __webpack_require__(88);
 	
 	// Base class for all stores used in our FLUX architecture
 	// Acts as an intermediate class for the library EventEmitter class
@@ -8838,7 +8746,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 90 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -9143,6 +9051,137 @@
 	  return arg === void 0;
 	}
 
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _appDispatcher = __webpack_require__(81);
+	
+	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
+	
+	var _constants = __webpack_require__(82);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var actionTypes = _constants2['default'].ActionTypes;
+	
+	var UserActions = {
+	  register: function register(userInfo) {
+	    _appDispatcher2['default'].handleViewAction({
+	      type: actionTypes.registerUser,
+	      data: userInfo
+	    });
+	  }
+	
+	};
+	
+	exports['default'] = UserActions;
+	module.exports = exports['default'];
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _reactBootstrap = __webpack_require__(4);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var _actionsUserActions = __webpack_require__(89);
+	
+	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
+	
+	var _storesUsersStore = __webpack_require__(80);
+	
+	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
+	
+	var RegistrationForm = (function (_React$Component) {
+		function RegistrationForm(props) {
+			_classCallCheck(this, RegistrationForm);
+	
+			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this, props);
+			this.state = { isAuthenticated: props.isAuthenticated };
+	
+			this.handleChange = this.handleChange.bind(this);
+			this.register = this.register.bind(this);
+		}
+	
+		_inherits(RegistrationForm, _React$Component);
+	
+		_createClass(RegistrationForm, [{
+			key: 'handleChange',
+			value: function handleChange(e) {
+				switch (e.target.id) {
+					case 'registrationUserName':
+						this.setState({ userName: e.target.value });
+						break;
+					case 'registrationEmail':
+						this.setState({ email: e.target.value });
+						break;
+					case 'registrationPassword':
+						this.setState({
+							password: e.target.value,
+							confirmPassword: e.target.value
+						});
+						break;
+				}
+			}
+		}, {
+			key: 'register',
+			value: function register() {
+				_actionsUserActions2['default'].register(this.state);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					_reactBootstrap2['default'].Panel,
+					{ header: 'Registration', bsStyle: 'primary' },
+					React.createElement(
+						'form',
+						{ className: 'form-horizontal' },
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'text', id: 'registrationUserName', value: this.state.userName, onChange: this.handleChange, label: 'Username', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'email', id: 'registrationEmail', value: this.state.email, onChange: this.handleChange, label: 'Email', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'password', id: 'registrationPassword', value: this.state.password, onChange: this.handleChange, label: 'Password', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(
+							_reactBootstrap2['default'].Button,
+							{ onClick: this.register, bsStyle: 'primary' },
+							'Register'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return RegistrationForm;
+	})(React.Component);
+	
+	exports['default'] = RegistrationForm;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

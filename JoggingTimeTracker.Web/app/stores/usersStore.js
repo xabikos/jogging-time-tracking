@@ -33,6 +33,13 @@ let UsersStore = {
 
   removeChangeListener: (callback) => {
     storeWithEvents.removeChangeListener(callback);
+  },
+
+  getState: () => {
+    return {
+      isAuthenticated: true,
+      user : {}
+    };
   }
 };
 
