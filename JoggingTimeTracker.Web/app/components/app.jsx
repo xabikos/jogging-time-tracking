@@ -1,5 +1,6 @@
 ﻿var ReactBootstrap = require('react-bootstrap');
 
+var NavigationBar = require('./navigationBar');
 
 class App extends React.Component {
   render() {
@@ -9,7 +10,7 @@ class App extends React.Component {
 	
 	return (
 		<div>
-			
+			<NavigationBar />
 			<Grid fluid={false} >
 				<Row>
 					<Col xs={12} md={9}>

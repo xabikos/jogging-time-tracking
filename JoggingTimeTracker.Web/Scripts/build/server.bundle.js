@@ -80,6 +80,8 @@
 	
 	var ReactBootstrap = __webpack_require__(4);
 	
+	var NavigationBar = __webpack_require__(78);
+	
 	var App = (function (_React$Component) {
 		function App() {
 			_classCallCheck(this, App);
@@ -101,6 +103,7 @@
 				return React.createElement(
 					'div',
 					null,
+					React.createElement(NavigationBar, null),
 					React.createElement(
 						Grid,
 						{ fluid: false },
@@ -7997,6 +8000,68 @@
 	
 	exports['default'] = Well;
 	module.exports = exports['default'];
+
+/***/ },
+/* 78 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var ReactBootstrap = __webpack_require__(4);
+	
+	var NavigationBar = (function (_React$Component) {
+		function NavigationBar() {
+			_classCallCheck(this, NavigationBar);
+	
+			if (_React$Component != null) {
+				_React$Component.apply(this, arguments);
+			}
+		}
+	
+		_inherits(NavigationBar, _React$Component);
+	
+		_createClass(NavigationBar, [{
+			key: 'render',
+			value: function render() {
+				var navBarHeader = React.createElement(
+					'a',
+					{ href: '/' },
+					'Home'
+				);
+				var Navbar = ReactBootstrap.Navbar;
+				var NavItem = ReactBootstrap.NavItem;
+	
+				return React.createElement(
+					Navbar,
+					{ fixedTop: true, brand: navBarHeader },
+					React.createElement(
+						ReactBootstrap.Nav,
+						{ navbar: true, right: true },
+						React.createElement(
+							NavItem,
+							{ href: 'http://skg.azurebootcamp.net/', target: '_blank' },
+							'First'
+						),
+						React.createElement(
+							NavItem,
+							{ href: 'https://github.com/xabikos/globalazurebootcampreport', target: '_blank' },
+							'Second'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return NavigationBar;
+	})(React.Component);
+	
+	module.exports = NavigationBar;
 
 /***/ }
 /******/ ]);

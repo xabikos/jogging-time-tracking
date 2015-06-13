@@ -277,6 +277,7 @@
     <Content Include="Scripts\build\server.bundle.js" />
     <Content Include="Scripts\build\server.js" />
     <Content Include="webpack.config.js" />
+    <Content Include="app\components\navigationBar.jsx" />
     <None Include="ClearScript.V8\ClearScriptV8-32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
