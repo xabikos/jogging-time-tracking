@@ -3,7 +3,6 @@
 class UserActions
 {
   register(userInfo) {
-    console.log(userInfo);
     this.dispatch(userInfo);
   }
 }

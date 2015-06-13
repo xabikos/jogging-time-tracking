@@ -8171,6 +8171,10 @@
 	
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
+	var _storesUsersStore = __webpack_require__(97);
+	
+	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
+	
 	var RegistrationForm = React.createClass({
 		displayName: 'RegistrationForm',
 	
@@ -8255,7 +8259,6 @@
 	  _createClass(UserActions, [{
 	    key: 'register',
 	    value: function register(userInfo) {
-	      console.log(userInfo);
 	      this.dispatch(userInfo);
 	    }
 	  }]);
@@ -10184,6 +10187,52 @@
 	  return action;
 	}
 	
+	module.exports = exports['default'];
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	var _alt = __webpack_require__(82);
+	
+	var _alt2 = _interopRequireDefault(_alt);
+	
+	var _actionsUserActions = __webpack_require__(81);
+	
+	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
+	
+	var UsersStore = (function () {
+	  function UsersStore() {
+	    _classCallCheck(this, UsersStore);
+	
+	    this.bindListeners({
+	      handleRegister: _actionsUserActions2['default'].REGISTER
+	    });
+	  }
+	
+	  _createClass(UsersStore, [{
+	    key: 'handleRegister',
+	    value: function handleRegister(userInfo) {
+	      console.log(userInfo);
+	    }
+	  }]);
+	
+	  return UsersStore;
+	})();
+	
+	exports['default'] = _alt2['default'].createStore(UsersStore, 'UsersStore');
 	module.exports = exports['default'];
 
 /***/ }

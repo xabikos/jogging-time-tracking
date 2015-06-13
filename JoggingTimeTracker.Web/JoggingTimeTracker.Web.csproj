@@ -273,6 +273,7 @@
   <ItemGroup>
     <Content Include="app\actions\userActions.js" />
     <Content Include="app\alt.js" />
+    <Content Include="app\stores\usersStore.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="app\components\app.jsx" />
     <Content Include="Content\images\jogging.jpg" />

@@ -1,6 +1,7 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
 
 import UserActions from '../actions/userActions';
+import UserStore from '../stores/usersStore';
 
 let RegistrationForm = React.createClass({
 	
