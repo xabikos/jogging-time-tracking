@@ -23,9 +23,9 @@ var src = './app',
 gulp.task('webpack', [], function () {
     //return gulp.src(path.join(src, '**', CONFIG_FILENAME), { base: path.resolve(src) })
     return gulp.src(path.join(CONFIG_FILENAME))
-        .pipe(webpack.configure(webpackConfig))
-        .pipe(webpack.overrides(webpackOptions))
-        .pipe(webpack.compile())
+        .pipe(webpack.init(webpackConfig))
+        .pipe(webpack.props(webpackOptions))
+        .pipe(webpack.run())
         .pipe(webpack.format({
             version: false,
             timings: true
