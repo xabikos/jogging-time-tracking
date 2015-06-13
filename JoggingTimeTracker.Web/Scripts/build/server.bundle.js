@@ -113,7 +113,8 @@
 							React.createElement(
 								Col,
 								{ xs: 12, md: 9 },
-								'First'
+								'Jogging Time Tracking app',
+								React.createElement('img', { className: 'img-responsive', src: '/Content/images/jogging.jpg', alt: 'jogging activity' })
 							),
 							React.createElement(
 								Col,
@@ -8032,7 +8033,7 @@
 				var navBarHeader = React.createElement(
 					'a',
 					{ href: '/' },
-					'Home'
+					'Jogging Time Tracking'
 				);
 				var Navbar = ReactBootstrap.Navbar;
 				var NavItem = ReactBootstrap.NavItem;
@@ -8045,12 +8046,12 @@
 						{ navbar: true, right: true },
 						React.createElement(
 							NavItem,
-							{ href: 'http://skg.azurebootcamp.net/', target: '_blank' },
+							{ href: '', target: '_blank' },
 							'First'
 						),
 						React.createElement(
 							NavItem,
-							{ href: 'https://github.com/xabikos/globalazurebootcampreport', target: '_blank' },
+							{ href: '', target: '_blank' },
 							'Second'
 						)
 					)

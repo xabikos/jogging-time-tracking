@@ -14,7 +14,8 @@ class App extends React.Component {
 			<Grid fluid={false} >
 				<Row>
 					<Col xs={12} md={9}>
-						First	
+						Jogging Time Tracking app
+						<img className="img-responsive" src="/Content/images/jogging.jpg" alt="jogging activity"/>
 					</Col>					
 					<Col xs={12} md={3}>
 						last

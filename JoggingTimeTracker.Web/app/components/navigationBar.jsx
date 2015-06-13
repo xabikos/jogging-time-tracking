@@ -4,7 +4,7 @@ class NavigationBar extends React.Component {
 	render() {
 		var navBarHeader = (
 			<a href="/">
-				Home
+				Jogging Time Tracking
 			</a>	
 		);
 		var Navbar = ReactBootstrap.Navbar;
@@ -13,8 +13,8 @@ class NavigationBar extends React.Component {
 		return (			
 			<Navbar fixedTop={true} brand={navBarHeader}>
 				<ReactBootstrap.Nav navbar right>
-					<NavItem href='http://skg.azurebootcamp.net/' target='_blank'>First</NavItem>
-					<NavItem href='https://github.com/xabikos/globalazurebootcampreport' target='_blank'>Second</NavItem>
+					<NavItem href='' target='_blank'>First</NavItem>
+					<NavItem href='' target='_blank'>Second</NavItem>
 				</ReactBootstrap.Nav>
 			</Navbar>
 		);
