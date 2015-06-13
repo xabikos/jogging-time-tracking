@@ -3,6 +3,9 @@
 
 var path = require('path'),
     gulp = require('gulp'),
+    uglify = require('gulp-uglify'),
+    rename = require('gulp-rename'),
+    ignore = require('gulp-ignore'),
     webpack = require('gulp-webpack-build');
 
 var src = './app',
@@ -21,7 +24,7 @@ var src = './app',
     },
     CONFIG_FILENAME = webpack.config.CONFIG_FILENAME;
 
-gulp.task('webpack', [], function () {
+gulp.task('development', [], function () {
   //return gulp.src(path.join(src, '**', CONFIG_FILENAME), { base: path.resolve(src) })
   return gulp.src(path.join(CONFIG_FILENAME))
       .pipe(webpack.init(webpackConfig))
@@ -58,4 +61,28 @@ gulp.task('watch', ['webpack'], function () {
           ));
     }
   });
+});
+
+// The production task depends in development because we need both normal and minified versions of the bundles
+// as we still rely on ASP.NET bundle mechanism to select the normal and min version in DEBUG and RELEASE mode 
+gulp.task('production', ['development'], function () {
+
+  return gulp.src(path.join(CONFIG_FILENAME))
+      .pipe(webpack.init(webpackConfig))
+      .pipe(webpack.props({
+        debug: false
+      }))
+      .pipe(webpack.run())
+      .pipe(webpack.format({
+        version: false,
+        timings: true
+      }))
+      .pipe(webpack.failAfter({
+        errors: true,
+        warnings: true
+      }))
+      .pipe(ignore.exclude(["**/*.map"]))
+      .pipe(uglify())
+      .pipe(rename({ suffix: '.min' }))
+      .pipe(gulp.dest(dest));
 });

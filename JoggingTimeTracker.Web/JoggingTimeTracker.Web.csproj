@@ -278,9 +278,11 @@
     <Content Include="app\components\app.jsx" />
     <Content Include="Content\images\jogging.jpg" />
     <Content Include="Scripts\build\client.bundle.js" />
+    <Content Include="Scripts\build\client.bundle.min.js" />
     <Content Include="Scripts\build\client.js" />
     <Content Include="Scripts\build\index.js" />
     <Content Include="Scripts\build\server.bundle.js" />
+    <Content Include="Scripts\build\server.bundle.min.js" />
     <Content Include="Scripts\build\server.js" />
     <Content Include="webpack.config.js" />
     <Content Include="app\components\navigationBar.jsx" />
