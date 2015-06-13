@@ -8199,12 +8199,31 @@
 	
 	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
 	
+	var state = {
+	  isAuthenticated: false,
+	  user: {}
+	};
+	
+	var register = function register(userInfo) {
+	  console.log(userInfo);
+	  $.ajax({
+	    type: 'POST',
+	    url: '/api/Account/Register',
+	    contentType: 'application/json; charset=utf-8',
+	    data: JSON.stringify(userInfo)
+	  }).done(function (data) {
+	    console.log('success registration');
+	  }).fail(function (error) {
+	    return console.log(error);
+	  });
+	};
+	
 	var registeredCallback = function registeredCallback(payload) {
 	  var actionTypes = _constants2['default'].ActionTypes;
 	
 	  switch (payload.action.type) {
 	    case actionTypes.registerUser:
-	      console.log(payload.action.data);
+	      register(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
@@ -8226,10 +8245,7 @@
 	  },
 	
 	  getState: function getState() {
-	    return {
-	      isAuthenticated: true,
-	      user: {}
-	    };
+	    return state;
 	  }
 	};
 	
@@ -9135,9 +9151,6 @@
 			key: 'handleChange',
 			value: function handleChange(e) {
 				switch (e.target.id) {
-					case 'registrationUserName':
-						this.setState({ userName: e.target.value });
-						break;
 					case 'registrationEmail':
 						this.setState({ email: e.target.value });
 						break;
@@ -9163,7 +9176,6 @@
 					React.createElement(
 						'form',
 						{ className: 'form-horizontal' },
-						React.createElement(_reactBootstrap2['default'].Input, { type: 'text', id: 'registrationUserName', value: this.state.userName, onChange: this.handleChange, label: 'Username', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
 						React.createElement(_reactBootstrap2['default'].Input, { type: 'email', id: 'registrationEmail', value: this.state.email, onChange: this.handleChange, label: 'Email', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
 						React.createElement(_reactBootstrap2['default'].Input, { type: 'password', id: 'registrationPassword', value: this.state.password, onChange: this.handleChange, label: 'Password', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
 						React.createElement(
