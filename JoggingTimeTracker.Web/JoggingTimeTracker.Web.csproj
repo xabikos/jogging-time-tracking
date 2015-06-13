@@ -271,9 +271,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\actions\userActions.js" />
+    <Content Include="app\alt.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="app\components\app.jsx" />
     <Content Include="Content\images\jogging.jpg" />
+    <Content Include="Scripts\build\client.bundle.js" />
+    <Content Include="Scripts\build\client.js" />
     <Content Include="Scripts\build\index.js" />
     <Content Include="Scripts\build\server.bundle.js" />
     <Content Include="Scripts\build\server.js" />
@@ -331,6 +335,7 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="package.json" />
     <Content Include="Scripts\build\server.bundle.js.map" />
+    <Content Include="Scripts\build\client.bundle.js.map" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

@@ -44,7 +44,6 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// Expose components globally so ReactJS.NET can use them
 	'use strict';
 	
 	var Components = __webpack_require__(1);
@@ -10189,4 +10188,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=server.bundle.js.map
+//# sourceMappingURL=client.bundle.js.map

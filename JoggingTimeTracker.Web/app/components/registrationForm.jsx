@@ -1,16 +1,17 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
 
-class RegistrationForm extends React.Component {
+import UserActions from '../actions/userActions';
+
+let RegistrationForm = React.createClass({
 	
-	constructor(props) {
-		super(props);
-		this.state = {
+	getInitialState(){
+		return {
 			userName: '',			
 			email: '',
 			password: '',
 			confirmPassword: ''
 		};
-	}
+	},
 
 	handleChange(e) {
 		switch (e.target.id) {
@@ -27,11 +28,11 @@ class RegistrationForm extends React.Component {
 				});
 				break;
 		}
-	}
+	},
 
 	register() {
-		//security.register(this.state);
-	}
+		UserActions.register(this.state);
+	},
 
 	render() {
 		return(
@@ -45,6 +46,6 @@ class RegistrationForm extends React.Component {
 			</ReactBootstrap.Panel>
 		);
 	}
-}
+});
 
 export default RegistrationForm;

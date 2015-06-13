@@ -4,7 +4,7 @@ module.exports = {
     context: path.join(__dirname, 'Scripts/build'),
     entry: {
         server: './server',
-        //client: './client'
+        client: './client'
     },
     output: {
         path: path.join(__dirname, 'Scripts/build'),
