@@ -1,10 +1,18 @@
-﻿import alt from '../alt';
+﻿'use strict';
 
-class UserActions
-{
-  register(userInfo) {
-    this.dispatch(userInfo);
+import Dispatcher from '../appDispatcher';
+import Constants from '../constants';
+
+let actionTypes = Constants.ActionTypes;
+
+let UserActions = {
+  register: (userInfo) => {
+    Dispatcher.handleViewAction({
+      type: actionTypes.registerUser,
+      data: userInfo
+    });
   }
-}
+  
+};
 
-export default alt.createActions(UserActions);
+export default UserActions;

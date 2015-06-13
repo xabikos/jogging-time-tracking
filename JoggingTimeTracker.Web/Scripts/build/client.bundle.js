@@ -8171,7 +8171,7 @@
 	
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
-	var _storesUsersStore = __webpack_require__(97);
+	var _storesUsersStore = __webpack_require__(88);
 	
 	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
 	
@@ -8241,32 +8241,29 @@
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _appDispatcher = __webpack_require__(82);
 	
-	var _alt = __webpack_require__(82);
+	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
 	
-	var _alt2 = _interopRequireDefault(_alt);
+	var _constants = __webpack_require__(83);
 	
-	var UserActions = (function () {
-	  function UserActions() {
-	    _classCallCheck(this, UserActions);
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var actionTypes = _constants2['default'].ActionTypes;
+	
+	var UserActions = {
+	  register: function register(userInfo) {
+	    _appDispatcher2['default'].handleViewAction({
+	      type: actionTypes.registerUser,
+	      data: userInfo
+	    });
 	  }
 	
-	  _createClass(UserActions, [{
-	    key: 'register',
-	    value: function register(userInfo) {
-	      this.dispatch(userInfo);
-	    }
-	  }]);
+	};
 	
-	  return UserActions;
-	})();
-	
-	exports['default'] = _alt2['default'].createActions(UserActions);
+	exports['default'] = UserActions;
 	module.exports = exports['default'];
 
 /***/ },
@@ -8281,332 +8278,68 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _alt = __webpack_require__(83);
+	var _constants = __webpack_require__(83);
 	
-	var _alt2 = _interopRequireDefault(_alt);
+	var _constants2 = _interopRequireDefault(_constants);
 	
-	var alt = new _alt2['default']();
+	var _flux = __webpack_require__(84);
 	
-	//var chromeDebug = require('alt/utils/chromeDebug')
+	var _flux2 = _interopRequireDefault(_flux);
 	
-	//chromeDebug(alt);
+	var _objectAssign = __webpack_require__(87);
 	
-	exports['default'] = alt;
+	var _objectAssign2 = _interopRequireDefault(_objectAssign);
+	
+	var AppDispatcher = (0, _objectAssign2['default'])(new _flux2['default'].Dispatcher(), {
+	  /**
+	  * @@param {object} action The details of the action, including the action's
+	  * type and additional data coming from the server.
+	  */
+	  handleServerAction: function handleServerAction(action) {
+	    var payload = {
+	      source: _constants2['default'].PayloadSources.serverAction,
+	      action: action
+	    };
+	    this.dispatch(payload);
+	  },
+	
+	  /**
+	  * @@param {object} action The details of the action, including the action's
+	  * type and additional data coming from the view.
+	  */
+	  handleViewAction: function handleViewAction(action) {
+	    var payload = {
+	      source: _constants2['default'].PayloadSources.viewAction,
+	      action: action
+	    };
+	    this.dispatch(payload);
+	  }
+	});
+	
+	exports['default'] = AppDispatcher;
 	module.exports = exports['default'];
 
 /***/ },
 /* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*global window*/
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	var _bind = Function.prototype.bind;
+	var Constants = {
+	  ActionTypes: {
+	    registerUser: 'REGISTER_USER'
+	  },
 	
-	var _get = function get(_x3, _x4, _x5) { var _again = true; _function: while (_again) { var object = _x3, property = _x4, receiver = _x5; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x3 = parent; _x4 = property; _x5 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var _flux = __webpack_require__(84);
-	
-	var _utilsStateFunctions = __webpack_require__(87);
-	
-	var StateFunctions = _interopRequireWildcard(_utilsStateFunctions);
-	
-	var _symbolsSymbols = __webpack_require__(88);
-	
-	var Sym = _interopRequireWildcard(_symbolsSymbols);
-	
-	var _utilsFunctions = __webpack_require__(90);
-	
-	var fn = _interopRequireWildcard(_utilsFunctions);
-	
-	var _store = __webpack_require__(91);
-	
-	var store = _interopRequireWildcard(_store);
-	
-	var _utilsAltUtils = __webpack_require__(93);
-	
-	var utils = _interopRequireWildcard(_utilsAltUtils);
-	
-	var _actions = __webpack_require__(96);
-	
-	var _actions2 = _interopRequireDefault(_actions);
-	
-	var Alt = (function () {
-	  function Alt() {
-	    var config = arguments[0] === undefined ? {} : arguments[0];
-	
-	    _classCallCheck(this, Alt);
-	
-	    this.config = config;
-	    this.serialize = config.serialize || JSON.stringify;
-	    this.deserialize = config.deserialize || JSON.parse;
-	    this.dispatcher = config.dispatcher || new _flux.Dispatcher();
-	    this.batchingFunction = config.batchingFunction || function (callback) {
-	      return callback();
-	    };
-	    this.actions = { global: {} };
-	    this.stores = {};
-	    this.storeTransforms = config.storeTransforms || [];
-	    this[Sym.ACTIONS_REGISTRY] = {};
-	    this[Sym.INIT_SNAPSHOT] = {};
-	    this[Sym.LAST_SNAPSHOT] = {};
+	  PayloadSources: {
+	    serverAction: 'SERVER_ACTION',
+	    viewAction: 'VIEW_ACTION'
 	  }
+	};
 	
-	  _createClass(Alt, [{
-	    key: 'dispatch',
-	    value: function dispatch(action, data, details) {
-	      var _this = this;
-	
-	      this.batchingFunction(function () {
-	        return _this.dispatcher.dispatch({ action: action, data: data, details: details });
-	      });
-	    }
-	  }, {
-	    key: 'createUnsavedStore',
-	    value: function createUnsavedStore(StoreModel) {
-	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        args[_key - 1] = arguments[_key];
-	      }
-	
-	      var key = StoreModel.displayName || '';
-	      store.createStoreConfig(this.config, StoreModel);
-	      var Store = store.transformStore(this.storeTransforms, StoreModel);
-	
-	      return fn.isFunction(Store) ? store.createStoreFromClass.apply(store, [this, Store, key].concat(args)) : store.createStoreFromObject(this, Store, key);
-	    }
-	  }, {
-	    key: 'createStore',
-	    value: function createStore(StoreModel, iden) {
-	      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	        args[_key2 - 2] = arguments[_key2];
-	      }
-	
-	      var key = iden || StoreModel.displayName || StoreModel.name || '';
-	      store.createStoreConfig(this.config, StoreModel);
-	      var Store = store.transformStore(this.storeTransforms, StoreModel);
-	
-	      if (this.stores[key] || !key) {
-	        if (this.stores[key]) {
-	          utils.warn('A store named ' + key + ' already exists, double check your store ' + 'names or pass in your own custom identifier for each store');
-	        } else {
-	          utils.warn('Store name was not specified');
-	        }
-	
-	        key = utils.uid(this.stores, key);
-	      }
-	
-	      var storeInstance = fn.isFunction(Store) ? store.createStoreFromClass.apply(store, [this, Store, key].concat(args)) : store.createStoreFromObject(this, Store, key);
-	
-	      this.stores[key] = storeInstance;
-	      StateFunctions.saveInitialSnapshot(this, key);
-	
-	      return storeInstance;
-	    }
-	  }, {
-	    key: 'generateActions',
-	    value: function generateActions() {
-	      for (var _len3 = arguments.length, actionNames = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-	        actionNames[_key3] = arguments[_key3];
-	      }
-	
-	      var actions = { name: 'global' };
-	      return this.createActions(actionNames.reduce(function (obj, action) {
-	        obj[action] = utils.dispatchIdentity;
-	        return obj;
-	      }, actions));
-	    }
-	  }, {
-	    key: 'createAction',
-	    value: function createAction(name, implementation, obj) {
-	      return (0, _actions2['default'])(this, 'global', name, implementation, obj);
-	    }
-	  }, {
-	    key: 'createActions',
-	    value: function createActions(ActionsClass) {
-	      for (var _len4 = arguments.length, argsForConstructor = Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {
-	        argsForConstructor[_key4 - 2] = arguments[_key4];
-	      }
-	
-	      var _this2 = this;
-	
-	      var exportObj = arguments[1] === undefined ? {} : arguments[1];
-	
-	      var actions = {};
-	      var key = utils.uid(this[Sym.ACTIONS_REGISTRY], ActionsClass.displayName || ActionsClass.name || 'Unknown');
-	
-	      if (fn.isFunction(ActionsClass)) {
-	        (function () {
-	          fn.assign(actions, utils.getInternalMethods(ActionsClass, true));
-	
-	          var ActionsGenerator = (function (_ActionsClass) {
-	            function ActionsGenerator() {
-	              for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-	                args[_key5] = arguments[_key5];
-	              }
-	
-	              _classCallCheck(this, ActionsGenerator);
-	
-	              _get(Object.getPrototypeOf(ActionsGenerator.prototype), 'constructor', this).apply(this, args);
-	            }
-	
-	            _inherits(ActionsGenerator, _ActionsClass);
-	
-	            _createClass(ActionsGenerator, [{
-	              key: 'generateActions',
-	              value: function generateActions() {
-	                for (var _len6 = arguments.length, actionNames = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-	                  actionNames[_key6] = arguments[_key6];
-	                }
-	
-	                actionNames.forEach(function (actionName) {
-	                  actions[actionName] = utils.dispatchIdentity;
-	                });
-	              }
-	            }]);
-	
-	            return ActionsGenerator;
-	          })(ActionsClass);
-	
-	          fn.assign(actions, new (_bind.apply(ActionsGenerator, [null].concat(argsForConstructor)))());
-	        })();
-	      } else {
-	        fn.assign(actions, ActionsClass);
-	      }
-	
-	      this.actions[key] = this.actions[key] || {};
-	
-	      fn.eachObject(function (actionName, action) {
-	        if (!fn.isFunction(action)) {
-	          return;
-	        }
-	
-	        // create the action
-	        exportObj[actionName] = (0, _actions2['default'])(_this2, key, actionName, action, exportObj);
-	
-	        // generate a constant
-	        var constant = utils.formatAsConstant(actionName);
-	        exportObj[constant] = exportObj[actionName][Sym.ACTION_KEY];
-	      }, [actions]);
-	      return exportObj;
-	    }
-	  }, {
-	    key: 'takeSnapshot',
-	    value: function takeSnapshot() {
-	      for (var _len7 = arguments.length, storeNames = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-	        storeNames[_key7] = arguments[_key7];
-	      }
-	
-	      var state = StateFunctions.snapshot(this, storeNames);
-	      fn.assign(this[Sym.LAST_SNAPSHOT], state);
-	      return this.serialize(state);
-	    }
-	  }, {
-	    key: 'rollback',
-	    value: function rollback() {
-	      StateFunctions.setAppState(this, this.serialize(this[Sym.LAST_SNAPSHOT]), function (storeInst) {
-	        storeInst[Sym.LIFECYCLE].emit('rollback');
-	        storeInst.emitChange();
-	      });
-	    }
-	  }, {
-	    key: 'recycle',
-	    value: function recycle() {
-	      for (var _len8 = arguments.length, storeNames = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-	        storeNames[_key8] = arguments[_key8];
-	      }
-	
-	      var initialSnapshot = storeNames.length ? StateFunctions.filterSnapshots(this, this[Sym.INIT_SNAPSHOT], storeNames) : this[Sym.INIT_SNAPSHOT];
-	
-	      StateFunctions.setAppState(this, this.serialize(initialSnapshot), function (storeInst) {
-	        storeInst[Sym.LIFECYCLE].emit('init');
-	        storeInst.emitChange();
-	      });
-	    }
-	  }, {
-	    key: 'flush',
-	    value: function flush() {
-	      var state = this.serialize(StateFunctions.snapshot(this));
-	      this.recycle();
-	      return state;
-	    }
-	  }, {
-	    key: 'bootstrap',
-	    value: function bootstrap(data) {
-	      StateFunctions.setAppState(this, data, function (storeInst) {
-	        storeInst[Sym.LIFECYCLE].emit('bootstrap');
-	        storeInst.emitChange();
-	      });
-	    }
-	  }, {
-	    key: 'prepare',
-	    value: function prepare(storeInst, payload) {
-	      var data = {};
-	      if (!storeInst.displayName) {
-	        throw new ReferenceError('Store provided does not have a name');
-	      }
-	      data[storeInst.displayName] = payload;
-	      return this.serialize(data);
-	    }
-	  }, {
-	    key: 'addActions',
-	
-	    // Instance type methods for injecting alt into your application as context
-	
-	    value: function addActions(name, ActionsClass) {
-	      for (var _len9 = arguments.length, args = Array(_len9 > 2 ? _len9 - 2 : 0), _key9 = 2; _key9 < _len9; _key9++) {
-	        args[_key9 - 2] = arguments[_key9];
-	      }
-	
-	      this.actions[name] = Array.isArray(ActionsClass) ? this.generateActions.apply(this, ActionsClass) : this.createActions.apply(this, [ActionsClass].concat(args));
-	    }
-	  }, {
-	    key: 'addStore',
-	    value: function addStore(name, StoreModel) {
-	      for (var _len10 = arguments.length, args = Array(_len10 > 2 ? _len10 - 2 : 0), _key10 = 2; _key10 < _len10; _key10++) {
-	        args[_key10 - 2] = arguments[_key10];
-	      }
-	
-	      this.createStore.apply(this, [StoreModel, name].concat(args));
-	    }
-	  }, {
-	    key: 'getActions',
-	    value: function getActions(name) {
-	      return this.actions[name];
-	    }
-	  }, {
-	    key: 'getStore',
-	    value: function getStore(name) {
-	      return this.stores[name];
-	    }
-	  }], [{
-	    key: 'debug',
-	    value: function debug(name, alt) {
-	      var key = 'alt.js.org';
-	      if (typeof window !== 'undefined') {
-	        window[key] = window[key] || [];
-	        window[key].push({ name: name, alt: alt });
-	      }
-	      return alt;
-	    }
-	  }]);
-	
-	  return Alt;
-	})();
-	
-	exports['default'] = Alt;
+	exports['default'] = Constants;
 	module.exports = exports['default'];
 
 /***/ },
@@ -8945,73 +8678,45 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports.setAppState = setAppState;
-	exports.snapshot = snapshot;
-	exports.saveInitialSnapshot = saveInitialSnapshot;
-	exports.filterSnapshots = filterSnapshots;
+	function ToObject(val) {
+		if (val == null) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
 	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-	
-	var _symbolsSymbols = __webpack_require__(88);
-	
-	var Sym = _interopRequireWildcard(_symbolsSymbols);
-	
-	var _utilsFunctions = __webpack_require__(90);
-	
-	var fn = _interopRequireWildcard(_utilsFunctions);
-	
-	function setAppState(instance, data, onStore) {
-	  var obj = instance.deserialize(data);
-	  fn.eachObject(function (key, value) {
-	    var store = instance.stores[key];
-	    if (store) {
-	      var config = store.StoreModel.config;
-	
-	      if (config.onDeserialize) {
-	        obj[key] = config.onDeserialize(value) || value;
-	      }
-	      fn.assign(store[Sym.STATE_CONTAINER], obj[key]);
-	      onStore(store);
-	    }
-	  }, [obj]);
+		return Object(val);
 	}
 	
-	function snapshot(instance) {
-	  var storeNames = arguments[1] === undefined ? [] : arguments[1];
+	function ownEnumerableKeys(obj) {
+		var keys = Object.getOwnPropertyNames(obj);
 	
-	  var stores = storeNames.length ? storeNames : Object.keys(instance.stores);
-	  return stores.reduce(function (obj, storeHandle) {
-	    var storeName = storeHandle.displayName || storeHandle;
-	    var store = instance.stores[storeName];
-	    var config = store.StoreModel.config;
+		if (Object.getOwnPropertySymbols) {
+			keys = keys.concat(Object.getOwnPropertySymbols(obj));
+		}
 	
-	    store[Sym.LIFECYCLE].emit('snapshot');
-	    var customSnapshot = config.onSerialize && config.onSerialize(store[Sym.STATE_CONTAINER]);
-	    obj[storeName] = customSnapshot ? customSnapshot : store.getState();
-	    return obj;
-	  }, {});
+		return keys.filter(function (key) {
+			return propIsEnumerable.call(obj, key);
+		});
 	}
 	
-	function saveInitialSnapshot(instance, key) {
-	  var state = instance.deserialize(instance.serialize(instance.stores[key][Sym.STATE_CONTAINER]));
-	  instance[Sym.INIT_SNAPSHOT][key] = state;
-	  instance[Sym.LAST_SNAPSHOT][key] = state;
-	}
+	module.exports = Object.assign || function (target, source) {
+		var from;
+		var keys;
+		var to = ToObject(target);
 	
-	function filterSnapshots(instance, state, stores) {
-	  return stores.reduce(function (obj, store) {
-	    var storeName = store.displayName || store;
-	    if (!state[storeName]) {
-	      throw new ReferenceError('' + storeName + ' is not a valid store');
-	    }
-	    obj[storeName] = state[storeName];
-	    return obj;
-	  }, {});
-	}
+		for (var s = 1; s < arguments.length; s++) {
+			from = arguments[s];
+			keys = ownEnumerableKeys(Object(from));
+	
+			for (var i = 0; i < keys.length; i++) {
+				to[keys[i]] = from[keys[i]];
+			}
+		}
+	
+		return to;
+	};
+
 
 /***/ },
 /* 88 */
@@ -9025,1215 +8730,418 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _esSymbol = __webpack_require__(89);
+	var _appDispatcher = __webpack_require__(82);
 	
-	var _esSymbol2 = _interopRequireDefault(_esSymbol);
+	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
 	
-	// action creator handler
-	var ACTION_HANDLER = (0, _esSymbol2['default'])();
+	var _StoreWithEvents = __webpack_require__(89);
 	
-	exports.ACTION_HANDLER = ACTION_HANDLER;
-	// the action's uid symbol for listening
-	var ACTION_KEY = (0, _esSymbol2['default'])();
-	
-	exports.ACTION_KEY = ACTION_KEY;
-	// per instance registry of actions
-	var ACTIONS_REGISTRY = (0, _esSymbol2['default'])();
-	
-	exports.ACTIONS_REGISTRY = ACTIONS_REGISTRY;
-	// the action's name
-	var ACTION_UID = (0, _esSymbol2['default'])();
-	
-	exports.ACTION_UID = ACTION_UID;
-	// store all of a store's listeners
-	var ALL_LISTENERS = (0, _esSymbol2['default'])();
-	
-	exports.ALL_LISTENERS = ALL_LISTENERS;
-	// are we handling our own errors
-	var HANDLING_ERRORS = (0, _esSymbol2['default'])();
-	
-	exports.HANDLING_ERRORS = HANDLING_ERRORS;
-	// initial snapshot
-	var INIT_SNAPSHOT = (0, _esSymbol2['default'])();
-	
-	exports.INIT_SNAPSHOT = INIT_SNAPSHOT;
-	// last snapshot
-	var LAST_SNAPSHOT = (0, _esSymbol2['default'])();
-	
-	exports.LAST_SNAPSHOT = LAST_SNAPSHOT;
-	// all lifecycle listeners
-	var LIFECYCLE = (0, _esSymbol2['default'])();
-	
-	exports.LIFECYCLE = LIFECYCLE;
-	// store action listeners
-	var LISTENERS = (0, _esSymbol2['default'])();
-	
-	exports.LISTENERS = LISTENERS;
-	// public methods
-	var PUBLIC_METHODS = (0, _esSymbol2['default'])();
-	
-	exports.PUBLIC_METHODS = PUBLIC_METHODS;
-	// contains all state
-	var STATE_CONTAINER = (0, _esSymbol2['default'])();
-	exports.STATE_CONTAINER = STATE_CONTAINER;
-
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var globalSymbolRegistryList = {};
-	
-	// Aliases & Helpers
-	var make = Object.create;
-	var defProps = Object.defineProperties;
-	var defProp = Object.defineProperty;
-	var defValue = function (value) {
-	  var opts = arguments[1] === undefined ? {} : arguments[1];
-	  return {
-	    value: value,
-	    configurable: !!opts.c,
-	    writable: !!opts.w,
-	    enumerable: !!opts.e
-	  };
-	};
-	var isSymbol = function (symbol) {
-	  return symbol && symbol[xSymbol.toStringTag] === "Symbol";
-	};
-	
-	var supportsAccessors = undefined;
-	try {
-	  var x = defProp({}, "y", { get: function () {
-	      return 1;
-	    } });
-	  supportsAccessors = x.y === 1;
-	} catch (e) {
-	  supportsAccessors = false;
-	}
-	
-	var id = {};
-	var uid = function (desc) {
-	  desc = String(desc);
-	  var x = "";
-	  var i = 0;
-	  while (id[desc + x]) {
-	    x = i += 1;
-	  }
-	  id[desc + x] = 1;
-	
-	  var tag = "Symbol(" + desc + "" + x + ")";
-	
-	  /* istanbul ignore else */
-	  if (supportsAccessors) {
-	    // Make the symbols hidden to pre-es6 code
-	    defProp(Object.prototype, tag, {
-	      get: undefined,
-	      set: function (value) {
-	        defProp(this, tag, defValue(value, { c: true, w: true }));
-	      },
-	      configurable: true,
-	      enumerable: false
-	    });
-	  }
-	
-	  return tag;
-	};
-	
-	// The base symbol
-	var SymbolProto = make(null);
-	
-	// 19.4.1.1
-	function xSymbol(descString) {
-	  if (this instanceof xSymbol) {
-	    throw new TypeError("Symbol is not a constructor");
-	  }
-	
-	  descString = descString === undefined ? "" : String(descString);
-	
-	  var tag = uid(descString);
-	
-	  /* istanbul ignore next */
-	  if (!supportsAccessors) {
-	    return tag;
-	  }
-	
-	  return make(SymbolProto, {
-	    __description__: defValue(descString),
-	    __tag__: defValue(tag)
-	  });
-	}
-	
-	defProps(xSymbol, {
-	  // 19.4.2.1
-	  "for": defValue(function (key) {
-	    var stringKey = String(key);
-	
-	    if (globalSymbolRegistryList[stringKey]) {
-	      return globalSymbolRegistryList[stringKey];
-	    }
-	
-	    var symbol = xSymbol(stringKey);
-	    globalSymbolRegistryList[stringKey] = symbol;
-	
-	    return symbol;
-	  }),
-	
-	  // 19.4.2.5
-	  keyFor: defValue(function (sym) {
-	    if (supportsAccessors && !isSymbol(sym)) {
-	      throw new TypeError("" + sym + " is not a symbol");
-	    }
-	
-	    for (var key in globalSymbolRegistryList) {
-	      if (globalSymbolRegistryList[key] === sym) {
-	        return supportsAccessors ? globalSymbolRegistryList[key].__description__ : globalSymbolRegistryList[key].substr(7, globalSymbolRegistryList[key].length - 8);
-	      }
-	    }
-	  })
-	});
-	
-	// 6.1.5.1
-	defProps(xSymbol, {
-	  hasInstance: defValue(xSymbol("hasInstance")),
-	  isConcatSpreadable: defValue(xSymbol("isConcatSpreadable")),
-	  iterator: defValue(xSymbol("iterator")),
-	  match: defValue(xSymbol("match")),
-	  replace: defValue(xSymbol("replace")),
-	  search: defValue(xSymbol("search")),
-	  species: defValue(xSymbol("species")),
-	  split: defValue(xSymbol("split")),
-	  toPrimitive: defValue(xSymbol("toPrimitive")),
-	  toStringTag: defValue(xSymbol("toStringTag")),
-	  unscopables: defValue(xSymbol("unscopables"))
-	});
-	
-	// 19.4.3
-	defProps(SymbolProto, {
-	  constructor: defValue(xSymbol),
-	
-	  // 19.4.3.2
-	  toString: defValue(function () {
-	    return this.__tag__;
-	  }),
-	
-	  // 19.4.3.3
-	  valueOf: defValue(function () {
-	    return "Symbol(" + this.__description__ + ")";
-	  })
-	});
-	
-	// 19.4.3.5
-	/* istanbul ignore else */
-	if (supportsAccessors) {
-	  defProp(SymbolProto, xSymbol.toStringTag, defValue("Symbol", { c: true }));
-	}
-	
-	module.exports = typeof Symbol === "function" ? Symbol : xSymbol;
-	
-
-
-/***/ },
-/* 90 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports.eachObject = eachObject;
-	exports.assign = assign;
-	var isFunction = function isFunction(x) {
-	  return typeof x === 'function';
-	};
-	
-	exports.isFunction = isFunction;
-	
-	function eachObject(f, o) {
-	  o.forEach(function (from) {
-	    Object.keys(Object(from)).forEach(function (key) {
-	      f(key, from[key]);
-	    });
-	  });
-	}
-	
-	function assign(target) {
-	  for (var _len = arguments.length, source = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	    source[_key - 1] = arguments[_key];
-	  }
-	
-	  eachObject(function (key, value) {
-	    return target[key] = value;
-	  }, source);
-	  return target;
-	}
-
-/***/ },
-/* 91 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	var _bind = Function.prototype.bind;
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	exports.createStoreConfig = createStoreConfig;
-	exports.transformStore = transformStore;
-	exports.createStoreFromObject = createStoreFromObject;
-	exports.createStoreFromClass = createStoreFromClass;
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
-	
-	var _eventemitter3 = __webpack_require__(92);
-	
-	var _eventemitter32 = _interopRequireDefault(_eventemitter3);
-	
-	var _symbolsSymbols = __webpack_require__(88);
-	
-	var Sym = _interopRequireWildcard(_symbolsSymbols);
-	
-	var _utilsAltUtils = __webpack_require__(93);
-	
-	var utils = _interopRequireWildcard(_utilsAltUtils);
-	
-	var _utilsFunctions = __webpack_require__(90);
-	
-	var fn = _interopRequireWildcard(_utilsFunctions);
-	
-	var _AltStore = __webpack_require__(94);
-	
-	var _AltStore2 = _interopRequireDefault(_AltStore);
-	
-	var _StoreMixin = __webpack_require__(95);
-	
-	var _StoreMixin2 = _interopRequireDefault(_StoreMixin);
-	
-	function doSetState(store, storeInstance, state) {
-	  if (!state) {
-	    return;
-	  }
-	
-	  var config = storeInstance.StoreModel.config;
-	
-	  var nextState = fn.isFunction(state) ? state(storeInstance[Sym.STATE_CONTAINER]) : state;
-	
-	  storeInstance[Sym.STATE_CONTAINER] = config.setState.call(store, storeInstance[Sym.STATE_CONTAINER], nextState);
-	
-	  if (!store.alt.dispatcher.isDispatching()) {
-	    store.emitChange();
-	  }
-	}
-	
-	function createPrototype(proto, alt, key, extras) {
-	  proto[Sym.ALL_LISTENERS] = [];
-	  proto[Sym.LIFECYCLE] = new _eventemitter32['default']();
-	  proto[Sym.LISTENERS] = {};
-	  proto[Sym.PUBLIC_METHODS] = {};
-	
-	  return fn.assign(proto, _StoreMixin2['default'], {
-	    _storeName: key,
-	    alt: alt,
-	    dispatcher: alt.dispatcher,
-	    preventDefault: function preventDefault() {
-	      this.getInstance().preventDefault = true;
-	    }
-	  }, extras);
-	}
-	
-	function createStoreConfig(globalConfig, StoreModel) {
-	  StoreModel.config = fn.assign({
-	    getState: function getState(state) {
-	      return fn.assign({}, state);
-	    },
-	    setState: fn.assign
-	  }, globalConfig, StoreModel.config);
-	}
-	
-	function transformStore(transforms, StoreModel) {
-	  return transforms.reduce(function (Store, transform) {
-	    return transform(Store);
-	  }, StoreModel);
-	}
-	
-	function createStoreFromObject(alt, StoreModel, key) {
-	  var storeInstance = undefined;
-	
-	  var StoreProto = createPrototype({}, alt, key, fn.assign({
-	    getInstance: function getInstance() {
-	      return storeInstance;
-	    },
-	    setState: function setState(nextState) {
-	      doSetState(this, storeInstance, nextState);
-	    }
-	  }, StoreModel));
-	
-	  // bind the store listeners
-	  /* istanbul ignore else */
-	  if (StoreProto.bindListeners) {
-	    _StoreMixin2['default'].bindListeners.call(StoreProto, StoreProto.bindListeners);
-	  }
-	  /* istanbul ignore else */
-	  if (StoreProto.observe) {
-	    _StoreMixin2['default'].bindListeners.call(StoreProto, StoreProto.observe(alt));
-	  }
-	
-	  // bind the lifecycle events
-	  /* istanbul ignore else */
-	  if (StoreProto.lifecycle) {
-	    fn.eachObject(function (eventName, event) {
-	      _StoreMixin2['default'].on.call(StoreProto, eventName, event);
-	    }, [StoreProto.lifecycle]);
-	  }
-	
-	  // create the instance and fn.assign the public methods to the instance
-	  storeInstance = fn.assign(new _AltStore2['default'](alt, StoreProto, StoreProto.state || {}, StoreModel), StoreProto.publicMethods, { displayName: key });
-	
-	  return storeInstance;
-	}
-	
-	function createStoreFromClass(alt, StoreModel, key) {
-	  for (var _len = arguments.length, argsForClass = Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
-	    argsForClass[_key - 3] = arguments[_key];
-	  }
-	
-	  var storeInstance = undefined;
-	  var config = StoreModel.config;
-	
-	  // Creating a class here so we don't overload the provided store's
-	  // prototype with the mixin behaviour and I'm extending from StoreModel
-	  // so we can inherit any extensions from the provided store.
-	
-	  var Store = (function (_StoreModel) {
-	    function Store() {
-	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	        args[_key2] = arguments[_key2];
-	      }
-	
-	      _classCallCheck(this, Store);
-	
-	      _get(Object.getPrototypeOf(Store.prototype), 'constructor', this).apply(this, args);
-	    }
-	
-	    _inherits(Store, _StoreModel);
-	
-	    return Store;
-	  })(StoreModel);
-	
-	  createPrototype(Store.prototype, alt, key, {
-	    getInstance: function getInstance() {
-	      return storeInstance;
-	    },
-	    setState: function setState(nextState) {
-	      doSetState(this, storeInstance, nextState);
-	    }
-	  });
-	
-	  var store = new (_bind.apply(Store, [null].concat(argsForClass)))();
-	
-	  if (config.bindListeners) store.bindListeners(config.bindListeners);
-	  if (config.datasource) store.registerAsync(config.datasource);
-	
-	  storeInstance = fn.assign(new _AltStore2['default'](alt, store, store[alt.config.stateKey] || store[config.stateKey] || null, StoreModel), utils.getInternalMethods(StoreModel), config.publicMethods, { displayName: key });
-	
-	  return storeInstance;
-	}
-
-/***/ },
-/* 92 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	/**
-	 * Representation of a single EventEmitter function.
-	 *
-	 * @param {Function} fn Event handler to be called.
-	 * @param {Mixed} context Context for function execution.
-	 * @param {Boolean} once Only emit once
-	 * @api private
-	 */
-	function EE(fn, context, once) {
-	  this.fn = fn;
-	  this.context = context;
-	  this.once = once || false;
-	}
-	
-	/**
-	 * Minimal EventEmitter interface that is molded against the Node.js
-	 * EventEmitter interface.
-	 *
-	 * @constructor
-	 * @api public
-	 */
-	function EventEmitter() { /* Nothing to set */ }
-	
-	/**
-	 * Holds the assigned EventEmitters by name.
-	 *
-	 * @type {Object}
-	 * @private
-	 */
-	EventEmitter.prototype._events = undefined;
-	
-	/**
-	 * Return a list of assigned event listeners.
-	 *
-	 * @param {String} event The events that should be listed.
-	 * @returns {Array}
-	 * @api public
-	 */
-	EventEmitter.prototype.listeners = function listeners(event) {
-	  if (!this._events || !this._events[event]) return [];
-	  if (this._events[event].fn) return [this._events[event].fn];
-	
-	  for (var i = 0, l = this._events[event].length, ee = new Array(l); i < l; i++) {
-	    ee[i] = this._events[event][i].fn;
-	  }
-	
-	  return ee;
-	};
-	
-	/**
-	 * Emit an event to all registered event listeners.
-	 *
-	 * @param {String} event The name of the event.
-	 * @returns {Boolean} Indication if we've emitted an event.
-	 * @api public
-	 */
-	EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
-	  if (!this._events || !this._events[event]) return false;
-	
-	  var listeners = this._events[event]
-	    , len = arguments.length
-	    , args
-	    , i;
-	
-	  if ('function' === typeof listeners.fn) {
-	    if (listeners.once) this.removeListener(event, listeners.fn, true);
-	
-	    switch (len) {
-	      case 1: return listeners.fn.call(listeners.context), true;
-	      case 2: return listeners.fn.call(listeners.context, a1), true;
-	      case 3: return listeners.fn.call(listeners.context, a1, a2), true;
-	      case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
-	      case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
-	      case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
-	    }
-	
-	    for (i = 1, args = new Array(len -1); i < len; i++) {
-	      args[i - 1] = arguments[i];
-	    }
-	
-	    listeners.fn.apply(listeners.context, args);
-	  } else {
-	    var length = listeners.length
-	      , j;
-	
-	    for (i = 0; i < length; i++) {
-	      if (listeners[i].once) this.removeListener(event, listeners[i].fn, true);
-	
-	      switch (len) {
-	        case 1: listeners[i].fn.call(listeners[i].context); break;
-	        case 2: listeners[i].fn.call(listeners[i].context, a1); break;
-	        case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
-	        default:
-	          if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
-	            args[j - 1] = arguments[j];
-	          }
-	
-	          listeners[i].fn.apply(listeners[i].context, args);
-	      }
-	    }
-	  }
-	
-	  return true;
-	};
-	
-	/**
-	 * Register a new EventListener for the given event.
-	 *
-	 * @param {String} event Name of the event.
-	 * @param {Functon} fn Callback function.
-	 * @param {Mixed} context The context of the function.
-	 * @api public
-	 */
-	EventEmitter.prototype.on = function on(event, fn, context) {
-	  var listener = new EE(fn, context || this);
-	
-	  if (!this._events) this._events = {};
-	  if (!this._events[event]) this._events[event] = listener;
-	  else {
-	    if (!this._events[event].fn) this._events[event].push(listener);
-	    else this._events[event] = [
-	      this._events[event], listener
-	    ];
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Add an EventListener that's only called once.
-	 *
-	 * @param {String} event Name of the event.
-	 * @param {Function} fn Callback function.
-	 * @param {Mixed} context The context of the function.
-	 * @api public
-	 */
-	EventEmitter.prototype.once = function once(event, fn, context) {
-	  var listener = new EE(fn, context || this, true);
-	
-	  if (!this._events) this._events = {};
-	  if (!this._events[event]) this._events[event] = listener;
-	  else {
-	    if (!this._events[event].fn) this._events[event].push(listener);
-	    else this._events[event] = [
-	      this._events[event], listener
-	    ];
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Remove event listeners.
-	 *
-	 * @param {String} event The event we want to remove.
-	 * @param {Function} fn The listener that we need to find.
-	 * @param {Boolean} once Only remove once listeners.
-	 * @api public
-	 */
-	EventEmitter.prototype.removeListener = function removeListener(event, fn, once) {
-	  if (!this._events || !this._events[event]) return this;
-	
-	  var listeners = this._events[event]
-	    , events = [];
-	
-	  if (fn) {
-	    if (listeners.fn && (listeners.fn !== fn || (once && !listeners.once))) {
-	      events.push(listeners);
-	    }
-	    if (!listeners.fn) for (var i = 0, length = listeners.length; i < length; i++) {
-	      if (listeners[i].fn !== fn || (once && !listeners[i].once)) {
-	        events.push(listeners[i]);
-	      }
-	    }
-	  }
-	
-	  //
-	  // Reset the array, or remove it completely if we have no more listeners.
-	  //
-	  if (events.length) {
-	    this._events[event] = events.length === 1 ? events[0] : events;
-	  } else {
-	    delete this._events[event];
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Remove all listeners or only the listeners for the specified event.
-	 *
-	 * @param {String} event The event want to remove all listeners for.
-	 * @api public
-	 */
-	EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
-	  if (!this._events) return this;
-	
-	  if (event) delete this._events[event];
-	  else this._events = {};
-	
-	  return this;
-	};
-	
-	//
-	// Alias methods names because people roll like that.
-	//
-	EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
-	EventEmitter.prototype.addListener = EventEmitter.prototype.on;
-	
-	//
-	// This function doesn't apply anymore.
-	//
-	EventEmitter.prototype.setMaxListeners = function setMaxListeners() {
-	  return this;
-	};
-	
-	//
-	// Expose the module.
-	//
-	EventEmitter.EventEmitter = EventEmitter;
-	EventEmitter.EventEmitter2 = EventEmitter;
-	EventEmitter.EventEmitter3 = EventEmitter;
-	
-	//
-	// Expose the module.
-	//
-	module.exports = EventEmitter;
-
-
-/***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	exports.getInternalMethods = getInternalMethods;
-	exports.warn = warn;
-	exports.uid = uid;
-	exports.formatAsConstant = formatAsConstant;
-	exports.dispatchIdentity = dispatchIdentity;
-	/* istanbul ignore next */
-	function NoopClass() {}
-	
-	var builtIns = Object.getOwnPropertyNames(NoopClass);
-	var builtInProto = Object.getOwnPropertyNames(NoopClass.prototype);
-	
-	function getInternalMethods(Obj, isProto) {
-	  var excluded = isProto ? builtInProto : builtIns;
-	  var obj = isProto ? Obj.prototype : Obj;
-	  return Object.getOwnPropertyNames(obj).reduce(function (value, m) {
-	    if (excluded.indexOf(m) !== -1) {
-	      return value;
-	    }
-	
-	    value[m] = obj[m];
-	    return value;
-	  }, {});
-	}
-	
-	function warn(msg) {
-	  /* istanbul ignore else */
-	  if (typeof console !== 'undefined') {
-	    console.warn(new ReferenceError(msg));
-	  }
-	}
-	
-	function uid(container, name) {
-	  var count = 0;
-	  var key = name;
-	  while (Object.hasOwnProperty.call(container, key)) {
-	    key = name + String(++count);
-	  }
-	  return key;
-	}
-	
-	function formatAsConstant(name) {
-	  return name.replace(/[a-z]([A-Z])/g, function (i) {
-	    return '' + i[0] + '_' + i[1].toLowerCase();
-	  }).toUpperCase();
-	}
-	
-	function dispatchIdentity(x) {
-	  for (var _len = arguments.length, a = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	    a[_key - 1] = arguments[_key];
-	  }
-	
-	  this.dispatch(a.length ? [x].concat(a) : x);
-	}
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var _eventemitter3 = __webpack_require__(92);
-	
-	var _eventemitter32 = _interopRequireDefault(_eventemitter3);
-	
-	var _esSymbol = __webpack_require__(89);
-	
-	var _esSymbol2 = _interopRequireDefault(_esSymbol);
-	
-	var _symbolsSymbols = __webpack_require__(88);
-	
-	var Sym = _interopRequireWildcard(_symbolsSymbols);
-	
-	var _utilsFunctions = __webpack_require__(90);
-	
-	var fn = _interopRequireWildcard(_utilsFunctions);
-	
-	// event emitter instance
-	var EE = (0, _esSymbol2['default'])();
-	
-	var AltStore = (function () {
-	  function AltStore(alt, model, state, StoreModel) {
-	    var _this = this;
-	
-	    _classCallCheck(this, AltStore);
-	
-	    this[EE] = new _eventemitter32['default']();
-	    this[Sym.LIFECYCLE] = model[Sym.LIFECYCLE];
-	    this[Sym.STATE_CONTAINER] = state || model;
-	
-	    this.preventDefault = false;
-	    this._storeName = model._storeName;
-	    this.boundListeners = model[Sym.ALL_LISTENERS];
-	    this.StoreModel = StoreModel;
-	
-	    var output = model.output || function (x) {
-	      return x;
-	    };
-	
-	    this.emitChange = function () {
-	      _this[EE].emit('change', output.call(model, _this[Sym.STATE_CONTAINER]));
-	    };
-	
-	    var handleDispatch = function handleDispatch(f, payload) {
-	      try {
-	        return f();
-	      } catch (e) {
-	        if (model[Sym.HANDLING_ERRORS]) {
-	          _this[Sym.LIFECYCLE].emit('error', e, payload, _this[Sym.STATE_CONTAINER]);
-	          return false;
-	        } else {
-	          throw e;
-	        }
-	      }
-	    };
-	
-	    fn.assign(this, model[Sym.PUBLIC_METHODS]);
-	
-	    // Register dispatcher
-	    this.dispatchToken = alt.dispatcher.register(function (payload) {
-	      _this.preventDefault = false;
-	      _this[Sym.LIFECYCLE].emit('beforeEach', payload, _this[Sym.STATE_CONTAINER]);
-	
-	      var actionHandler = model[Sym.LISTENERS][payload.action] || model.otherwise;
-	
-	      if (actionHandler) {
-	        var result = handleDispatch(function () {
-	          return actionHandler.call(model, payload.data, payload.action);
-	        }, payload);
-	
-	        if (result !== false && !_this.preventDefault) _this.emitChange();
-	      }
-	
-	      if (model.reduce) {
-	        handleDispatch(function () {
-	          model.setState(model.reduce(_this[Sym.STATE_CONTAINER], payload));
-	        }, payload);
-	
-	        if (!_this.preventDefault) _this.emitChange();
-	      }
-	
-	      _this[Sym.LIFECYCLE].emit('afterEach', payload, _this[Sym.STATE_CONTAINER]);
-	    });
-	
-	    this[Sym.LIFECYCLE].emit('init');
-	  }
-	
-	  _createClass(AltStore, [{
-	    key: 'getEventEmitter',
-	    value: function getEventEmitter() {
-	      return this[EE];
-	    }
-	  }, {
-	    key: 'listen',
-	    value: function listen(cb) {
-	      var _this2 = this;
-	
-	      this[EE].on('change', cb);
-	      return function () {
-	        return _this2.unlisten(cb);
-	      };
-	    }
-	  }, {
-	    key: 'unlisten',
-	    value: function unlisten(cb) {
-	      if (!cb) throw new TypeError('Unlisten must receive a function');
-	      this[Sym.LIFECYCLE].emit('unlisten');
-	      this[EE].removeListener('change', cb);
-	    }
-	  }, {
-	    key: 'getState',
-	    value: function getState() {
-	      return this.StoreModel.config.getState.call(this, this[Sym.STATE_CONTAINER]);
-	    }
-	  }]);
-	
-	  return AltStore;
-	})();
-	
-	exports['default'] = AltStore;
-	module.exports = exports['default'];
-
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _esSymbol = __webpack_require__(89);
-	
-	var _esSymbol2 = _interopRequireDefault(_esSymbol);
-	
-	var _symbolsSymbols = __webpack_require__(88);
-	
-	var Sym = _interopRequireWildcard(_symbolsSymbols);
-	
-	var _utilsFunctions = __webpack_require__(90);
-	
-	var fn = _interopRequireWildcard(_utilsFunctions);
-	
-	var StoreMixin = {
-	  waitFor: function waitFor() {
-	    for (var _len = arguments.length, sources = Array(_len), _key = 0; _key < _len; _key++) {
-	      sources[_key] = arguments[_key];
-	    }
-	
-	    if (!sources.length) {
-	      throw new ReferenceError('Dispatch tokens not provided');
-	    }
-	
-	    var sourcesArray = sources;
-	    if (sources.length === 1) {
-	      sourcesArray = Array.isArray(sources[0]) ? sources[0] : sources;
-	    }
-	
-	    var tokens = sourcesArray.map(function (source) {
-	      return source.dispatchToken || source;
-	    });
-	
-	    this.dispatcher.waitFor(tokens);
-	  },
-	
-	  exportAsync: function exportAsync(asyncMethods) {
-	    this.registerAsync(asyncMethods);
-	  },
-	
-	  registerAsync: function registerAsync(asyncDef) {
-	    var _this = this;
-	
-	    var loadCounter = 0;
-	
-	    var asyncMethods = fn.isFunction(asyncDef) ? asyncDef(this.alt) : asyncDef;
-	
-	    var toExport = Object.keys(asyncMethods).reduce(function (publicMethods, methodName) {
-	      var desc = asyncMethods[methodName];
-	      var spec = fn.isFunction(desc) ? desc(_this) : desc;
-	
-	      var validHandlers = ['success', 'error', 'loading'];
-	      validHandlers.forEach(function (handler) {
-	        if (spec[handler] && !spec[handler][Sym.ACTION_KEY]) {
-	          throw new Error('' + handler + ' handler must be an action function');
-	        }
-	      });
-	
-	      publicMethods[methodName] = function () {
-	        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	          args[_key2] = arguments[_key2];
-	        }
-	
-	        var state = _this.getInstance().getState();
-	        var value = spec.local && spec.local.apply(spec, [state].concat(args));
-	        var shouldFetch = spec.shouldFetch ? spec.shouldFetch.apply(spec, [state].concat(args)) : value == null;
-	        var intercept = spec.interceptResponse || function (x) {
-	          return x;
-	        };
-	
-	        var makeActionHandler = function makeActionHandler(action, isError) {
-	          return function (x) {
-	            var fire = function fire() {
-	              loadCounter -= 1;
-	              action(intercept(x, action, args));
-	              if (isError) throw x;
-	            };
-	            return typeof window === 'undefined' ? function () {
-	              return fire();
-	            } : fire();
-	          };
-	        };
-	
-	        // if we don't have it in cache then fetch it
-	        if (shouldFetch) {
-	          loadCounter += 1;
-	          /* istanbul ignore else */
-	          if (spec.loading) spec.loading(intercept(null, spec.loading, args));
-	          return spec.remote.apply(spec, [state].concat(args))['catch'](makeActionHandler(spec.error, 1)).then(makeActionHandler(spec.success));
-	        } else {
-	          // otherwise emit the change now
-	          _this.emitChange();
-	        }
-	      };
-	
-	      return publicMethods;
-	    }, {});
-	
-	    this.exportPublicMethods(toExport);
-	    this.exportPublicMethods({
-	      isLoading: function isLoading() {
-	        return loadCounter > 0;
-	      }
-	    });
-	  },
-	
-	  exportPublicMethods: function exportPublicMethods(methods) {
-	    var _this2 = this;
-	
-	    fn.eachObject(function (methodName, value) {
-	      if (!fn.isFunction(value)) {
-	        throw new TypeError('exportPublicMethods expects a function');
-	      }
-	
-	      _this2[Sym.PUBLIC_METHODS][methodName] = value;
-	    }, [methods]);
-	  },
-	
-	  emitChange: function emitChange() {
-	    this.getInstance().emitChange();
-	  },
-	
-	  on: function on(lifecycleEvent, handler) {
-	    if (lifecycleEvent === 'error') {
-	      this[Sym.HANDLING_ERRORS] = true;
-	    }
-	    this[Sym.LIFECYCLE].on(lifecycleEvent, handler.bind(this));
-	  },
-	
-	  bindAction: function bindAction(symbol, handler) {
-	    if (!symbol) {
-	      throw new ReferenceError('Invalid action reference passed in');
-	    }
-	    if (!fn.isFunction(handler)) {
-	      throw new TypeError('bindAction expects a function');
-	    }
-	
-	    if (handler.length > 1) {
-	      throw new TypeError('Action handler in store ' + this._storeName + ' for ' + ('' + (symbol[Sym.ACTION_KEY] || symbol).toString() + ' was defined with ') + 'two parameters. Only a single parameter is passed through the ' + 'dispatcher, did you mean to pass in an Object instead?');
-	    }
-	
-	    // You can pass in the constant or the function itself
-	    var key = symbol[Sym.ACTION_KEY] ? symbol[Sym.ACTION_KEY] : symbol;
-	    this[Sym.LISTENERS][key] = handler.bind(this);
-	    this[Sym.ALL_LISTENERS].push(_esSymbol2['default'].keyFor(key));
-	  },
-	
-	  bindActions: function bindActions(actions) {
-	    var _this3 = this;
-	
-	    fn.eachObject(function (action, symbol) {
-	      var matchFirstCharacter = /./;
-	      var assumedEventHandler = action.replace(matchFirstCharacter, function (x) {
-	        return 'on' + x[0].toUpperCase();
-	      });
-	      var handler = null;
-	
-	      if (_this3[action] && _this3[assumedEventHandler]) {
-	        // If you have both action and onAction
-	        throw new ReferenceError('You have multiple action handlers bound to an action: ' + ('' + action + ' and ' + assumedEventHandler));
-	      } else if (_this3[action]) {
-	        // action
-	        handler = _this3[action];
-	      } else if (_this3[assumedEventHandler]) {
-	        // onAction
-	        handler = _this3[assumedEventHandler];
-	      }
-	
-	      if (handler) {
-	        _this3.bindAction(symbol, handler);
-	      }
-	    }, [actions]);
-	  },
-	
-	  bindListeners: function bindListeners(obj) {
-	    var _this4 = this;
-	
-	    fn.eachObject(function (methodName, symbol) {
-	      var listener = _this4[methodName];
-	
-	      if (!listener) {
-	        throw new ReferenceError('' + methodName + ' defined but does not exist in ' + _this4._storeName);
-	      }
-	
-	      if (Array.isArray(symbol)) {
-	        symbol.forEach(function (action) {
-	          _this4.bindAction(action, listener);
-	        });
-	      } else {
-	        _this4.bindAction(symbol, listener);
-	      }
-	    }, [obj]);
-	  }
-	};
-	
-	exports['default'] = StoreMixin;
-	module.exports = exports['default'];
-
-/***/ },
-/* 96 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	exports['default'] = makeAction;
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var _esSymbol = __webpack_require__(89);
-	
-	var _esSymbol2 = _interopRequireDefault(_esSymbol);
-	
-	var _symbolsSymbols = __webpack_require__(88);
-	
-	var Sym = _interopRequireWildcard(_symbolsSymbols);
-	
-	var _utilsAltUtils = __webpack_require__(93);
-	
-	var utils = _interopRequireWildcard(_utilsAltUtils);
-	
-	var AltAction = (function () {
-	  function AltAction(alt, name, action, actions, actionDetails) {
-	    _classCallCheck(this, AltAction);
-	
-	    this[Sym.ACTION_UID] = name;
-	    this[Sym.ACTION_HANDLER] = action.bind(this);
-	    this.actions = actions;
-	    this.actionDetails = actionDetails;
-	    this.alt = alt;
-	  }
-	
-	  _createClass(AltAction, [{
-	    key: 'dispatch',
-	    value: function dispatch(data) {
-	      this.alt.dispatch(this[Sym.ACTION_UID], data, this.actionDetails);
-	    }
-	  }]);
-	
-	  return AltAction;
-	})();
-	
-	function makeAction(alt, namespace, name, implementation, obj) {
-	  // make sure each Symbol is unique
-	  var actionId = utils.uid(alt[Sym.ACTIONS_REGISTRY], '' + namespace + '.' + name);
-	  alt[Sym.ACTIONS_REGISTRY][actionId] = 1;
-	  var actionSymbol = _esSymbol2['default']['for']('alt/' + actionId);
-	
-	  var data = {
-	    namespace: namespace,
-	    name: name,
-	    id: actionId,
-	    symbol: actionSymbol
-	  };
-	
-	  // Wrap the action so we can provide a dispatch method
-	  var newAction = new AltAction(alt, actionSymbol, implementation, obj, data);
-	
-	  // the action itself
-	  var action = newAction[Sym.ACTION_HANDLER];
-	  action.defer = function () {
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    setTimeout(function () {
-	      newAction[Sym.ACTION_HANDLER].apply(null, args);
-	    });
-	  };
-	  action[Sym.ACTION_KEY] = actionSymbol;
-	  action.data = data;
-	
-	  // ensure each reference is unique in the namespace
-	  var container = alt.actions[namespace];
-	  var id = utils.uid(container, name);
-	  container[id] = action;
-	
-	  return action;
-	}
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 97 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var _alt = __webpack_require__(82);
-	
-	var _alt2 = _interopRequireDefault(_alt);
+	var _StoreWithEvents2 = _interopRequireDefault(_StoreWithEvents);
 	
 	var _actionsUserActions = __webpack_require__(81);
 	
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
-	var UsersStore = (function () {
-	  function UsersStore() {
-	    _classCallCheck(this, UsersStore);
+	var _constants = __webpack_require__(83);
 	
-	    this.bindListeners({
-	      handleRegister: _actionsUserActions2['default'].REGISTER
-	    });
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var changeEvent = 'USERS_CHANGE';
+	
+	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
+	
+	var registeredCallback = function registeredCallback(payload) {
+	  var actionTypes = _constants2['default'].ActionTypes;
+	
+	  switch (payload.action.type) {
+	    case actionTypes.registerUser:
+	      console.log(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	
+	    default:
+	    // do nothing
+	  }
+	};
+	
+	_appDispatcher2['default'].register(registeredCallback);
+	
+	var UsersStore = {
+	  // Public methods
+	  addChangeListener: function addChangeListener(callback) {
+	    storeWithEvents.addChangeListener(callback);
+	  },
+	
+	  removeChangeListener: function removeChangeListener(callback) {
+	    storeWithEvents.removeChangeListener(callback);
+	  }
+	};
+	
+	exports['default'] = UsersStore;
+	module.exports = exports['default'];
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _events = __webpack_require__(90);
+	
+	// Base class for all stores used in our FLUX architecture
+	// Acts as an intermediate class for the library EventEmitter class
+	
+	var StoreWithEvents = (function (_EventEmitter) {
+	  function StoreWithEvents(changeEvent) {
+	    _classCallCheck(this, StoreWithEvents);
+	
+	    _get(Object.getPrototypeOf(StoreWithEvents.prototype), 'constructor', this).call(this);
+	    this.changeEvent = changeEvent;
 	  }
 	
-	  _createClass(UsersStore, [{
-	    key: 'handleRegister',
-	    value: function handleRegister(userInfo) {
-	      console.log(userInfo);
+	  _inherits(StoreWithEvents, _EventEmitter);
+	
+	  _createClass(StoreWithEvents, [{
+	    key: 'emitChange',
+	    value: function emitChange() {
+	      _get(Object.getPrototypeOf(StoreWithEvents.prototype), 'emit', this).call(this, this.changeEvent);
+	    }
+	  }, {
+	    key: 'addChangeListener',
+	    value: function addChangeListener(callback) {
+	      _get(Object.getPrototypeOf(StoreWithEvents.prototype), 'on', this).call(this, this.changeEvent, callback);
+	    }
+	  }, {
+	    key: 'removeChangeListener',
+	    value: function removeChangeListener(callback) {
+	      _get(Object.getPrototypeOf(StoreWithEvents.prototype), 'removeListener', this).call(this, this.changeEvent, callback);
 	    }
 	  }]);
 	
-	  return UsersStore;
-	})();
+	  return StoreWithEvents;
+	})(_events.EventEmitter);
 	
-	exports['default'] = _alt2['default'].createStore(UsersStore, 'UsersStore');
+	exports['default'] = StoreWithEvents;
 	module.exports = exports['default'];
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	function EventEmitter() {
+	  this._events = this._events || {};
+	  this._maxListeners = this._maxListeners || undefined;
+	}
+	module.exports = EventEmitter;
+	
+	// Backwards-compat with node 0.10.x
+	EventEmitter.EventEmitter = EventEmitter;
+	
+	EventEmitter.prototype._events = undefined;
+	EventEmitter.prototype._maxListeners = undefined;
+	
+	// By default EventEmitters will print a warning if more than 10 listeners are
+	// added to it. This is a useful default which helps finding memory leaks.
+	EventEmitter.defaultMaxListeners = 10;
+	
+	// Obviously not all Emitters should be limited to 10. This function allows
+	// that to be increased. Set to zero for unlimited.
+	EventEmitter.prototype.setMaxListeners = function(n) {
+	  if (!isNumber(n) || n < 0 || isNaN(n))
+	    throw TypeError('n must be a positive number');
+	  this._maxListeners = n;
+	  return this;
+	};
+	
+	EventEmitter.prototype.emit = function(type) {
+	  var er, handler, len, args, i, listeners;
+	
+	  if (!this._events)
+	    this._events = {};
+	
+	  // If there is no 'error' event listener then throw.
+	  if (type === 'error') {
+	    if (!this._events.error ||
+	        (isObject(this._events.error) && !this._events.error.length)) {
+	      er = arguments[1];
+	      if (er instanceof Error) {
+	        throw er; // Unhandled 'error' event
+	      }
+	      throw TypeError('Uncaught, unspecified "error" event.');
+	    }
+	  }
+	
+	  handler = this._events[type];
+	
+	  if (isUndefined(handler))
+	    return false;
+	
+	  if (isFunction(handler)) {
+	    switch (arguments.length) {
+	      // fast cases
+	      case 1:
+	        handler.call(this);
+	        break;
+	      case 2:
+	        handler.call(this, arguments[1]);
+	        break;
+	      case 3:
+	        handler.call(this, arguments[1], arguments[2]);
+	        break;
+	      // slower
+	      default:
+	        len = arguments.length;
+	        args = new Array(len - 1);
+	        for (i = 1; i < len; i++)
+	          args[i - 1] = arguments[i];
+	        handler.apply(this, args);
+	    }
+	  } else if (isObject(handler)) {
+	    len = arguments.length;
+	    args = new Array(len - 1);
+	    for (i = 1; i < len; i++)
+	      args[i - 1] = arguments[i];
+	
+	    listeners = handler.slice();
+	    len = listeners.length;
+	    for (i = 0; i < len; i++)
+	      listeners[i].apply(this, args);
+	  }
+	
+	  return true;
+	};
+	
+	EventEmitter.prototype.addListener = function(type, listener) {
+	  var m;
+	
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  if (!this._events)
+	    this._events = {};
+	
+	  // To avoid recursion in the case that type === "newListener"! Before
+	  // adding it to the listeners, first emit "newListener".
+	  if (this._events.newListener)
+	    this.emit('newListener', type,
+	              isFunction(listener.listener) ?
+	              listener.listener : listener);
+	
+	  if (!this._events[type])
+	    // Optimize the case of one listener. Don't need the extra array object.
+	    this._events[type] = listener;
+	  else if (isObject(this._events[type]))
+	    // If we've already got an array, just append.
+	    this._events[type].push(listener);
+	  else
+	    // Adding the second element, need to change to array.
+	    this._events[type] = [this._events[type], listener];
+	
+	  // Check for listener leak
+	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    var m;
+	    if (!isUndefined(this._maxListeners)) {
+	      m = this._maxListeners;
+	    } else {
+	      m = EventEmitter.defaultMaxListeners;
+	    }
+	
+	    if (m && m > 0 && this._events[type].length > m) {
+	      this._events[type].warned = true;
+	      console.error('(node) warning: possible EventEmitter memory ' +
+	                    'leak detected. %d listeners added. ' +
+	                    'Use emitter.setMaxListeners() to increase limit.',
+	                    this._events[type].length);
+	      if (typeof console.trace === 'function') {
+	        // not supported in IE 10
+	        console.trace();
+	      }
+	    }
+	  }
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+	
+	EventEmitter.prototype.once = function(type, listener) {
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  var fired = false;
+	
+	  function g() {
+	    this.removeListener(type, g);
+	
+	    if (!fired) {
+	      fired = true;
+	      listener.apply(this, arguments);
+	    }
+	  }
+	
+	  g.listener = listener;
+	  this.on(type, g);
+	
+	  return this;
+	};
+	
+	// emits a 'removeListener' event iff the listener was removed
+	EventEmitter.prototype.removeListener = function(type, listener) {
+	  var list, position, length, i;
+	
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  if (!this._events || !this._events[type])
+	    return this;
+	
+	  list = this._events[type];
+	  length = list.length;
+	  position = -1;
+	
+	  if (list === listener ||
+	      (isFunction(list.listener) && list.listener === listener)) {
+	    delete this._events[type];
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	
+	  } else if (isObject(list)) {
+	    for (i = length; i-- > 0;) {
+	      if (list[i] === listener ||
+	          (list[i].listener && list[i].listener === listener)) {
+	        position = i;
+	        break;
+	      }
+	    }
+	
+	    if (position < 0)
+	      return this;
+	
+	    if (list.length === 1) {
+	      list.length = 0;
+	      delete this._events[type];
+	    } else {
+	      list.splice(position, 1);
+	    }
+	
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	  }
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.removeAllListeners = function(type) {
+	  var key, listeners;
+	
+	  if (!this._events)
+	    return this;
+	
+	  // not listening for removeListener, no need to emit
+	  if (!this._events.removeListener) {
+	    if (arguments.length === 0)
+	      this._events = {};
+	    else if (this._events[type])
+	      delete this._events[type];
+	    return this;
+	  }
+	
+	  // emit removeListener for all listeners on all events
+	  if (arguments.length === 0) {
+	    for (key in this._events) {
+	      if (key === 'removeListener') continue;
+	      this.removeAllListeners(key);
+	    }
+	    this.removeAllListeners('removeListener');
+	    this._events = {};
+	    return this;
+	  }
+	
+	  listeners = this._events[type];
+	
+	  if (isFunction(listeners)) {
+	    this.removeListener(type, listeners);
+	  } else {
+	    // LIFO order
+	    while (listeners.length)
+	      this.removeListener(type, listeners[listeners.length - 1]);
+	  }
+	  delete this._events[type];
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.listeners = function(type) {
+	  var ret;
+	  if (!this._events || !this._events[type])
+	    ret = [];
+	  else if (isFunction(this._events[type]))
+	    ret = [this._events[type]];
+	  else
+	    ret = this._events[type].slice();
+	  return ret;
+	};
+	
+	EventEmitter.listenerCount = function(emitter, type) {
+	  var ret;
+	  if (!emitter._events || !emitter._events[type])
+	    ret = 0;
+	  else if (isFunction(emitter._events[type]))
+	    ret = 1;
+	  else
+	    ret = emitter._events[type].length;
+	  return ret;
+	};
+	
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+	
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+	
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+	
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
+
 
 /***/ }
 /******/ ]);
