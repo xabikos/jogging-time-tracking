@@ -8112,9 +8112,13 @@
 	
 	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
 	
-	var _RegistrationForm = __webpack_require__(91);
+	var _registrationForm = __webpack_require__(92);
 	
-	var _RegistrationForm2 = _interopRequireDefault(_RegistrationForm);
+	var _registrationForm2 = _interopRequireDefault(_registrationForm);
+	
+	var _loginForm = __webpack_require__(93);
+	
+	var _loginForm2 = _interopRequireDefault(_loginForm);
 	
 	var SecurityController = (function (_React$Component) {
 		function SecurityController(props) {
@@ -8150,11 +8154,13 @@
 				) : this.state.isRegistered ? React.createElement(
 					'div',
 					null,
-					'Registered'
+					'Registered',
+					React.createElement(_loginForm2['default'], null)
 				) : React.createElement(
 					'div',
 					null,
-					React.createElement(_RegistrationForm2['default'], null)
+					React.createElement(_registrationForm2['default'], null),
+					React.createElement(_loginForm2['default'], null)
 				);
 			}
 		}, {
@@ -8214,12 +8220,13 @@
 	var state = {
 	  isRegistrating: false,
 	  isRegistered: false,
+	  isLogingIn: false,
 	  isAuthenticated: false,
+	  accessToken: '',
 	  user: {}
 	};
 	
 	var register = function register(userInfo) {
-	  console.log(userInfo);
 	  state.isRegistrating = true;
 	  $.ajax({
 	    type: 'POST',
@@ -8227,11 +8234,9 @@
 	    contentType: 'application/json; charset=utf-8',
 	    data: JSON.stringify(userInfo)
 	  }).done(function (data) {
-	    console.log('success registration');
 	    _actionsUserActions2['default'].registerSuccessful(data);
 	  }).fail(function (error) {
-	    console.log(error);
-	    _servicesNotificationsService2['default'].error('Registration failed. ' + error.responseText);
+	    _actionsUserActions2['default'].registerFailed(error);
 	  });
 	};
 	
@@ -8239,6 +8244,44 @@
 	  state.isRegistrating = false;
 	  state.isRegistered = true;
 	  _servicesNotificationsService2['default'].success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
+	};
+	
+	var registerFailed = function registerFailed(errorResponse) {
+	  state.isRegistrating = false;
+	  _servicesNotificationsService2['default'].error('Registration failed. ' + errorResponse.responseText);
+	};
+	
+	var logIn = function logIn(credentials) {
+	  state.isLogingIn = true;
+	  var loginData = {
+	    grant_type: 'password',
+	    username: credentials.email,
+	    password: credentials.password
+	  };
+	  $.ajax({
+	    type: 'POST',
+	    url: '/Token',
+	    data: loginData
+	  }).done(function (data) {
+	    _actionsUserActions2['default'].logInSuccessful(data);
+	  }).fail(function (error) {
+	    _actionsUserActions2['default'].logInFailed(error);
+	  });
+	};
+	
+	var logInSuccessful = function logInSuccessful(serverResponse) {
+	  state.isLogingIn = false;
+	  state.isAuthenticated = true;
+	  state.accessToken = serverResponse.access_token;
+	  // Cache the access token in session storage.
+	  sessionStorage.setItem('tokenKey', serverResponse.access_token);
+	  _servicesNotificationsService2['default'].success('Successful log in', 'You can start use the app now');
+	};
+	
+	var loginFailed = function loginFailed(errorResponse) {
+	  state.isLogingIn = false;
+	  var message = JSON.parse(errorResponse.responseText).error_description;
+	  _servicesNotificationsService2['default'].error('LogIn failed. ' + message);
 	};
 	
 	var registeredCallback = function registeredCallback(payload) {
@@ -8251,6 +8294,22 @@
 	      break;
 	    case actionTypes.registerSuccessful:
 	      registerSuccessful(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.registerFailed:
+	      registerFailed(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.logInUser:
+	      logIn(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.loginSuccessful:
+	      logInSuccessful(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.loginFailed:
+	      loginFailed(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
@@ -8345,7 +8404,10 @@
 	  ActionTypes: {
 	    registerUser: 'REGISTER_USER',
 	    registerSuccessful: 'REGISTER_SUCCESSFUL',
-	    registerFailed: 'REGISTER_FAILED'
+	    registerFailed: 'REGISTER_FAILED',
+	    logInUser: 'LOGIN_USER',
+	    loginSuccessful: 'LOGIN_SUCCESSFUL',
+	    loginFailed: 'LOGIN_FAILED'
 	  },
 	
 	  PayloadSources: {
@@ -9138,6 +9200,27 @@
 	      type: actionTypes.registerFailed,
 	      data: errorResponse
 	    });
+	  },
+	
+	  logIn: function logIn(credentials) {
+	    _appDispatcher2['default'].handleServerAction({
+	      type: actionTypes.logInUser,
+	      data: credentials
+	    });
+	  },
+	
+	  logInSuccessful: function logInSuccessful(serverResponse) {
+	    _appDispatcher2['default'].handleServerAction({
+	      type: actionTypes.loginSuccessful,
+	      data: serverResponse
+	    });
+	  },
+	
+	  logInFailed: function logInFailed(errorResponse) {
+	    _appDispatcher2['default'].handleServerAction({
+	      type: actionTypes.loginFailed,
+	      data: errorResponse
+	    });
 	  }
 	};
 	
@@ -9169,7 +9252,8 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 91 */
+/* 91 */,
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9196,15 +9280,11 @@
 	
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
-	var _storesUsersStore = __webpack_require__(80);
-	
-	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
-	
 	var RegistrationForm = (function (_React$Component) {
-		function RegistrationForm(props) {
+		function RegistrationForm() {
 			_classCallCheck(this, RegistrationForm);
 	
-			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this, props);
+			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this);
 			this.state = {
 				email: '',
 				password: '',
@@ -9218,16 +9298,6 @@
 		_inherits(RegistrationForm, _React$Component);
 	
 		_createClass(RegistrationForm, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				console.log('form mount');
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				console.log('form unmount');
-			}
-		}, {
 			key: 'handleChange',
 			value: function handleChange(e) {
 				switch (e.target.id) {
@@ -9273,6 +9343,100 @@
 	})(React.Component);
 	
 	exports['default'] = RegistrationForm;
+	module.exports = exports['default'];
+
+/***/ },
+/* 93 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _reactBootstrap = __webpack_require__(4);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var _actionsUserActions = __webpack_require__(89);
+	
+	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
+	
+	var LogInForm = (function (_React$Component) {
+		function LogInForm() {
+			_classCallCheck(this, LogInForm);
+	
+			_get(Object.getPrototypeOf(LogInForm.prototype), 'constructor', this).call(this);
+			this.state = {
+				email: '',
+				password: ''
+			};
+	
+			this.handleChange = this.handleChange.bind(this);
+			this.login = this.login.bind(this);
+		}
+	
+		_inherits(LogInForm, _React$Component);
+	
+		_createClass(LogInForm, [{
+			key: 'handleChange',
+			value: function handleChange(e) {
+				switch (e.target.id) {
+					case 'loginEmail':
+						this.setState({ email: e.target.value });
+						break;
+					case 'loginPassword':
+						this.setState({
+							password: e.target.value
+						});
+						break;
+				}
+			}
+		}, {
+			key: 'login',
+			value: function login() {
+				_actionsUserActions2['default'].logIn(this.state);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var Panel = _reactBootstrap2['default'].Panel;
+				var Input = _reactBootstrap2['default'].Input;
+				var Button = _reactBootstrap2['default'].Button;
+	
+				return React.createElement(
+					Panel,
+					{ header: 'Login', bsStyle: 'primary' },
+					React.createElement(
+						'form',
+						{ className: 'form-horizontal' },
+						React.createElement(Input, { type: 'email', id: 'loginEmail', value: this.state.email, onChange: this.handleChange, label: 'Email', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(Input, { type: 'password', id: 'loginPassword', value: this.state.password, onChange: this.handleChange, label: 'Password', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(
+							Button,
+							{ onClick: this.login, bsStyle: 'primary' },
+							'Login'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return LogInForm;
+	})(React.Component);
+	
+	exports['default'] = LogInForm;
 	module.exports = exports['default'];
 
 /***/ }

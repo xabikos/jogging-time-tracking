@@ -1,12 +1,11 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
 
 import UserActions from '../actions/userActions';
-import UserStore from '../stores/usersStore';
 
 class RegistrationForm extends React.Component {
 	
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 		this.state = {
 			email: '',
 			password: '',
@@ -15,14 +14,6 @@ class RegistrationForm extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.register = this.register.bind(this);
-	}
-
-	componentDidMount() {
-		console.log('form mount');
-	}
-
-	componentWillUnmount() {
-		console.log('form unmount');
 	}
 
 	handleChange(e) {

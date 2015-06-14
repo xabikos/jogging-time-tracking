@@ -1,5 +1,6 @@
 ﻿import UsersStore from '../stores/usersStore';
-import RegistrationForm from './RegistrationForm';
+import RegistrationForm from './registrationForm';
+import LogInFrom from './loginForm';
 
 class SecurityController extends React.Component {
 	
@@ -29,9 +30,11 @@ class SecurityController extends React.Component {
         this.state.isRegistered ?
           (<div>
           Registered
+          <LogInFrom />
           </div>) :
 				  (<div>          
 					    <RegistrationForm />          
+					    <LogInFrom />          
 				  </div>)
 		);
 	}

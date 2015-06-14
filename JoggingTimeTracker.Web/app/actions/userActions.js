@@ -25,6 +25,27 @@ let UserActions = {
       type: actionTypes.registerFailed,
       data: errorResponse
     });
+  },
+
+  logIn: (credentials) => {
+    Dispatcher.handleServerAction({
+      type: actionTypes.logInUser,
+      data: credentials
+    });
+  },
+
+  logInSuccessful: (serverResponse) => {
+    Dispatcher.handleServerAction({
+      type: actionTypes.loginSuccessful,
+      data: serverResponse
+    });
+  },
+
+logInFailed: (errorResponse) => {
+    Dispatcher.handleServerAction({
+      type: actionTypes.loginFailed,
+      data: errorResponse
+    });
   }
 };
 
