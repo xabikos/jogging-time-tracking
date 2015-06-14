@@ -89,19 +89,19 @@
 	
 	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
 	
-	var _storesUsersStore = __webpack_require__(80);
+	var _storesUsersStore = __webpack_require__(78);
 	
 	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
 	
-	var _navigationBar = __webpack_require__(78);
+	var _navigationBar = __webpack_require__(89);
 	
 	var _navigationBar2 = _interopRequireDefault(_navigationBar);
 	
-	var _securityController = __webpack_require__(79);
+	var _securityController = __webpack_require__(90);
 	
 	var _securityController2 = _interopRequireDefault(_securityController);
 	
-	var _timesController = __webpack_require__(94);
+	var _timesController = __webpack_require__(93);
 	
 	var _timesController2 = _interopRequireDefault(_timesController);
 	
@@ -8062,209 +8062,28 @@
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
-		value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
-	
-	var _reactBootstrap = __webpack_require__(4);
-	
-	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
-	
-	var NavigationBar = (function (_React$Component) {
-		function NavigationBar() {
-			_classCallCheck(this, NavigationBar);
-	
-			if (_React$Component != null) {
-				_React$Component.apply(this, arguments);
-			}
-		}
-	
-		_inherits(NavigationBar, _React$Component);
-	
-		_createClass(NavigationBar, [{
-			key: 'render',
-			value: function render() {
-				var navBarHeader = React.createElement(
-					'a',
-					{ href: '/' },
-					'Jogging Time Tracking'
-				);
-				var Navbar = _reactBootstrap2['default'].Navbar;
-				var NavItem = _reactBootstrap2['default'].NavItem;
-	
-				return React.createElement(
-					Navbar,
-					{ fixedTop: true, brand: navBarHeader },
-					React.createElement(
-						_reactBootstrap2['default'].Nav,
-						{ navbar: true, right: true },
-						React.createElement(
-							NavItem,
-							{ href: '', target: '_blank' },
-							'First'
-						),
-						React.createElement(
-							NavItem,
-							{ href: '', target: '_blank' },
-							'Second'
-						)
-					)
-				);
-			}
-		}]);
-	
-		return NavigationBar;
-	})(React.Component);
-	
-	exports['default'] = NavigationBar;
-	module.exports = exports['default'];
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-		value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
-	
-	var _storesUsersStore = __webpack_require__(80);
-	
-	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
-	
-	var _registrationForm = __webpack_require__(92);
-	
-	var _registrationForm2 = _interopRequireDefault(_registrationForm);
-	
-	var _loginForm = __webpack_require__(93);
-	
-	var _loginForm2 = _interopRequireDefault(_loginForm);
-	
-	var SecurityController = (function (_React$Component) {
-		function SecurityController(props) {
-			_classCallCheck(this, SecurityController);
-	
-			_get(Object.getPrototypeOf(SecurityController.prototype), 'constructor', this).call(this, props);
-			this.state = {
-				isAuthenticated: props.isAuthenticated
-			};
-	
-			this.onChange = this.onChange.bind(this);
-		}
-	
-		_inherits(SecurityController, _React$Component);
-	
-		_createClass(SecurityController, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				_storesUsersStore2['default'].addChangeListener(this.onChange);
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				_storesUsersStore2['default'].removeChangeListener(this.onChange);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var registerEmail = this.state.registerInfo ? this.state.registerInfo.email : '';
-				var registerPassword = this.state.registerInfo ? this.state.registerInfo.password : '';
-				var registerConfirmPassword = this.state.registerInfo ? this.state.registerInfo.confirmPassword : '';
-				var logInEmail = this.state.logInInfo ? this.state.logInInfo.email : '';
-				var logInpassword = this.state.logInInfo ? this.state.logInInfo.password : '';
-				var markup = this.state.isAuthenticated ? React.createElement(
-					'div',
-					null,
-					'Authenticated'
-				) : React.createElement(
-					'div',
-					null,
-					React.createElement(_registrationForm2['default'], { isRegistered: this.state.isRegistered, email: registerEmail, password: registerPassword, confirmPassword: registerConfirmPassword }),
-					React.createElement(_loginForm2['default'], { email: logInEmail, password: logInpassword })
-				);
-	
-				if (this.state.performApiCall) {
-					return React.createElement(
-						'div',
-						null,
-						React.createElement(
-							'div',
-							{ className: 'isLoading' },
-							React.createElement('div', { className: 'spinner' })
-						),
-						markup
-					);
-				} else {
-					return markup;
-				}
-			}
-		}, {
-			key: 'onChange',
-			value: function onChange() {
-				var storeState = _storesUsersStore2['default'].getState();
-				this.setState({
-					isRegistered: storeState.isRegistered,
-					isAuthenticated: storeState.isAuthenticated,
-					performApiCall: storeState.performApiCall,
-					registerInfo: storeState.registerInfo,
-					logInInfo: storeState.logInInfo
-				});
-			}
-		}]);
-	
-		return SecurityController;
-	})(React.Component);
-	
-	exports['default'] = SecurityController;
-	module.exports = exports['default'];
-
-/***/ },
-/* 80 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _appDispatcher = __webpack_require__(81);
+	var _appDispatcher = __webpack_require__(79);
 	
 	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
 	
-	var _StoreWithEvents = __webpack_require__(87);
+	var _StoreWithEvents = __webpack_require__(85);
 	
 	var _StoreWithEvents2 = _interopRequireDefault(_StoreWithEvents);
 	
-	var _actionsUserActions = __webpack_require__(89);
+	var _actionsUserActions = __webpack_require__(87);
 	
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
-	var _constants = __webpack_require__(82);
+	var _constants = __webpack_require__(80);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
-	var _servicesNotificationsService = __webpack_require__(90);
+	var _servicesNotificationsService = __webpack_require__(88);
 	
 	var _servicesNotificationsService2 = _interopRequireDefault(_servicesNotificationsService);
 	
@@ -8399,7 +8218,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 81 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8410,15 +8229,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _constants = __webpack_require__(82);
+	var _constants = __webpack_require__(80);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
-	var _flux = __webpack_require__(83);
+	var _flux = __webpack_require__(81);
 	
 	var _flux2 = _interopRequireDefault(_flux);
 	
-	var _objectAssign = __webpack_require__(86);
+	var _objectAssign = __webpack_require__(84);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -8452,7 +8271,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 82 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8480,7 +8299,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 83 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8492,11 +8311,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(84)
+	module.exports.Dispatcher = __webpack_require__(82)
 
 
 /***/ },
-/* 84 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -8513,7 +8332,7 @@
 	
 	"use strict";
 	
-	var invariant = __webpack_require__(85);
+	var invariant = __webpack_require__(83);
 	
 	var _lastID = 1;
 	var _prefix = 'ID_';
@@ -8752,7 +8571,7 @@
 
 
 /***/ },
-/* 85 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8811,7 +8630,7 @@
 
 
 /***/ },
-/* 86 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8856,7 +8675,7 @@
 
 
 /***/ },
-/* 87 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8873,7 +8692,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
-	var _events = __webpack_require__(88);
+	var _events = __webpack_require__(86);
 	
 	// Base class for all stores used in our FLUX architecture
 	// Acts as an intermediate class for the library EventEmitter class
@@ -8912,7 +8731,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 88 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -9219,7 +9038,7 @@
 
 
 /***/ },
-/* 89 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9230,11 +9049,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _appDispatcher = __webpack_require__(81);
+	var _appDispatcher = __webpack_require__(79);
 	
 	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
 	
-	var _constants = __webpack_require__(82);
+	var _constants = __webpack_require__(80);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
@@ -9288,7 +9107,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 90 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9312,8 +9131,188 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 91 */,
-/* 92 */
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _reactBootstrap = __webpack_require__(4);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var NavigationBar = (function (_React$Component) {
+		function NavigationBar() {
+			_classCallCheck(this, NavigationBar);
+	
+			if (_React$Component != null) {
+				_React$Component.apply(this, arguments);
+			}
+		}
+	
+		_inherits(NavigationBar, _React$Component);
+	
+		_createClass(NavigationBar, [{
+			key: 'render',
+			value: function render() {
+				var navBarHeader = React.createElement(
+					'a',
+					{ href: '/' },
+					'Jogging Time Tracking'
+				);
+				var Navbar = _reactBootstrap2['default'].Navbar;
+				var NavItem = _reactBootstrap2['default'].NavItem;
+	
+				return React.createElement(
+					Navbar,
+					{ fixedTop: true, brand: navBarHeader },
+					React.createElement(
+						_reactBootstrap2['default'].Nav,
+						{ navbar: true, right: true },
+						React.createElement(
+							NavItem,
+							{ href: '', target: '_blank' },
+							'First'
+						),
+						React.createElement(
+							NavItem,
+							{ href: '', target: '_blank' },
+							'Second'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return NavigationBar;
+	})(React.Component);
+	
+	exports['default'] = NavigationBar;
+	module.exports = exports['default'];
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _storesUsersStore = __webpack_require__(78);
+	
+	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
+	
+	var _registrationForm = __webpack_require__(91);
+	
+	var _registrationForm2 = _interopRequireDefault(_registrationForm);
+	
+	var _loginForm = __webpack_require__(92);
+	
+	var _loginForm2 = _interopRequireDefault(_loginForm);
+	
+	var SecurityController = (function (_React$Component) {
+		function SecurityController(props) {
+			_classCallCheck(this, SecurityController);
+	
+			_get(Object.getPrototypeOf(SecurityController.prototype), 'constructor', this).call(this, props);
+			this.state = {
+				isAuthenticated: props.isAuthenticated
+			};
+	
+			this.onChange = this.onChange.bind(this);
+		}
+	
+		_inherits(SecurityController, _React$Component);
+	
+		_createClass(SecurityController, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				_storesUsersStore2['default'].addChangeListener(this.onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_storesUsersStore2['default'].removeChangeListener(this.onChange);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var registerEmail = this.state.registerInfo ? this.state.registerInfo.email : '';
+				var registerPassword = this.state.registerInfo ? this.state.registerInfo.password : '';
+				var registerConfirmPassword = this.state.registerInfo ? this.state.registerInfo.confirmPassword : '';
+				var logInEmail = this.state.logInInfo ? this.state.logInInfo.email : '';
+				var logInpassword = this.state.logInInfo ? this.state.logInInfo.password : '';
+				var markup = this.state.isAuthenticated ? React.createElement(
+					'div',
+					null,
+					'Authenticated'
+				) : React.createElement(
+					'div',
+					null,
+					React.createElement(_registrationForm2['default'], { isRegistered: this.state.isRegistered, email: registerEmail, password: registerPassword, confirmPassword: registerConfirmPassword }),
+					React.createElement(_loginForm2['default'], { email: logInEmail, password: logInpassword })
+				);
+	
+				if (this.state.performApiCall) {
+					return React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'div',
+							{ className: 'isLoading' },
+							React.createElement('div', { className: 'spinner' })
+						),
+						markup
+					);
+				} else {
+					return markup;
+				}
+			}
+		}, {
+			key: 'onChange',
+			value: function onChange() {
+				var storeState = _storesUsersStore2['default'].getState();
+				this.setState({
+					isRegistered: storeState.isRegistered,
+					isAuthenticated: storeState.isAuthenticated,
+					performApiCall: storeState.performApiCall,
+					registerInfo: storeState.registerInfo,
+					logInInfo: storeState.logInInfo
+				});
+			}
+		}]);
+	
+		return SecurityController;
+	})(React.Component);
+	
+	exports['default'] = SecurityController;
+	module.exports = exports['default'];
+
+/***/ },
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9336,7 +9335,7 @@
 	
 	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
 	
-	var _actionsUserActions = __webpack_require__(89);
+	var _actionsUserActions = __webpack_require__(87);
 	
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
@@ -9414,7 +9413,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 93 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9437,7 +9436,7 @@
 	
 	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
 	
-	var _actionsUserActions = __webpack_require__(89);
+	var _actionsUserActions = __webpack_require__(87);
 	
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
@@ -9508,7 +9507,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 94 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9527,7 +9526,11 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 	
-	var _timesList = __webpack_require__(95);
+	var _reactBootstrap = __webpack_require__(4);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var _timesList = __webpack_require__(94);
 	
 	var _timesList2 = _interopRequireDefault(_timesList);
 	
@@ -9552,7 +9555,32 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				return React.createElement(_timesList2['default'], null);
+				var Grid = _reactBootstrap2['default'].Grid;
+				var Row = _reactBootstrap2['default'].Row;
+				var Col = _reactBootstrap2['default'].Col;
+	
+				return React.createElement(
+					Grid,
+					{ fluid: false },
+					React.createElement(
+						Row,
+						null,
+						React.createElement(
+							Col,
+							{ xs: 12, md: 9 },
+							React.createElement(_timesList2['default'], null)
+						),
+						React.createElement(
+							Col,
+							{ xs: 12, md: 3 },
+							React.createElement(
+								'div',
+								null,
+								'Time details'
+							)
+						)
+					)
+				);
 			}
 		}, {
 			key: 'onChange',
@@ -9568,7 +9596,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 95 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

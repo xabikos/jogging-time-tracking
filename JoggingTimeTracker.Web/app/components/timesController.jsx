@@ -1,4 +1,6 @@
-﻿import TimesList from './timesList';
+﻿import ReactBootstrap from 'react-bootstrap';
+
+import TimesList from './timesList';
 
 class TimesController extends React.Component {
 	
@@ -19,9 +21,22 @@ class TimesController extends React.Component {
 		
 	}
 
-	render() {    
+	render() {
+		let Grid = ReactBootstrap.Grid;
+		let Row = ReactBootstrap.Row;
+		let Col = ReactBootstrap.Col;
+
 		return (
-			<TimesList />
+			<Grid fluid={false}>
+					<Row>
+						<Col xs={12} md={9}>
+							<TimesList />
+						</Col>					
+						<Col xs={12} md={3}>
+							<div>Time details</div>
+						</Col>
+					</Row>
+			</Grid>			
 		);    		
 	}
 
