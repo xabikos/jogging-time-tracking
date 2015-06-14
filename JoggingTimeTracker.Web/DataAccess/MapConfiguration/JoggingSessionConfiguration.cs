@@ -15,6 +15,7 @@ namespace JoggingTimeTracker.Web.DataAccess.MapConfiguration
             ToTable("JoggingSessions");
 
             Property(js => js.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Ignore(js => js.Time);
             HasRequired(js=>js.User).WithMany(u=>u.Sessions).HasForeignKey(js=>js.UserId).WillCascadeOnDelete(true);
         }
     }

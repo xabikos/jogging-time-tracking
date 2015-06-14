@@ -101,9 +101,9 @@
 	
 	var _securityController2 = _interopRequireDefault(_securityController);
 	
-	var _timesController = __webpack_require__(93);
+	var _sessionsController = __webpack_require__(93);
 	
-	var _timesController2 = _interopRequireDefault(_timesController);
+	var _sessionsController2 = _interopRequireDefault(_sessionsController);
 	
 	var App = (function (_React$Component) {
 		function App(props) {
@@ -166,7 +166,7 @@
 						'div',
 						null,
 						React.createElement(_navigationBar2['default'], null),
-						React.createElement(_timesController2['default'], null)
+						React.createElement(_sessionsController2['default'], null)
 					);
 				}
 			}
@@ -8286,7 +8286,9 @@
 	    registerFailed: 'REGISTER_FAILED',
 	    logInUser: 'LOGIN_USER',
 	    loginSuccessful: 'LOGIN_SUCCESSFUL',
-	    loginFailed: 'LOGIN_FAILED'
+	    loginFailed: 'LOGIN_FAILED',
+	
+	    joggingSessionAdd: 'JOGGINGSESSION_ADD'
 	  },
 	
 	  PayloadSources: {
@@ -9534,19 +9536,27 @@
 	
 	var _timesList2 = _interopRequireDefault(_timesList);
 	
-	var TimesController = (function (_React$Component) {
-		function TimesController(props) {
-			_classCallCheck(this, TimesController);
+	var _sessionDetails = __webpack_require__(95);
 	
-			_get(Object.getPrototypeOf(TimesController.prototype), 'constructor', this).call(this, props);
+	var _sessionDetails2 = _interopRequireDefault(_sessionDetails);
+	
+	var _storesJoggingSessionsStore = __webpack_require__(97);
+	
+	var _storesJoggingSessionsStore2 = _interopRequireDefault(_storesJoggingSessionsStore);
+	
+	var SessionsController = (function (_React$Component) {
+		function SessionsController(props) {
+			_classCallCheck(this, SessionsController);
+	
+			_get(Object.getPrototypeOf(SessionsController.prototype), 'constructor', this).call(this, props);
 			this.state = {};
 	
 			this.onChange = this.onChange.bind(this);
 		}
 	
-		_inherits(TimesController, _React$Component);
+		_inherits(SessionsController, _React$Component);
 	
-		_createClass(TimesController, [{
+		_createClass(SessionsController, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {}
 		}, {
@@ -9573,11 +9583,7 @@
 						React.createElement(
 							Col,
 							{ xs: 12, md: 3 },
-							React.createElement(
-								'div',
-								null,
-								'Time details'
-							)
+							React.createElement(_sessionDetails2['default'], null)
 						)
 					)
 				);
@@ -9589,10 +9595,10 @@
 			}
 		}]);
 	
-		return TimesController;
+		return SessionsController;
 	})(React.Component);
 	
-	exports['default'] = TimesController;
+	exports['default'] = SessionsController;
 	module.exports = exports['default'];
 
 /***/ },
@@ -9647,6 +9653,248 @@
 	})(React.Component);
 	
 	exports['default'] = TimesList;
+	module.exports = exports['default'];
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _reactBootstrap = __webpack_require__(4);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var _actionsJoggingSessionActions = __webpack_require__(96);
+	
+	var _actionsJoggingSessionActions2 = _interopRequireDefault(_actionsJoggingSessionActions);
+	
+	var SessionsDetails = (function (_React$Component) {
+		function SessionsDetails(props) {
+			_classCallCheck(this, SessionsDetails);
+	
+			_get(Object.getPrototypeOf(SessionsDetails.prototype), 'constructor', this).call(this, props);
+	
+			this.state = {
+				id: props.Id,
+				date: '',
+				distance: '',
+				time: ''
+			};
+	
+			this.handleChange = this.handleChange.bind(this);
+			this.save = this.save.bind(this);
+		}
+	
+		_inherits(SessionsDetails, _React$Component);
+	
+		_createClass(SessionsDetails, [{
+			key: 'handleChange',
+			value: function handleChange(e) {
+				switch (e.target.id) {
+					case 'date':
+						this.setState({ date: e.target.value });
+						break;
+					case 'distance':
+						this.setState({ distance: e.target.value });
+						break;
+					case 'time':
+						this.setState({ time: e.target.value });
+						break;
+				}
+			}
+		}, {
+			key: 'save',
+			value: function save() {
+				if (!this.state.id) {
+					_actionsJoggingSessionActions2['default'].add(this.state);
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					_reactBootstrap2['default'].Panel,
+					{ header: 'Session Details', bsStyle: 'primary' },
+					React.createElement(
+						'form',
+						{ className: 'form-horizontal' },
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'date', required: true, id: 'date', value: this.state.date, onChange: this.handleChange, label: 'Date', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'number', required: true, id: 'distance', value: this.state.distance, onChange: this.handleChange, label: 'distance', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'text', required: true, id: 'time', value: this.state.time, onChange: this.handleChange, label: 'Time', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(
+							_reactBootstrap2['default'].Button,
+							{ onClick: this.save, bsStyle: 'primary' },
+							'Save'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return SessionsDetails;
+	})(React.Component);
+	
+	exports['default'] = SessionsDetails;
+	module.exports = exports['default'];
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _appDispatcher = __webpack_require__(79);
+	
+	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
+	
+	var _constants = __webpack_require__(80);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var actionTypes = _constants2['default'].ActionTypes;
+	
+	var JoggingSessionActions = {
+	  add: function add(joggingSessionInfo) {
+	    _appDispatcher2['default'].handleViewAction({
+	      type: actionTypes.joggingSessionAdd,
+	      data: joggingSessionInfo
+	    });
+	  }
+	};
+	
+	exports['default'] = JoggingSessionActions;
+	module.exports = exports['default'];
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _appDispatcher = __webpack_require__(79);
+	
+	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
+	
+	var _StoreWithEvents = __webpack_require__(85);
+	
+	var _StoreWithEvents2 = _interopRequireDefault(_StoreWithEvents);
+	
+	var _actionsJoggingSessionActions = __webpack_require__(96);
+	
+	var _actionsJoggingSessionActions2 = _interopRequireDefault(_actionsJoggingSessionActions);
+	
+	var _constants = __webpack_require__(80);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var _servicesNotificationsService = __webpack_require__(88);
+	
+	var _servicesNotificationsService2 = _interopRequireDefault(_servicesNotificationsService);
+	
+	var changeEvent = 'Sessions_CHANGE';
+	
+	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
+	
+	var state = {
+	  performApiCall: false,
+	  editingSession: {}
+	};
+	
+	var addJoggingSession = function addJoggingSession(sessionInfo) {
+	  state.performApiCall = true;
+	  state.editingSession.date = sessionInfo.date;
+	  state.editingSession.distance = sessionInfo.distance;
+	  state.editingSession.time = sessionInfo.time;
+	
+	  var token = sessionStorage.getItem('tokenKey');
+	  var headers = {};
+	  if (token) {
+	    headers.Authorization = 'Bearer ' + token;
+	  }
+	
+	  $.ajax({
+	    type: 'POST',
+	    url: '/api/joggingSessions',
+	    contentType: 'application/json; charset=utf-8',
+	    data: JSON.stringify(sessionInfo),
+	    headers: headers
+	  }).done(function (data) {
+	    console.log(data);
+	  }).fail(function (error) {
+	    console.log(error);
+	  });
+	};
+	
+	var registerSuccessful = function registerSuccessful(serverResponse) {
+	  state.performApiCall = false;
+	  state.isRegistered = true;
+	  _servicesNotificationsService2['default'].success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
+	};
+	
+	var registerFailed = function registerFailed(errorResponse) {
+	  state.performApiCall = false;
+	  _servicesNotificationsService2['default'].error('Registration failed. ' + errorResponse.responseText);
+	};
+	
+	var registeredCallback = function registeredCallback(payload) {
+	  var actionTypes = _constants2['default'].ActionTypes;
+	
+	  switch (payload.action.type) {
+	    case actionTypes.joggingSessionAdd:
+	      addJoggingSession(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	
+	    default:
+	    // do nothing
+	  }
+	};
+	
+	_appDispatcher2['default'].register(registeredCallback);
+	
+	var JoggingSessionsStore = {
+	  // Public methods
+	  addChangeListener: function addChangeListener(callback) {
+	    storeWithEvents.addChangeListener(callback);
+	  },
+	
+	  removeChangeListener: function removeChangeListener(callback) {
+	    storeWithEvents.removeChangeListener(callback);
+	  },
+	
+	  getState: function getState() {
+	    return state;
+	  }
+	};
+	
+	exports['default'] = JoggingSessionsStore;
 	module.exports = exports['default'];
 
 /***/ }

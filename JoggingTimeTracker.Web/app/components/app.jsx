@@ -3,7 +3,7 @@
 import UsersStore from '../stores/usersStore';
 import NavigationBar from './navigationBar';
 import SecurityController from './securityController';
-import TimesController from './timesController';
+import SessionsController from './sessionsController';
 
 class App extends React.Component {
 
@@ -50,7 +50,7 @@ class App extends React.Component {
 			return(
 				<div> 
 					<NavigationBar />
-					<TimesController />
+					<SessionsController />
 				</div>
 			);
 		}

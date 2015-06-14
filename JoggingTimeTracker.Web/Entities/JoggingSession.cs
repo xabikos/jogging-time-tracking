@@ -28,6 +28,15 @@ namespace JoggingTimeTracker.Web.Entities
         public TimeSpan Time { get; set; }
 
         /// <summary>
+        /// This is the property that actually stored in the database
+        /// </summary>
+        public long TimeInTicks
+        {
+            get { return Time.Ticks; }
+            set { Time = new TimeSpan(value);}
+        }
+
+        /// <summary>
         /// The id of the user the session belongs to
         /// </summary>
         public string UserId { get; set; }

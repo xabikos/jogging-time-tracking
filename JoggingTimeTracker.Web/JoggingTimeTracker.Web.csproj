@@ -256,10 +256,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\JoggingSessionsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="DataAccess\Configuration.cs" />
     <Compile Include="DataAccess\MapConfiguration\JoggingSessionConfiguration.cs" />
     <Compile Include="Entities\JoggingSession.cs" />
     <Compile Include="Global.asax.cs">
@@ -275,11 +275,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\actions\joggingSessionActions.js" />
     <Content Include="app\actions\userActions.js" />
     <Content Include="app\appDispatcher.js" />
     <Content Include="app\constants.js" />
     <Content Include="app\services\notificationsService.js" />
     <Content Include="app\stores\StoreWithEvents.js" />
+    <Content Include="app\stores\joggingSessionsStore.js" />
     <Content Include="app\stores\usersStore.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="app\components\app.jsx" />
@@ -297,7 +299,8 @@
     <Content Include="app\components\registrationForm.jsx" />
     <Content Include="app\components\loginForm.jsx" />
     <Content Include="app\components\timesList.jsx" />
-    <Content Include="app\components\timesController.jsx" />
+    <Content Include="app\components\sessionsController.jsx" />
+    <Content Include="app\components\sessionDetails.jsx" />
     <None Include="ClearScript.V8\ClearScriptV8-32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

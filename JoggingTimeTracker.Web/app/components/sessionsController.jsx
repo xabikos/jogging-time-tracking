@@ -1,8 +1,10 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
 
 import TimesList from './timesList';
+import SessionDetails from './sessionDetails';
+import JoggingSessionsStore from '../stores/joggingSessionsStore';
 
-class TimesController extends React.Component {
+class SessionsController extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -33,7 +35,7 @@ class TimesController extends React.Component {
 							<TimesList />
 						</Col>					
 						<Col xs={12} md={3}>
-							<div>Time details</div>
+							<SessionDetails />
 						</Col>
 					</Row>
 			</Grid>			
@@ -46,4 +48,4 @@ class TimesController extends React.Component {
 	}
 }
  
-export default TimesController;
+export default SessionsController;

@@ -7,7 +7,9 @@ let Constants = {
     registerFailed: 'REGISTER_FAILED',
     logInUser: 'LOGIN_USER',
     loginSuccessful: 'LOGIN_SUCCESSFUL',
-    loginFailed: 'LOGIN_FAILED'
+    loginFailed: 'LOGIN_FAILED',
+
+    joggingSessionAdd: 'JOGGINGSESSION_ADD'
   },
 
   PayloadSources: {

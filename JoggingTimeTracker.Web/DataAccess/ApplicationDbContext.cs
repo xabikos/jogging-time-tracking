@@ -6,6 +6,9 @@ namespace JoggingTimeTracker.Web.DataAccess
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
+        public DbSet<JoggingSession> JoggingSessions { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
