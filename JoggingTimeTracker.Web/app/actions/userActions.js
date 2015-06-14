@@ -11,8 +11,21 @@ let UserActions = {
       type: actionTypes.registerUser,
       data: userInfo
     });
+  },
+
+  registerSuccessful: (serverResponse) => {
+    Dispatcher.handleServerAction({
+      type: actionTypes.registerSuccessful,
+      data: serverResponse
+    });
+  },
+
+  registerFailed: (errorResponse) => {
+    Dispatcher.handleServerAction({
+      type: actionTypes.registerFailed,
+      data: errorResponse
+    });
   }
-  
 };
 
 export default UserActions;

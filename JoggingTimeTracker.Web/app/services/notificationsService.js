@@ -2,6 +2,10 @@
   
   success: (title, message) => {
     toastr.success(message, title);
+  },
+
+  error: (message) => {
+    toastr.error(message);
   }
 
 };

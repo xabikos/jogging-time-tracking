@@ -2,7 +2,9 @@
 
 let Constants = {
   ActionTypes: {
-    registerUser: 'REGISTER_USER'
+    registerUser: 'REGISTER_USER',
+    registerSuccessful: 'REGISTER_SUCCESSFUL',
+    registerFailed: 'REGISTER_FAILED'
   },
 
   PayloadSources: {

@@ -8130,11 +8130,13 @@
 		_createClass(SecurityController, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				console.log('controller mount');
 				_storesUsersStore2['default'].addChangeListener(this.onChange);
 			}
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
+				console.log('controller unmount');
 				_storesUsersStore2['default'].removeChangeListener(this.onChange);
 			}
 		}, {
@@ -8144,6 +8146,10 @@
 					'div',
 					null,
 					'Authenticated'
+				) : this.state.isRegistered ? React.createElement(
+					'div',
+					null,
+					'Registered'
 				) : React.createElement(
 					'div',
 					null,
@@ -8155,6 +8161,7 @@
 			value: function onChange() {
 				var storeState = _storesUsersStore2['default'].getState();
 				this.setState({
+					isRegistered: storeState.isRegistered,
 					isAuthenticated: storeState.isAuthenticated,
 					user: storeState.user
 				});
@@ -8204,12 +8211,15 @@
 	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
 	
 	var state = {
+	  isRegistrating: false,
+	  isRegistered: false,
 	  isAuthenticated: false,
 	  user: {}
 	};
 	
 	var register = function register(userInfo) {
 	  console.log(userInfo);
+	  state.isRegistrating = true;
 	  $.ajax({
 	    type: 'POST',
 	    url: '/api/Account/Register',
@@ -8217,10 +8227,17 @@
 	    data: JSON.stringify(userInfo)
 	  }).done(function (data) {
 	    console.log('success registration');
-	    _servicesNotificationsService2['default'].success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
+	    _actionsUserActions2['default'].registerSuccessful(data);
 	  }).fail(function (error) {
-	    return console.log(error);
+	    console.log(error);
+	    _servicesNotificationsService2['default'].error('Registration failed. ' + error.responseText);
 	  });
+	};
+	
+	var registerSuccessful = function registerSuccessful(serverResponse) {
+	  state.isRegistrating = false;
+	  state.isRegistered = true;
+	  _servicesNotificationsService2['default'].success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
 	};
 	
 	var registeredCallback = function registeredCallback(payload) {
@@ -8229,6 +8246,10 @@
 	  switch (payload.action.type) {
 	    case actionTypes.registerUser:
 	      register(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.registerSuccessful:
+	      registerSuccessful(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
@@ -8321,7 +8342,9 @@
 	});
 	var Constants = {
 	  ActionTypes: {
-	    registerUser: 'REGISTER_USER'
+	    registerUser: 'REGISTER_USER',
+	    registerSuccessful: 'REGISTER_SUCCESSFUL',
+	    registerFailed: 'REGISTER_FAILED'
 	  },
 	
 	  PayloadSources: {
@@ -9100,8 +9123,21 @@
 	      type: actionTypes.registerUser,
 	      data: userInfo
 	    });
-	  }
+	  },
 	
+	  registerSuccessful: function registerSuccessful(serverResponse) {
+	    _appDispatcher2['default'].handleServerAction({
+	      type: actionTypes.registerSuccessful,
+	      data: serverResponse
+	    });
+	  },
+	
+	  registerFailed: function registerFailed(errorResponse) {
+	    _appDispatcher2['default'].handleServerAction({
+	      type: actionTypes.registerFailed,
+	      data: errorResponse
+	    });
+	  }
 	};
 	
 	exports['default'] = UserActions;
@@ -9120,6 +9156,10 @@
 	
 	  success: function success(title, message) {
 	    toastr.success(message, title);
+	  },
+	
+	  error: function error(message) {
+	    toastr.error(message);
 	  }
 	
 	};
@@ -9160,11 +9200,15 @@
 	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
 	
 	var RegistrationForm = (function (_React$Component) {
-		function RegistrationForm() {
+		function RegistrationForm(props) {
 			_classCallCheck(this, RegistrationForm);
 	
-			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this);
-			this.state = {};
+			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this, props);
+			this.state = {
+				email: '',
+				password: '',
+				confirmPassword: ''
+			};
 	
 			this.handleChange = this.handleChange.bind(this);
 			this.register = this.register.bind(this);
@@ -9173,6 +9217,16 @@
 		_inherits(RegistrationForm, _React$Component);
 	
 		_createClass(RegistrationForm, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				console.log('form mount');
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				console.log('form unmount');
+			}
+		}, {
 			key: 'handleChange',
 			value: function handleChange(e) {
 				switch (e.target.id) {
@@ -9180,10 +9234,10 @@
 						this.setState({ email: e.target.value });
 						break;
 					case 'registrationPassword':
-						this.setState({
-							password: e.target.value,
-							confirmPassword: e.target.value
-						});
+						this.setState({ password: e.target.value });
+						break;
+					case 'registrationConfirmPassword':
+						this.setState({ confirmPassword: e.target.value });
 						break;
 				}
 			}
@@ -9201,8 +9255,9 @@
 					React.createElement(
 						'form',
 						{ className: 'form-horizontal' },
-						React.createElement(_reactBootstrap2['default'].Input, { type: 'email', id: 'registrationEmail', value: this.state.email, onChange: this.handleChange, label: 'Email', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'email', required: true, id: 'registrationEmail', value: this.state.email, onChange: this.handleChange, label: 'Email', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
 						React.createElement(_reactBootstrap2['default'].Input, { type: 'password', id: 'registrationPassword', value: this.state.password, onChange: this.handleChange, label: 'Password', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
+						React.createElement(_reactBootstrap2['default'].Input, { type: 'password', id: 'registrationConfirmPassword', value: this.state.confirmPassword, onChange: this.handleChange, label: 'Confirm Password', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
 						React.createElement(
 							_reactBootstrap2['default'].Button,
 							{ onClick: this.register, bsStyle: 'primary' },

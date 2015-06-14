@@ -2,7 +2,7 @@
 
 import AppDispatcher from '../appDispatcher';
 import StoreWithEvents from './StoreWithEvents';
-import Actions from '../actions/userActions';
+import UserActions from '../actions/userActions';
 import Constants from '../constants';
 import NotificationsService from '../services/notificationsService';
 
@@ -11,12 +11,15 @@ let changeEvent = 'USERS_CHANGE';
 let storeWithEvents = new StoreWithEvents(changeEvent);
 
 let state = {
+  isRegistrating: false,
+  isRegistered: false,
   isAuthenticated: false,
   user : {}
 };
 
 const register = (userInfo) => {
   console.log(userInfo);
+  state.isRegistrating = true;
   $.ajax({
     type: 'POST',
     url: '/api/Account/Register',
@@ -24,8 +27,17 @@ const register = (userInfo) => {
     data: JSON.stringify(userInfo)
   }).done((data) => {
     console.log('success registration');
-    NotificationsService.success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
-  }).fail((error) => console.log(error));
+    UserActions.registerSuccessful(data);
+  }).fail((error) => {
+    console.log(error);
+    NotificationsService.error('Registration failed. ' + error.responseText);
+  });
+};
+
+const registerSuccessful = (serverResponse) => {
+  state.isRegistrating = false;
+  state.isRegistered = true;
+  NotificationsService.success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
 };
 
 const registeredCallback = (payload) => {
@@ -34,6 +46,10 @@ const registeredCallback = (payload) => {
   switch (payload.action.type) {
     case actionTypes.registerUser:
       register(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+    case actionTypes.registerSuccessful:
+      registerSuccessful(payload.action.data);
       storeWithEvents.emitChange();
       break;
 
