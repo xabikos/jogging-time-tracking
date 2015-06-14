@@ -50,7 +50,7 @@ class App extends React.Component {
 			return(
 				<div> 
 					<NavigationBar />
-					<SessionsController />
+					<SessionsController joggingSessions={this.props.joggingSessions} />
 				</div>
 			);
 		}

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using JoggingTimeTracker.Web.Entities
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -11,7 +12,8 @@
 <body>
     @Html.React("Components.App", new
                         {
-                            isAuthenticated = false
+                            isAuthenticated = User.Identity.IsAuthenticated,
+                            joggingSessions = (List<JoggingSession>)ViewBag.JoggingSessions
                         }, containerId: "app")
 
     @Scripts.Render("~/bundles/jquery")

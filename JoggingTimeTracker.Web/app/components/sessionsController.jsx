@@ -1,8 +1,8 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
 
-import TimesList from './timesList';
-import SessionDetails from './sessionDetails';
 import JoggingSessionsStore from '../stores/joggingSessionsStore';
+import JoggingSessionsList from './joggingSessionsList';
+import SessionDetails from './sessionDetails';
 
 class SessionsController extends React.Component {
 	
@@ -16,11 +16,11 @@ class SessionsController extends React.Component {
 	}
 	
 	componentDidMount() {
-		
+		JoggingSessionsStore.addChangeListener(this.onChange);
 	}
 
 	componentWillUnmount() {    
-		
+		JoggingSessionsStore.removeChangeListener(this.onChange);
 	}
 
 	render() {
@@ -32,7 +32,7 @@ class SessionsController extends React.Component {
 			<Grid fluid={false}>
 					<Row>
 						<Col xs={12} md={9}>
-							<TimesList />
+							<JoggingSessionsList joggingSessions={this.props.joggingSessions} />
 						</Col>					
 						<Col xs={12} md={3}>
 							<SessionDetails />
