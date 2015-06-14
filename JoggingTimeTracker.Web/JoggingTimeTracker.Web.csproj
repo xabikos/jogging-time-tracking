@@ -292,6 +292,8 @@
     <Content Include="app\components\securityController.jsx" />
     <Content Include="app\components\registrationForm.jsx" />
     <Content Include="app\components\loginForm.jsx" />
+    <Content Include="app\components\timesList.jsx" />
+    <Content Include="app\components\timesController.jsx" />
     <None Include="ClearScript.V8\ClearScriptV8-32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

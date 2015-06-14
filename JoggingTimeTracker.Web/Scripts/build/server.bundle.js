@@ -78,6 +78,8 @@
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -88,6 +90,10 @@
 	
 	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
 	
+	var _storesUsersStore = __webpack_require__(80);
+	
+	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
+	
 	var _navigationBar = __webpack_require__(78);
 	
 	var _navigationBar2 = _interopRequireDefault(_navigationBar);
@@ -96,48 +102,81 @@
 	
 	var _securityController2 = _interopRequireDefault(_securityController);
 	
+	var _timesController = __webpack_require__(94);
+	
+	var _timesController2 = _interopRequireDefault(_timesController);
+	
 	var App = (function (_React$Component) {
-		function App() {
+		function App(props) {
 			_classCallCheck(this, App);
 	
-			if (_React$Component != null) {
-				_React$Component.apply(this, arguments);
-			}
+			_get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this, props);
+			this.state = {
+				isAuthenticated: props.isAuthenticated
+			};
+	
+			this.onChange = this.onChange.bind(this);
 		}
 	
 		_inherits(App, _React$Component);
 	
 		_createClass(App, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				_storesUsersStore2['default'].addChangeListener(this.onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_storesUsersStore2['default'].removeChangeListener(this.onChange);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var Grid = _reactBootstrap2['default'].Grid;
 				var Row = _reactBootstrap2['default'].Row;
 				var Col = _reactBootstrap2['default'].Col;
 	
-				return React.createElement(
-					'div',
-					null,
-					React.createElement(_navigationBar2['default'], null),
-					React.createElement(
-						Grid,
-						{ fluid: false },
+				if (!this.state.isAuthenticated) {
+					return React.createElement(
+						'div',
+						null,
+						React.createElement(_navigationBar2['default'], null),
 						React.createElement(
-							Row,
-							null,
+							Grid,
+							{ fluid: false },
 							React.createElement(
-								Col,
-								{ xs: 12, md: 9 },
-								'Jogging Time Tracking app',
-								React.createElement('img', { className: 'img-responsive', src: '/Content/images/jogging.jpg', alt: 'jogging activity' })
-							),
-							React.createElement(
-								Col,
-								{ xs: 12, md: 3 },
-								React.createElement(_securityController2['default'], { isAuthenticated: false })
+								Row,
+								null,
+								React.createElement(
+									Col,
+									{ xs: 12, md: 9 },
+									'Jogging Time Tracking app',
+									React.createElement('img', { className: 'img-responsive', src: '/Content/images/jogging.jpg', alt: 'jogging activity' })
+								),
+								React.createElement(
+									Col,
+									{ xs: 12, md: 3 },
+									React.createElement(_securityController2['default'], { isAuthenticated: this.props.isAuthenticated })
+								)
 							)
 						)
-					)
-				);
+					);
+				} else {
+					return React.createElement(
+						'div',
+						null,
+						React.createElement(_navigationBar2['default'], null),
+						React.createElement(_timesController2['default'], null)
+					);
+				}
+			}
+		}, {
+			key: 'onChange',
+			value: function onChange() {
+				this.setState({
+					isAuthenticated: _storesUsersStore2['default'].getState().isAuthenticated
+				});
 			}
 		}]);
 	
@@ -9467,6 +9506,120 @@
 	})(React.Component);
 	
 	exports['default'] = LogInForm;
+	module.exports = exports['default'];
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _timesList = __webpack_require__(95);
+	
+	var _timesList2 = _interopRequireDefault(_timesList);
+	
+	var TimesController = (function (_React$Component) {
+		function TimesController(props) {
+			_classCallCheck(this, TimesController);
+	
+			_get(Object.getPrototypeOf(TimesController.prototype), 'constructor', this).call(this, props);
+			this.state = {};
+	
+			this.onChange = this.onChange.bind(this);
+		}
+	
+		_inherits(TimesController, _React$Component);
+	
+		_createClass(TimesController, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(_timesList2['default'], null);
+			}
+		}, {
+			key: 'onChange',
+			value: function onChange() {
+				this.setState({});
+			}
+		}]);
+	
+		return TimesController;
+	})(React.Component);
+	
+	exports['default'] = TimesController;
+	module.exports = exports['default'];
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _reactBootstrap = __webpack_require__(4);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var TimesList = (function (_React$Component) {
+		function TimesList() {
+			_classCallCheck(this, TimesList);
+	
+			if (_React$Component != null) {
+				_React$Component.apply(this, arguments);
+			}
+		}
+	
+		_inherits(TimesList, _React$Component);
+	
+		_createClass(TimesList, [{
+			key: 'render',
+			value: function render() {
+				var Grid = _reactBootstrap2['default'].Grid;
+				var Row = _reactBootstrap2['default'].Row;
+				var Col = _reactBootstrap2['default'].Col;
+	
+				return React.createElement(
+					'div',
+					null,
+					'This is the times list'
+				);
+			}
+		}]);
+	
+		return TimesList;
+	})(React.Component);
+	
+	exports['default'] = TimesList;
 	module.exports = exports['default'];
 
 /***/ }
