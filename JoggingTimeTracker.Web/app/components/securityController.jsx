@@ -22,21 +22,33 @@ class SecurityController extends React.Component {
 	}
 
 	render() {
-		return (			
-			this.state.isAuthenticated ? 
-				(<div>
-					Authenticated
-				</div>) :
-        this.state.isRegistered ?
-          (<div>
+    let markup = this.state.isAuthenticated ? 
+		  (<div>
+			  Authenticated
+		  </div>) :
+      this.state.isRegistered ?
+        (<div>
           Registered
           <LogInFrom />
-          </div>) :
-				  (<div>          
-					    <RegistrationForm />          
-					    <LogInFrom />          
-				  </div>)
-		);
+        </div>) :
+			  (<div>          
+					<RegistrationForm />          
+					<LogInFrom />          
+			  </div>);
+
+    if(this.state.performApiCall){
+      return (
+        <div>
+          <div className="isLoading">
+            <div className="spinner"/>
+          </div>
+          {markup}
+        </div>
+      );
+    }
+    else {
+      return markup;
+    }		
 	}
 
 	onChange() {
@@ -44,6 +56,7 @@ class SecurityController extends React.Component {
 		this.setState({
       isRegistered: storeState.isRegistered,
 			isAuthenticated: storeState.isAuthenticated,
+      performApiCall: storeState.performApiCall,
 			user: storeState.user
 		});
 	}

@@ -8147,7 +8147,7 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				return this.state.isAuthenticated ? React.createElement(
+				var markup = this.state.isAuthenticated ? React.createElement(
 					'div',
 					null,
 					'Authenticated'
@@ -8162,6 +8162,21 @@
 					React.createElement(_registrationForm2['default'], null),
 					React.createElement(_loginForm2['default'], null)
 				);
+	
+				if (this.state.performApiCall) {
+					return React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'div',
+							{ className: 'isLoading' },
+							React.createElement('div', { className: 'spinner' })
+						),
+						markup
+					);
+				} else {
+					return markup;
+				}
 			}
 		}, {
 			key: 'onChange',
@@ -8170,6 +8185,7 @@
 				this.setState({
 					isRegistered: storeState.isRegistered,
 					isAuthenticated: storeState.isAuthenticated,
+					performApiCall: storeState.performApiCall,
 					user: storeState.user
 				});
 			}
@@ -8218,16 +8234,15 @@
 	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
 	
 	var state = {
-	  isRegistrating: false,
+	  performApiCall: false,
 	  isRegistered: false,
-	  isLogingIn: false,
 	  isAuthenticated: false,
 	  accessToken: '',
 	  user: {}
 	};
 	
 	var register = function register(userInfo) {
-	  state.isRegistrating = true;
+	  state.performApiCall = true;
 	  $.ajax({
 	    type: 'POST',
 	    url: '/api/Account/Register',
@@ -8241,18 +8256,18 @@
 	};
 	
 	var registerSuccessful = function registerSuccessful(serverResponse) {
-	  state.isRegistrating = false;
+	  state.performApiCall = false;
 	  state.isRegistered = true;
 	  _servicesNotificationsService2['default'].success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
 	};
 	
 	var registerFailed = function registerFailed(errorResponse) {
-	  state.isRegistrating = false;
+	  state.performApiCall = false;
 	  _servicesNotificationsService2['default'].error('Registration failed. ' + errorResponse.responseText);
 	};
 	
 	var logIn = function logIn(credentials) {
-	  state.isLogingIn = true;
+	  state.performApiCall = true;
 	  var loginData = {
 	    grant_type: 'password',
 	    username: credentials.email,
@@ -8270,7 +8285,7 @@
 	};
 	
 	var logInSuccessful = function logInSuccessful(serverResponse) {
-	  state.isLogingIn = false;
+	  state.performApiCall = false;
 	  state.isAuthenticated = true;
 	  state.accessToken = serverResponse.access_token;
 	  // Cache the access token in session storage.
@@ -8279,7 +8294,7 @@
 	};
 	
 	var loginFailed = function loginFailed(errorResponse) {
-	  state.isLogingIn = false;
+	  state.performApiCall = false;
 	  var message = JSON.parse(errorResponse.responseText).error_description;
 	  _servicesNotificationsService2['default'].error('LogIn failed. ' + message);
 	};

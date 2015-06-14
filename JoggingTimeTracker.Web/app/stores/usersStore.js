@@ -11,16 +11,15 @@ let changeEvent = 'USERS_CHANGE';
 let storeWithEvents = new StoreWithEvents(changeEvent);
 
 let state = {
-  isRegistrating: false,
+  performApiCall: false,
   isRegistered: false,
-  isLogingIn: false,
   isAuthenticated: false,
   accessToken: '',
   user : {}
 };
 
 const register = (userInfo) => {
-  state.isRegistrating = true;
+  state.performApiCall = true;
   $.ajax({
     type: 'POST',
     url: '/api/Account/Register',
@@ -34,18 +33,18 @@ const register = (userInfo) => {
 };
 
 const registerSuccessful = (serverResponse) => {
-  state.isRegistrating = false;
+  state.performApiCall = false;
   state.isRegistered = true;
   NotificationsService.success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
 };
 
 const registerFailed = (errorResponse) => {
-  state.isRegistrating = false;
+  state.performApiCall = false;
   NotificationsService.error('Registration failed. ' + errorResponse.responseText);
 };
 
 const logIn = (credentials) => {
-  state.isLogingIn = true;
+  state.performApiCall = true;
   let loginData = {
     grant_type: 'password',
     username: credentials.email,
@@ -63,7 +62,7 @@ const logIn = (credentials) => {
 };
 
 const logInSuccessful = (serverResponse) => {
-  state.isLogingIn = false;
+  state.performApiCall = false;
   state.isAuthenticated = true;
   state.accessToken = serverResponse.access_token;
   // Cache the access token in session storage.
@@ -72,7 +71,7 @@ const logInSuccessful = (serverResponse) => {
 };
 
 const loginFailed = (errorResponse) => {
-  state.isLogingIn = false;
+  state.performApiCall = false;
   let message = JSON.parse(errorResponse.responseText).error_description;
   NotificationsService.error('LogIn failed. ' + message);
 };
