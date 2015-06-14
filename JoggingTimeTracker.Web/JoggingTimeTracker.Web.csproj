@@ -274,6 +274,7 @@
     <Content Include="app\actions\userActions.js" />
     <Content Include="app\appDispatcher.js" />
     <Content Include="app\constants.js" />
+    <Content Include="app\services\notificationsService.js" />
     <Content Include="app\stores\StoreWithEvents.js" />
     <Content Include="app\stores\usersStore.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />

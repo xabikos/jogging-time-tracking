@@ -4,8 +4,9 @@ import AppDispatcher from '../appDispatcher';
 import StoreWithEvents from './StoreWithEvents';
 import Actions from '../actions/userActions';
 import Constants from '../constants';
+import NotificationsService from '../services/notificationsService';
 
-var changeEvent = 'USERS_CHANGE';
+let changeEvent = 'USERS_CHANGE';
 
 let storeWithEvents = new StoreWithEvents(changeEvent);
 
@@ -23,6 +24,7 @@ const register = (userInfo) => {
     data: JSON.stringify(userInfo)
   }).done((data) => {
     console.log('success registration');
+    NotificationsService.success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
   }).fail((error) => console.log(error));
 };
 

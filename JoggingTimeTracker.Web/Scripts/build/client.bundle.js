@@ -8111,7 +8111,7 @@
 	
 	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
 	
-	var _RegistrationForm = __webpack_require__(90);
+	var _RegistrationForm = __webpack_require__(91);
 	
 	var _RegistrationForm2 = _interopRequireDefault(_RegistrationForm);
 	
@@ -8195,6 +8195,10 @@
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
+	var _servicesNotificationsService = __webpack_require__(90);
+	
+	var _servicesNotificationsService2 = _interopRequireDefault(_servicesNotificationsService);
+	
 	var changeEvent = 'USERS_CHANGE';
 	
 	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
@@ -8213,6 +8217,7 @@
 	    data: JSON.stringify(userInfo)
 	  }).done(function (data) {
 	    console.log('success registration');
+	    _servicesNotificationsService2['default'].success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
 	  }).fail(function (error) {
 	    return console.log(error);
 	  });
@@ -9106,6 +9111,26 @@
 /* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var NotificationsService = {
+	
+	  success: function success(title, message) {
+	    toastr.success(message, title);
+	  }
+	
+	};
+	
+	exports["default"] = NotificationsService;
+	module.exports = exports["default"];
+
+/***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
@@ -9135,11 +9160,11 @@
 	var _storesUsersStore2 = _interopRequireDefault(_storesUsersStore);
 	
 	var RegistrationForm = (function (_React$Component) {
-		function RegistrationForm(props) {
+		function RegistrationForm() {
 			_classCallCheck(this, RegistrationForm);
 	
-			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this, props);
-			this.state = { isAuthenticated: props.isAuthenticated };
+			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this);
+			this.state = {};
 	
 			this.handleChange = this.handleChange.bind(this);
 			this.register = this.register.bind(this);

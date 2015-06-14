@@ -5,9 +5,9 @@ import UserStore from '../stores/usersStore';
 
 class RegistrationForm extends React.Component {
 	
-	constructor(props) {
-		super(props);
-		this.state = {isAuthenticated: props.isAuthenticated};
+	constructor() {
+		super();
+		this.state = {};
 
 		this.handleChange = this.handleChange.bind(this);
 		this.register = this.register.bind(this);
