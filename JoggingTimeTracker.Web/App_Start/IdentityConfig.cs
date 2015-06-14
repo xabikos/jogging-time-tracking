@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using JoggingTimeTracker.Web.DataAccess;
+using JoggingTimeTracker.Web.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
