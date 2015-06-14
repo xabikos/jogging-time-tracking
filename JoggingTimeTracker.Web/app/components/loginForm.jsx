@@ -4,11 +4,11 @@ import UserActions from '../actions/userActions';
 
 class LogInForm extends React.Component{
 	
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			email: '',
-			password: ''
+			email: props.email,
+			password: props.password
 		};
 
 		this.handleChange = this.handleChange.bind(this);

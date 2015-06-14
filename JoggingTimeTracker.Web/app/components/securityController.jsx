@@ -6,34 +6,34 @@ class SecurityController extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {isAuthenticated: props.isAuthenticated};
+		this.state = {
+      isAuthenticated: props.isAuthenticated
+    };
 
 		this.onChange = this.onChange.bind(this);
 	}
 	
 	componentDidMount() {
-    console.log('controller mount');
 		UsersStore.addChangeListener(this.onChange);
 	}
 
-	componentWillUnmount() {
-    console.log('controller unmount');
+	componentWillUnmount() {    
 		UsersStore.removeChangeListener(this.onChange);
 	}
 
 	render() {
+    let registerEmail = this.state.registerInfo ? this.state.registerInfo.email : '';
+    let registerPassword = this.state.registerInfo ? this.state.registerInfo.password : '';
+    let registerConfirmPassword = this.state.registerInfo ? this.state.registerInfo.confirmPassword : '';
+    let logInEmail = this.state.logInInfo ? this.state.logInInfo.email : '';
+    let logInpassword = this.state.logInInfo ? this.state.logInInfo.password : '';
     let markup = this.state.isAuthenticated ? 
 		  (<div>
 			  Authenticated
-		  </div>) :
-      this.state.isRegistered ?
-        (<div>
-          Registered
-          <LogInFrom />
-        </div>) :
+		  </div>) :      
 			  (<div>          
-					<RegistrationForm />          
-					<LogInFrom />          
+					<RegistrationForm isRegistered={this.state.isRegistered} email={registerEmail} password={registerPassword} confirmPassword={registerConfirmPassword} />
+					<LogInFrom email={logInEmail} password={logInpassword}/>
 			  </div>);
 
     if(this.state.performApiCall){
@@ -57,7 +57,8 @@ class SecurityController extends React.Component {
       isRegistered: storeState.isRegistered,
 			isAuthenticated: storeState.isAuthenticated,
       performApiCall: storeState.performApiCall,
-			user: storeState.user
+      registerInfo: storeState.registerInfo,
+			logInInfo: storeState.logInInfo
 		});
 	}
 }

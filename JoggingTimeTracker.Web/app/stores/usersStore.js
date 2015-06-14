@@ -15,11 +15,15 @@ let state = {
   isRegistered: false,
   isAuthenticated: false,
   accessToken: '',
-  user : {}
+  registerInfo: {},
+  logInInfo : {}
 };
 
 const register = (userInfo) => {
   state.performApiCall = true;
+  state.registerInfo.email = userInfo.email;
+  state.registerInfo.password = userInfo.password;
+  state.registerInfo.confirmPassword = userInfo.confirmPassword;
   $.ajax({
     type: 'POST',
     url: '/api/Account/Register',
@@ -45,6 +49,8 @@ const registerFailed = (errorResponse) => {
 
 const logIn = (credentials) => {
   state.performApiCall = true;
+  state.logInInfo.email = credentials.email;
+  state.logInInfo.password = credentials.password;
   let loginData = {
     grant_type: 'password',
     username: credentials.email,

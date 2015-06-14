@@ -8124,7 +8124,9 @@
 			_classCallCheck(this, SecurityController);
 	
 			_get(Object.getPrototypeOf(SecurityController.prototype), 'constructor', this).call(this, props);
-			this.state = { isAuthenticated: props.isAuthenticated };
+			this.state = {
+				isAuthenticated: props.isAuthenticated
+			};
 	
 			this.onChange = this.onChange.bind(this);
 		}
@@ -8134,32 +8136,30 @@
 		_createClass(SecurityController, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				console.log('controller mount');
 				_storesUsersStore2['default'].addChangeListener(this.onChange);
 			}
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
-				console.log('controller unmount');
 				_storesUsersStore2['default'].removeChangeListener(this.onChange);
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var registerEmail = this.state.registerInfo ? this.state.registerInfo.email : '';
+				var registerPassword = this.state.registerInfo ? this.state.registerInfo.password : '';
+				var registerConfirmPassword = this.state.registerInfo ? this.state.registerInfo.confirmPassword : '';
+				var logInEmail = this.state.logInInfo ? this.state.logInInfo.email : '';
+				var logInpassword = this.state.logInInfo ? this.state.logInInfo.password : '';
 				var markup = this.state.isAuthenticated ? React.createElement(
 					'div',
 					null,
 					'Authenticated'
-				) : this.state.isRegistered ? React.createElement(
-					'div',
-					null,
-					'Registered',
-					React.createElement(_loginForm2['default'], null)
 				) : React.createElement(
 					'div',
 					null,
-					React.createElement(_registrationForm2['default'], null),
-					React.createElement(_loginForm2['default'], null)
+					React.createElement(_registrationForm2['default'], { isRegistered: this.state.isRegistered, email: registerEmail, password: registerPassword, confirmPassword: registerConfirmPassword }),
+					React.createElement(_loginForm2['default'], { email: logInEmail, password: logInpassword })
 				);
 	
 				if (this.state.performApiCall) {
@@ -8185,7 +8185,8 @@
 					isRegistered: storeState.isRegistered,
 					isAuthenticated: storeState.isAuthenticated,
 					performApiCall: storeState.performApiCall,
-					user: storeState.user
+					registerInfo: storeState.registerInfo,
+					logInInfo: storeState.logInInfo
 				});
 			}
 		}]);
@@ -8237,11 +8238,15 @@
 	  isRegistered: false,
 	  isAuthenticated: false,
 	  accessToken: '',
-	  user: {}
+	  registerInfo: {},
+	  logInInfo: {}
 	};
 	
 	var register = function register(userInfo) {
 	  state.performApiCall = true;
+	  state.registerInfo.email = userInfo.email;
+	  state.registerInfo.password = userInfo.password;
+	  state.registerInfo.confirmPassword = userInfo.confirmPassword;
 	  $.ajax({
 	    type: 'POST',
 	    url: '/api/Account/Register',
@@ -8267,6 +8272,8 @@
 	
 	var logIn = function logIn(credentials) {
 	  state.performApiCall = true;
+	  state.logInInfo.email = credentials.email;
+	  state.logInInfo.password = credentials.password;
 	  var loginData = {
 	    grant_type: 'password',
 	    username: credentials.email,
@@ -9295,15 +9302,23 @@
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
 	var RegistrationForm = (function (_React$Component) {
-		function RegistrationForm() {
+		function RegistrationForm(props) {
 			_classCallCheck(this, RegistrationForm);
 	
-			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this);
-			this.state = {
-				email: '',
-				password: '',
-				confirmPassword: ''
-			};
+			_get(Object.getPrototypeOf(RegistrationForm.prototype), 'constructor', this).call(this, props);
+			if (props.isRegistered) {
+				this.state = {
+					email: '',
+					password: '',
+					confirmPassword: ''
+				};
+			} else {
+				this.state = {
+					email: props.email,
+					password: props.password,
+					confirmPassword: props.confirmPassword
+				};
+			}
 	
 			this.handleChange = this.handleChange.bind(this);
 			this.register = this.register.bind(this);
@@ -9388,13 +9403,13 @@
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
 	var LogInForm = (function (_React$Component) {
-		function LogInForm() {
+		function LogInForm(props) {
 			_classCallCheck(this, LogInForm);
 	
-			_get(Object.getPrototypeOf(LogInForm.prototype), 'constructor', this).call(this);
+			_get(Object.getPrototypeOf(LogInForm.prototype), 'constructor', this).call(this, props);
 			this.state = {
-				email: '',
-				password: ''
+				email: props.email,
+				password: props.password
 			};
 	
 			this.handleChange = this.handleChange.bind(this);

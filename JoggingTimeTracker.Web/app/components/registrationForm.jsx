@@ -4,13 +4,21 @@ import UserActions from '../actions/userActions';
 
 class RegistrationForm extends React.Component {
 	
-	constructor() {
-		super();
-		this.state = {
-			email: '',
-			password: '',
-			confirmPassword: ''
-		};
+	constructor(props) {
+		super(props);
+		if(props.isRegistered){
+			this.state = {
+				email: '',
+				password: '',
+				confirmPassword: ''
+			};
+		} else{
+			this.state = {
+				email: props.email,
+				password: props.password,
+				confirmPassword: props.confirmPassword
+			};
+		}
 
 		this.handleChange = this.handleChange.bind(this);
 		this.register = this.register.bind(this);
