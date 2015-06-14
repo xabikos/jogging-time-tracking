@@ -9,15 +9,11 @@ class JoggingSessionsList extends React.Component {
 		};
 	}
 
-	render() {
-		let Grid = ReactBootstrap.Grid;
-		let Row = ReactBootstrap.Row;
-		let Col = ReactBootstrap.Col;
-	
-
+	render() {	
+		let columns = ["Id", "Date", "Distance", "Time"];
 		return (		
 			<div>
-				<Griddle results={this.props.joggingSessions} />
+				<Griddle results={this.props.joggingSessions} columns={columns} />
 			</div>
 		);
 	}

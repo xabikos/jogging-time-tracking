@@ -9792,14 +9792,11 @@
 		_createClass(JoggingSessionsList, [{
 			key: 'render',
 			value: function render() {
-				var Grid = _reactBootstrap2['default'].Grid;
-				var Row = _reactBootstrap2['default'].Row;
-				var Col = _reactBootstrap2['default'].Col;
-	
+				var columns = ['Id', 'Date', 'Distance', 'Time'];
 				return React.createElement(
 					'div',
 					null,
-					React.createElement(_griddleReact2['default'], { results: this.props.joggingSessions })
+					React.createElement(_griddleReact2['default'], { results: this.props.joggingSessions, columns: columns })
 				);
 			}
 		}]);
