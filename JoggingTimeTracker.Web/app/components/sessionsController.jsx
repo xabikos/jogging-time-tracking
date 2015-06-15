@@ -9,7 +9,7 @@ class SessionsController extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			
+		  joggingSessions: this.props.joggingSessions ? this.props.joggingSessions : []
 		};
 
 		this.onChange = this.onChange.bind(this);
@@ -26,13 +26,13 @@ class SessionsController extends React.Component {
 	render() {
 		let Grid = ReactBootstrap.Grid;
 		let Row = ReactBootstrap.Row;
-		let Col = ReactBootstrap.Col;
+		let Col = ReactBootstrap.Col;    
 
 		return (
 			<Grid fluid={false}>
 					<Row>
 						<Col xs={12} md={9}>
-							<JoggingSessionsList joggingSessions={this.props.joggingSessions} />
+							<JoggingSessionsList joggingSessions={this.state.joggingSessions} />
 						</Col>					
 						<Col xs={12} md={3}>
 							<SessionDetails />

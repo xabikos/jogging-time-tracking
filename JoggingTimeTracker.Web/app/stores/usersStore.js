@@ -7,6 +7,7 @@ import Constants from '../constants';
 import NotificationsService from '../services/notificationsService';
 
 let changeEvent = 'USERS_CHANGE';
+let tokenKey = 'accessToken';
 
 let storeWithEvents = new StoreWithEvents(changeEvent);
 
@@ -72,7 +73,7 @@ const logInSuccessful = (serverResponse) => {
   state.isAuthenticated = true;
   state.accessToken = serverResponse.access_token;
   // Cache the access token in session storage.
-  sessionStorage.setItem('tokenKey', serverResponse.access_token);
+  sessionStorage.setItem(tokenKey, serverResponse.access_token);
   NotificationsService.success('Successful log in', 'You can start use the app now');
 };
 
@@ -80,6 +81,17 @@ const loginFailed = (errorResponse) => {
   state.performApiCall = false;
   let message = JSON.parse(errorResponse.responseText).error_description;
   NotificationsService.error('LogIn failed. ' + message);
+};
+
+const logout = () => {
+  $.ajax({
+    type: 'POST',
+    url: '/api/Account/Logout'
+  });
+
+  state.isAuthenticated = false;
+  state.accessToken = '';
+  sessionStorage.removeItem(tokenKey);
 };
 
 const registeredCallback = (payload) => {
@@ -108,6 +120,10 @@ const registeredCallback = (payload) => {
       break;
     case actionTypes.loginFailed:
       loginFailed(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+    case actionTypes.logOut:
+      logout();
       storeWithEvents.emitChange();
       break;
 

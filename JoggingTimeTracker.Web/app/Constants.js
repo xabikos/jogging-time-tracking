@@ -8,6 +8,7 @@ let Constants = {
     logInUser: 'LOGIN_USER',
     loginSuccessful: 'LOGIN_SUCCESSFUL',
     loginFailed: 'LOGIN_FAILED',
+    logOut: 'LOG_OUT',
 
     joggingSessionAdd: 'JOGGINGSESSION_ADD'
   },

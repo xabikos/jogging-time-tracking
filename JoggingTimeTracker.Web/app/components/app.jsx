@@ -32,7 +32,7 @@ class App extends React.Component {
 		if(!this.state.isAuthenticated) {
 			return (		
 				<div>
-					<NavigationBar />
+					<NavigationBar isAuthenticated={false} />
 					<Grid fluid={false} >
 						<Row>
 							<Col xs={12} md={9}>
@@ -49,7 +49,7 @@ class App extends React.Component {
 		} else {
 			return(
 				<div> 
-					<NavigationBar />
+					<NavigationBar isAuthenticated={true} />
 					<SessionsController joggingSessions={this.props.joggingSessions} />
 				</div>
 			);

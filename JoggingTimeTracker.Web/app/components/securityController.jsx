@@ -27,14 +27,10 @@ class SecurityController extends React.Component {
 		let registerConfirmPassword = this.state.registerInfo ? this.state.registerInfo.confirmPassword : '';
 		let logInEmail = this.state.logInInfo ? this.state.logInInfo.email : '';
 		let logInpassword = this.state.logInInfo ? this.state.logInInfo.password : '';
-		let markup = this.state.isAuthenticated ? 
-			(<div>
-				Authenticated
-			</div>) :      
-				(<div>          
-					<RegistrationForm isRegistered={this.state.isRegistered} email={registerEmail} password={registerPassword} confirmPassword={registerConfirmPassword} />
-					<LogInFrom email={logInEmail} password={logInpassword}/>
-				</div>);
+		let markup = (<div>          
+					        <RegistrationForm isRegistered={this.state.isRegistered} email={registerEmail} password={registerPassword} confirmPassword={registerConfirmPassword} />
+					        <LogInFrom email={logInEmail} password={logInpassword}/>
+				        </div>);
 
 		if(this.state.performApiCall){
 			return (

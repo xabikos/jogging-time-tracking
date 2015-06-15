@@ -21,7 +21,7 @@ state.editingSession.date = sessionInfo.date;
 state.editingSession.distance = sessionInfo.distance;
 state.editingSession.time = sessionInfo.time;
 
-  let token = sessionStorage.getItem('tokenKey');
+  let token = sessionStorage.getItem('accessToken');
   let headers = {};
   if (token) {
     headers.Authorization = 'Bearer ' + token;

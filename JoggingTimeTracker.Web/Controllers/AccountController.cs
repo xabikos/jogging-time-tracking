@@ -68,6 +68,7 @@ namespace JoggingTimeTracker.Web.Controllers
         }
 
         // POST api/Account/Logout
+        [AllowAnonymous]
         [Route("Logout")]
         public IHttpActionResult Logout()
         {

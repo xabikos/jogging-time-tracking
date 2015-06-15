@@ -140,7 +140,7 @@
 					return React.createElement(
 						'div',
 						null,
-						React.createElement(_navigationBar2['default'], null),
+						React.createElement(_navigationBar2['default'], { isAuthenticated: false }),
 						React.createElement(
 							Grid,
 							{ fluid: false },
@@ -165,7 +165,7 @@
 					return React.createElement(
 						'div',
 						null,
-						React.createElement(_navigationBar2['default'], null),
+						React.createElement(_navigationBar2['default'], { isAuthenticated: true }),
 						React.createElement(_sessionsController2['default'], { joggingSessions: this.props.joggingSessions })
 					);
 				}
@@ -8088,6 +8088,7 @@
 	var _servicesNotificationsService2 = _interopRequireDefault(_servicesNotificationsService);
 	
 	var changeEvent = 'USERS_CHANGE';
+	var tokenKey = 'accessToken';
 	
 	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
 	
@@ -8153,7 +8154,7 @@
 	  state.isAuthenticated = true;
 	  state.accessToken = serverResponse.access_token;
 	  // Cache the access token in session storage.
-	  sessionStorage.setItem('tokenKey', serverResponse.access_token);
+	  sessionStorage.setItem(tokenKey, serverResponse.access_token);
 	  _servicesNotificationsService2['default'].success('Successful log in', 'You can start use the app now');
 	};
 	
@@ -8161,6 +8162,17 @@
 	  state.performApiCall = false;
 	  var message = JSON.parse(errorResponse.responseText).error_description;
 	  _servicesNotificationsService2['default'].error('LogIn failed. ' + message);
+	};
+	
+	var logout = function logout() {
+	  $.ajax({
+	    type: 'POST',
+	    url: '/api/Account/Logout'
+	  });
+	
+	  state.isAuthenticated = false;
+	  state.accessToken = '';
+	  sessionStorage.removeItem(tokenKey);
 	};
 	
 	var registeredCallback = function registeredCallback(payload) {
@@ -8189,6 +8201,10 @@
 	      break;
 	    case actionTypes.loginFailed:
 	      loginFailed(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.logOut:
+	      logout();
 	      storeWithEvents.emitChange();
 	      break;
 	
@@ -8287,6 +8303,7 @@
 	    logInUser: 'LOGIN_USER',
 	    loginSuccessful: 'LOGIN_SUCCESSFUL',
 	    loginFailed: 'LOGIN_FAILED',
+	    logOut: 'LOG_OUT',
 	
 	    joggingSessionAdd: 'JOGGINGSESSION_ADD'
 	  },
@@ -9102,6 +9119,12 @@
 	      type: actionTypes.loginFailed,
 	      data: errorResponse
 	    });
+	  },
+	
+	  logOut: function logOut() {
+	    _appDispatcher2['default'].handleServerAction({
+	      type: actionTypes.logOut
+	    });
 	  }
 	};
 	
@@ -9139,10 +9162,12 @@
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
-		value: true
+			value: true
 	});
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
@@ -9154,50 +9179,59 @@
 	
 	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
 	
+	var _actionsUserActions = __webpack_require__(87);
+	
+	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
+	
 	var NavigationBar = (function (_React$Component) {
-		function NavigationBar() {
-			_classCallCheck(this, NavigationBar);
+			function NavigationBar(props) {
+					_classCallCheck(this, NavigationBar);
 	
-			if (_React$Component != null) {
-				_React$Component.apply(this, arguments);
+					_get(Object.getPrototypeOf(NavigationBar.prototype), 'constructor', this).call(this, props);
+	
+					this.logOut = this.logOut.bind(this);
 			}
-		}
 	
-		_inherits(NavigationBar, _React$Component);
+			_inherits(NavigationBar, _React$Component);
 	
-		_createClass(NavigationBar, [{
-			key: 'render',
-			value: function render() {
-				var navBarHeader = React.createElement(
-					'a',
-					{ href: '/' },
-					'Jogging Time Tracking'
-				);
-				var Navbar = _reactBootstrap2['default'].Navbar;
-				var NavItem = _reactBootstrap2['default'].NavItem;
+			_createClass(NavigationBar, [{
+					key: 'logOut',
+					value: function logOut() {
+							_actionsUserActions2['default'].logOut();
+					}
+			}, {
+					key: 'render',
+					value: function render() {
+							var navBarHeader = React.createElement(
+									'a',
+									{ href: '/' },
+									'Jogging Time Tracking'
+							);
+							var Navbar = _reactBootstrap2['default'].Navbar;
+							var NavItem = _reactBootstrap2['default'].NavItem;
 	
-				return React.createElement(
-					Navbar,
-					{ fixedTop: true, brand: navBarHeader },
-					React.createElement(
-						_reactBootstrap2['default'].Nav,
-						{ navbar: true, right: true },
-						React.createElement(
-							NavItem,
-							{ href: '', target: '_blank' },
-							'First'
-						),
-						React.createElement(
-							NavItem,
-							{ href: '', target: '_blank' },
-							'Second'
-						)
-					)
-				);
-			}
-		}]);
+							var navigationItems = [];
+							if (this.props.isAuthenticated) {
+									navigationItems.push(React.createElement(
+											NavItem,
+											{ onClick: this.logOut, href: '#' },
+											'Log out'
+									));
+							}
 	
-		return NavigationBar;
+							return React.createElement(
+									Navbar,
+									{ fixedTop: true, brand: navBarHeader },
+									React.createElement(
+											_reactBootstrap2['default'].Nav,
+											{ navbar: true, right: true },
+											navigationItems
+									)
+							);
+					}
+			}]);
+	
+			return NavigationBar;
 	})(React.Component);
 	
 	exports['default'] = NavigationBar;
@@ -9267,11 +9301,7 @@
 				var registerConfirmPassword = this.state.registerInfo ? this.state.registerInfo.confirmPassword : '';
 				var logInEmail = this.state.logInInfo ? this.state.logInInfo.email : '';
 				var logInpassword = this.state.logInInfo ? this.state.logInInfo.password : '';
-				var markup = this.state.isAuthenticated ? React.createElement(
-					'div',
-					null,
-					'Authenticated'
-				) : React.createElement(
+				var markup = React.createElement(
 					'div',
 					null,
 					React.createElement(_registrationForm2['default'], { isRegistered: this.state.isRegistered, email: registerEmail, password: registerPassword, confirmPassword: registerConfirmPassword }),
@@ -9549,7 +9579,9 @@
 			_classCallCheck(this, SessionsController);
 	
 			_get(Object.getPrototypeOf(SessionsController.prototype), 'constructor', this).call(this, props);
-			this.state = {};
+			this.state = {
+				joggingSessions: this.props.joggingSessions ? this.props.joggingSessions : []
+			};
 	
 			this.onChange = this.onChange.bind(this);
 		}
@@ -9582,7 +9614,7 @@
 						React.createElement(
 							Col,
 							{ xs: 12, md: 9 },
-							React.createElement(_joggingSessionsList2['default'], { joggingSessions: this.props.joggingSessions })
+							React.createElement(_joggingSessionsList2['default'], { joggingSessions: this.state.joggingSessions })
 						),
 						React.createElement(
 							Col,
@@ -9652,7 +9684,7 @@
 	  state.editingSession.distance = sessionInfo.distance;
 	  state.editingSession.time = sessionInfo.time;
 	
-	  var token = sessionStorage.getItem('tokenKey');
+	  var token = sessionStorage.getItem('accessToken');
 	  var headers = {};
 	  if (token) {
 	    headers.Authorization = 'Bearer ' + token;

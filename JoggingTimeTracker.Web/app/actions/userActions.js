@@ -41,10 +41,16 @@ let UserActions = {
     });
   },
 
-logInFailed: (errorResponse) => {
+  logInFailed: (errorResponse) => {
     Dispatcher.handleServerAction({
       type: actionTypes.loginFailed,
       data: errorResponse
+    });
+  },
+
+  logOut: () => {
+    Dispatcher.handleServerAction({
+      type: actionTypes.logOut
     });
   }
 };
