@@ -10,6 +10,8 @@ let Constants = {
     loginFailed: 'LOGIN_FAILED',
     logOut: 'LOG_OUT',
 
+    joggingSessionsInitialize: 'JOGGINGSESSIONS_INITIALIZE',
+    joggingSessionSelect: 'JOGGINGSESSION_SELECT',
     joggingSessionAdd: 'JOGGINGSESSION_ADD'
   },
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace JoggingTimeTracker.Web.Entities
 {
@@ -44,6 +45,7 @@ namespace JoggingTimeTracker.Web.Entities
         /// <summary>
         /// The user the session belongs to
         /// </summary>
+        [JsonIgnore]
         public ApplicationUser User { get; set; }
 
     }

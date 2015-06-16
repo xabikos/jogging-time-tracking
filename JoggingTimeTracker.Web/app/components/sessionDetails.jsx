@@ -18,6 +18,10 @@ class SessionsDetails extends React.Component {
 		this.save = this.save.bind(this);
 	}
 
+  componentWillReceiveProps(nextProps) {
+    this.setState(nextProps.editingData);
+  }
+
 	handleChange(e) {
 		switch (e.target.id) {			
 			case 'date':

@@ -1,5 +1,6 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
 
+import JoggingSessionActions from '../actions/joggingSessionActions';
 import UsersStore from '../stores/usersStore';
 import NavigationBar from './navigationBar';
 import SecurityController from './securityController';
@@ -18,6 +19,7 @@ class App extends React.Component {
 	
 	componentDidMount() {
 		UsersStore.addChangeListener(this.onChange);
+    JoggingSessionActions.initializeStore(this.props.joggingSessions);
 	}
 
 	componentWillUnmount() {    

@@ -16,7 +16,7 @@ class SessionsController extends React.Component {
 	}
 	
 	componentDidMount() {
-		JoggingSessionsStore.addChangeListener(this.onChange);
+		JoggingSessionsStore.addChangeListener(this.onChange);    
 	}
 
 	componentWillUnmount() {    
@@ -35,7 +35,7 @@ class SessionsController extends React.Component {
 							<JoggingSessionsList joggingSessions={this.state.joggingSessions} />
 						</Col>					
 						<Col xs={12} md={3}>
-							<SessionDetails />
+							<SessionDetails editingData={this.state.editingSession} />
 						</Col>
 					</Row>
 			</Grid>			
@@ -43,8 +43,7 @@ class SessionsController extends React.Component {
 	}
 
 	onChange() {
-		this.setState({      
-		});
+		this.setState(JoggingSessionsStore.getState());
 	}
 }
  

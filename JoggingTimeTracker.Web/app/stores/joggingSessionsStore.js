@@ -1,25 +1,36 @@
 ﻿'use strict';
 
+import _ from 'lodash';
+
 import AppDispatcher from '../appDispatcher';
 import StoreWithEvents from './StoreWithEvents';
 import JoggingSessionActions from '../actions/joggingSessionActions';
 import Constants from '../constants';
 import NotificationsService from '../services/notificationsService';
 
-let changeEvent = 'Sessions_CHANGE';
+let changeEvent = 'SESSIONS_CHANGE';
 
 let storeWithEvents = new StoreWithEvents(changeEvent);
 
 let state = {
   performApiCall: false,
-  editingSession: {}
+  editingSession: {},
+  joggingSessions: []
+};
+
+const joggingSessionsInitialize = (initialSessions) => {
+  state.joggingSessions = initialSessions;
+};
+
+const joggingSessionSelect = (sessionId) => {
+  state.editingSession = _.find(state.joggingSessions, {'id': sessionId});
 };
 
 const addJoggingSession = (sessionInfo) => {
   state.performApiCall = true;
-state.editingSession.date = sessionInfo.date;
-state.editingSession.distance = sessionInfo.distance;
-state.editingSession.time = sessionInfo.time;
+  state.editingSession.date = sessionInfo.date;
+  state.editingSession.distance = sessionInfo.distance;
+  state.editingSession.time = sessionInfo.time;
 
   let token = sessionStorage.getItem('accessToken');
   let headers = {};
@@ -53,13 +64,21 @@ const registerFailed = (errorResponse) => {
 
 const registeredCallback = (payload) => {
   let actionTypes = Constants.ActionTypes;
-
+  
   switch (payload.action.type) {
+    case actionTypes.joggingSessionsInitialize:
+      joggingSessionsInitialize(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+    case actionTypes.joggingSessionSelect:
+      joggingSessionSelect(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
     case actionTypes.joggingSessionAdd:
       addJoggingSession(payload.action.data);
       storeWithEvents.emitChange();
       break;
-
+    
     default:
       // do nothing
   }
