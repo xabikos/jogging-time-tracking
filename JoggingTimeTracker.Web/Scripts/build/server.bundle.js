@@ -106,9 +106,9 @@
 	
 	var _securityController2 = _interopRequireDefault(_securityController);
 	
-	var _sessionsController = __webpack_require__(94);
+	var _joggingSessionsController = __webpack_require__(115);
 	
-	var _sessionsController2 = _interopRequireDefault(_sessionsController);
+	var _joggingSessionsController2 = _interopRequireDefault(_joggingSessionsController);
 	
 	var App = (function (_React$Component) {
 		function App(props) {
@@ -172,7 +172,7 @@
 						'div',
 						null,
 						React.createElement(_navigationBar2['default'], { isAuthenticated: true }),
-						React.createElement(_sessionsController2['default'], { joggingSessions: this.props.joggingSessions })
+						React.createElement(_joggingSessionsController2['default'], { joggingSessions: this.props.joggingSessions })
 					);
 				}
 			}
@@ -9593,105 +9593,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-		value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
-	
-	var _reactBootstrap = __webpack_require__(5);
-	
-	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
-	
-	var _storesJoggingSessionsStore = __webpack_require__(95);
-	
-	var _storesJoggingSessionsStore2 = _interopRequireDefault(_storesJoggingSessionsStore);
-	
-	var _joggingSessionsList = __webpack_require__(98);
-	
-	var _joggingSessionsList2 = _interopRequireDefault(_joggingSessionsList);
-	
-	var _sessionDetails = __webpack_require__(113);
-	
-	var _sessionDetails2 = _interopRequireDefault(_sessionDetails);
-	
-	var SessionsController = (function (_React$Component) {
-		function SessionsController(props) {
-			_classCallCheck(this, SessionsController);
-	
-			_get(Object.getPrototypeOf(SessionsController.prototype), 'constructor', this).call(this, props);
-			this.state = {
-				joggingSessions: this.props.joggingSessions ? this.props.joggingSessions : []
-			};
-	
-			this.onChange = this.onChange.bind(this);
-		}
-	
-		_inherits(SessionsController, _React$Component);
-	
-		_createClass(SessionsController, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				_storesJoggingSessionsStore2['default'].addChangeListener(this.onChange);
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				_storesJoggingSessionsStore2['default'].removeChangeListener(this.onChange);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var Grid = _reactBootstrap2['default'].Grid;
-				var Row = _reactBootstrap2['default'].Row;
-				var Col = _reactBootstrap2['default'].Col;
-	
-				return React.createElement(
-					Grid,
-					{ fluid: false },
-					React.createElement(
-						Row,
-						null,
-						React.createElement(
-							Col,
-							{ xs: 12, md: 9 },
-							React.createElement(_joggingSessionsList2['default'], { joggingSessions: this.state.joggingSessions })
-						),
-						React.createElement(
-							Col,
-							{ xs: 12, md: 3 },
-							React.createElement(_sessionDetails2['default'], { editingData: this.state.editingSession })
-						)
-					)
-				);
-			}
-		}, {
-			key: 'onChange',
-			value: function onChange() {
-				this.setState(_storesJoggingSessionsStore2['default'].getState());
-			}
-		}]);
-	
-		return SessionsController;
-	})(React.Component);
-	
-	exports['default'] = SessionsController;
-	module.exports = exports['default'];
-
-/***/ },
+/* 94 */,
 /* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25653,7 +25555,8 @@
 	module.exports = CustomPaginationContainer;
 
 /***/ },
-/* 113 */
+/* 113 */,
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25680,11 +25583,11 @@
 	
 	var _actionsJoggingSessionActions2 = _interopRequireDefault(_actionsJoggingSessionActions);
 	
-	var SessionsDetails = (function (_React$Component) {
-		function SessionsDetails(props) {
-			_classCallCheck(this, SessionsDetails);
+	var JoggingSessionDetails = (function (_React$Component) {
+		function JoggingSessionDetails(props) {
+			_classCallCheck(this, JoggingSessionDetails);
 	
-			_get(Object.getPrototypeOf(SessionsDetails.prototype), 'constructor', this).call(this, props);
+			_get(Object.getPrototypeOf(JoggingSessionDetails.prototype), 'constructor', this).call(this, props);
 	
 			this.state = {
 				id: '',
@@ -25698,9 +25601,9 @@
 			this.cancel = this.cancel.bind(this);
 		}
 	
-		_inherits(SessionsDetails, _React$Component);
+		_inherits(JoggingSessionDetails, _React$Component);
 	
-		_createClass(SessionsDetails, [{
+		_createClass(JoggingSessionDetails, [{
 			key: 'componentWillReceiveProps',
 			value: function componentWillReceiveProps(nextProps) {
 				this.setState(nextProps.editingData);
@@ -25781,10 +25684,109 @@
 			}
 		}]);
 	
-		return SessionsDetails;
+		return JoggingSessionDetails;
 	})(React.Component);
 	
-	exports['default'] = SessionsDetails;
+	exports['default'] = JoggingSessionDetails;
+	module.exports = exports['default'];
+
+/***/ },
+/* 115 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+	
+	var _reactBootstrap = __webpack_require__(5);
+	
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var _storesJoggingSessionsStore = __webpack_require__(95);
+	
+	var _storesJoggingSessionsStore2 = _interopRequireDefault(_storesJoggingSessionsStore);
+	
+	var _joggingSessionsList = __webpack_require__(98);
+	
+	var _joggingSessionsList2 = _interopRequireDefault(_joggingSessionsList);
+	
+	var _joggingSessionDetails = __webpack_require__(114);
+	
+	var _joggingSessionDetails2 = _interopRequireDefault(_joggingSessionDetails);
+	
+	var JoggingSessionsController = (function (_React$Component) {
+		function JoggingSessionsController(props) {
+			_classCallCheck(this, JoggingSessionsController);
+	
+			_get(Object.getPrototypeOf(JoggingSessionsController.prototype), 'constructor', this).call(this, props);
+			this.state = {
+				joggingSessions: this.props.joggingSessions ? this.props.joggingSessions : []
+			};
+	
+			this.onChange = this.onChange.bind(this);
+		}
+	
+		_inherits(JoggingSessionsController, _React$Component);
+	
+		_createClass(JoggingSessionsController, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				_storesJoggingSessionsStore2['default'].addChangeListener(this.onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_storesJoggingSessionsStore2['default'].removeChangeListener(this.onChange);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var Grid = _reactBootstrap2['default'].Grid;
+				var Row = _reactBootstrap2['default'].Row;
+				var Col = _reactBootstrap2['default'].Col;
+	
+				return React.createElement(
+					Grid,
+					{ fluid: false },
+					React.createElement(
+						Row,
+						null,
+						React.createElement(
+							Col,
+							{ xs: 12, md: 9 },
+							React.createElement(_joggingSessionsList2['default'], { joggingSessions: this.state.joggingSessions })
+						),
+						React.createElement(
+							Col,
+							{ xs: 12, md: 3 },
+							React.createElement(_joggingSessionDetails2['default'], { editingData: this.state.editingSession })
+						)
+					)
+				);
+			}
+		}, {
+			key: 'onChange',
+			value: function onChange() {
+				this.setState(_storesJoggingSessionsStore2['default'].getState());
+			}
+		}]);
+	
+		return JoggingSessionsController;
+	})(React.Component);
+	
+	exports['default'] = JoggingSessionsController;
 	module.exports = exports['default'];
 
 /***/ }

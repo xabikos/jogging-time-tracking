@@ -2,7 +2,7 @@
 
 import JoggingSessionActions from '../actions/joggingSessionActions';
 
-class SessionsDetails extends React.Component {
+class JoggingSessionDetails extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -82,4 +82,4 @@ class SessionsDetails extends React.Component {
 	}
 }
 
-export default SessionsDetails;
+export default JoggingSessionDetails;

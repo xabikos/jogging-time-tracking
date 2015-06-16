@@ -2,9 +2,9 @@
 
 import JoggingSessionsStore from '../stores/joggingSessionsStore';
 import JoggingSessionsList from './joggingSessionsList';
-import SessionDetails from './sessionDetails';
+import JoggingSessionDetails from './joggingSessionDetails';
 
-class SessionsController extends React.Component {
+class JoggingSessionsController extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -35,7 +35,7 @@ class SessionsController extends React.Component {
 							<JoggingSessionsList joggingSessions={this.state.joggingSessions} />
 						</Col>					
 						<Col xs={12} md={3}>
-							<SessionDetails editingData={this.state.editingSession} />
+							<JoggingSessionDetails editingData={this.state.editingSession} />
 						</Col>
 					</Row>
 			</Grid>			
@@ -47,4 +47,4 @@ class SessionsController extends React.Component {
 	}
 }
  
-export default SessionsController;
+export default JoggingSessionsController;

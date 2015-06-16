@@ -4,7 +4,7 @@ import JoggingSessionActions from '../actions/joggingSessionActions';
 import UsersStore from '../stores/usersStore';
 import NavigationBar from './navigationBar';
 import SecurityController from './securityController';
-import SessionsController from './sessionsController';
+import JoggingSessionsController from './joggingSessionsController';
 
 class App extends React.Component {
 
@@ -52,7 +52,7 @@ class App extends React.Component {
 			return(
 				<div> 
 					<NavigationBar isAuthenticated={true} />
-					<SessionsController joggingSessions={this.props.joggingSessions} />
+					<JoggingSessionsController joggingSessions={this.props.joggingSessions} />
 				</div>
 			);
 		}
