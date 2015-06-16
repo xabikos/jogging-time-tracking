@@ -25686,7 +25686,7 @@
 			_get(Object.getPrototypeOf(SessionsDetails.prototype), 'constructor', this).call(this, props);
 	
 			this.state = {
-				id: props.Id,
+				id: '',
 				date: '',
 				distance: '',
 				time: ''
@@ -25694,6 +25694,7 @@
 	
 			this.handleChange = this.handleChange.bind(this);
 			this.save = this.save.bind(this);
+			this.cancel = this.cancel.bind(this);
 		}
 	
 		_inherits(SessionsDetails, _React$Component);
@@ -25721,16 +25722,39 @@
 		}, {
 			key: 'save',
 			value: function save() {
-				if (!this.state.id) {
+				if (this.state.id === '') {
 					_actionsJoggingSessionActions2['default'].add(this.state);
+				}
+			}
+		}, {
+			key: 'cancel',
+			value: function cancel() {
+				if (this.state.id === '') {
+					this.setState({
+						date: '',
+						distance: '',
+						time: ''
+					});
+				} else {
+					this.setState({
+						id: '',
+						date: '',
+						distance: '',
+						time: ''
+					});
 				}
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var isEditing = this.state.id !== '' ? true : false;
+				var header = isEditing ? 'Edit session with Id: ' + this.state.id : 'Add new session';
+				var saveButtonText = isEditing ? 'Edit session' : 'Add new session';
+				var cancelButtonText = isEditing ? 'Cancel' : 'Clear';
+	
 				return React.createElement(
 					_reactBootstrap2['default'].Panel,
-					{ header: 'Session Details', bsStyle: 'primary' },
+					{ header: header, bsStyle: 'primary' },
 					React.createElement(
 						'form',
 						{ className: 'form-horizontal' },
@@ -25738,9 +25762,18 @@
 						React.createElement(_reactBootstrap2['default'].Input, { type: 'number', required: true, id: 'distance', value: this.state.distance, onChange: this.handleChange, label: 'distance', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
 						React.createElement(_reactBootstrap2['default'].Input, { type: 'text', required: true, id: 'time', value: this.state.time, onChange: this.handleChange, label: 'Time', labelClassName: 'col-xs-2', wrapperClassName: 'col-xs-12' }),
 						React.createElement(
-							_reactBootstrap2['default'].Button,
-							{ onClick: this.save, bsStyle: 'primary' },
-							'Save'
+							_reactBootstrap2['default'].ButtonToolbar,
+							null,
+							React.createElement(
+								_reactBootstrap2['default'].Button,
+								{ onClick: this.save, bsStyle: 'primary' },
+								saveButtonText
+							),
+							React.createElement(
+								_reactBootstrap2['default'].Button,
+								{ onClick: this.cancel },
+								cancelButtonText
+							)
 						)
 					)
 				);

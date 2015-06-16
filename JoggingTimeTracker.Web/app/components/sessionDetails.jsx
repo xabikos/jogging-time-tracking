@@ -7,15 +7,16 @@ class SessionsDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		
-		this.state = {
-			id: props.Id,
-			date: '',
+		this.state = {			
+			id: '',
+      date: '',
 			distance: '',
 			time: ''
 		};		 
 
 		this.handleChange = this.handleChange.bind(this);
 		this.save = this.save.bind(this);
+		this.cancel = this.cancel.bind(this);
 	}
 
   componentWillReceiveProps(nextProps) {
@@ -37,19 +38,44 @@ class SessionsDetails extends React.Component {
 	}
 
 	save() {
-		if(!this.state.id) {
+		if(this.state.id === '') {
 			JoggingSessionActions.add(this.state);
 		}
 	}
 
-	render() {	  
-		return (		
-			<ReactBootstrap.Panel header='Session Details' bsStyle='primary'>
+  cancel() {
+    if(this.state.id === '') {
+			this.setState({			
+        date: '',
+			  distance: '',
+			  time: ''
+		  });	
+		} else {
+      this.setState({			
+			  id: '',
+        date: '',
+			  distance: '',
+			  time: ''
+		  });	
+    }
+  }
+
+	render() {
+    let isEditing = this.state.id !== '' ? true : false;
+    let header = isEditing ? 'Edit session with Id: ' + this.state.id : 'Add new session';
+    let saveButtonText = isEditing ? 'Edit session' : 'Add new session';
+    let cancelButtonText = isEditing ? 'Cancel' : 'Clear';
+		
+    return (		
+			<ReactBootstrap.Panel header={header} bsStyle="primary">
 				<form className='form-horizontal'>          
 					<ReactBootstrap.Input type='date' required id='date' value={this.state.date} onChange={this.handleChange} label='Date' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
 					<ReactBootstrap.Input type='number' required id='distance' value={this.state.distance} onChange={this.handleChange} label='distance' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
 					<ReactBootstrap.Input type='text' required id='time' value={this.state.time} onChange={this.handleChange} label='Time' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
-					<ReactBootstrap.Button onClick={this.save} bsStyle='primary'>Save</ReactBootstrap.Button>
+					<ReactBootstrap.ButtonToolbar>
+            <ReactBootstrap.Button onClick={this.save} bsStyle='primary'>{saveButtonText}</ReactBootstrap.Button>
+            <ReactBootstrap.Button onClick={this.cancel}>{cancelButtonText}</ReactBootstrap.Button>
+          </ReactBootstrap.ButtonToolbar>
 				</form>
 			</ReactBootstrap.Panel>
 		);
