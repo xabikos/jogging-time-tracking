@@ -301,7 +301,6 @@
     <Content Include="app\components\joggingSessionsList.jsx" />
     <Content Include="app\components\sessionsController.jsx" />
     <Content Include="app\components\sessionDetails.jsx" />
-    <Content Include="app\components\dateInput.jsx" />
     <None Include="ClearScript.V8\ClearScriptV8-32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
