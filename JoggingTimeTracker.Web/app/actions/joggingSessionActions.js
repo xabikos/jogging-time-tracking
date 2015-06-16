@@ -12,9 +12,9 @@ let JoggingSessionActions = {
       data: joggingSessions
     });
   },
-  select: (joggingSessionId) => {
+  edit: (joggingSessionId) => {
     Dispatcher.handleViewAction({
-      type: actionTypes.joggingSessionSelect,
+      type: actionTypes.joggingSessionEdit,
       data: joggingSessionId
     });
   },

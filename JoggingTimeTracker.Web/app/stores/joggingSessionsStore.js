@@ -22,7 +22,7 @@ const joggingSessionsInitialize = (initialSessions) => {
   state.joggingSessions = initialSessions;
 };
 
-const joggingSessionSelect = (sessionId) => {
+const joggingSessionEdit = (sessionId) => {
   state.editingSession = _.find(state.joggingSessions, {'id': sessionId});
 };
 
@@ -70,8 +70,8 @@ const registeredCallback = (payload) => {
       joggingSessionsInitialize(payload.action.data);
       storeWithEvents.emitChange();
       break;
-    case actionTypes.joggingSessionSelect:
-      joggingSessionSelect(payload.action.data);
+    case actionTypes.joggingSessionEdit:
+      joggingSessionEdit(payload.action.data);
       storeWithEvents.emitChange();
       break;
     case actionTypes.joggingSessionAdd:
