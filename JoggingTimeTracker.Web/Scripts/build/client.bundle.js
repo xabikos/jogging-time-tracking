@@ -22144,7 +22144,34 @@
 	
 	;
 	
-	var columns = ['id', 'date', 'distance', 'time', 'edit'];
+	var AverageSpeed = (function (_React$Component2) {
+	  function AverageSpeed(props) {
+	    _classCallCheck(this, AverageSpeed);
+	
+	    _get(Object.getPrototypeOf(AverageSpeed.prototype), 'constructor', this).call(this, props);
+	  }
+	
+	  _inherits(AverageSpeed, _React$Component2);
+	
+	  _createClass(AverageSpeed, [{
+	    key: 'render',
+	    value: function render() {
+	      console.log(this.props.rowData);
+	      var averageSpeed = this.props.rowData.distance / this.props.rowData.timeInTicks;
+	      return React.createElement(
+	        'span',
+	        null,
+	        averageSpeed
+	      );
+	    }
+	  }]);
+	
+	  return AverageSpeed;
+	})(React.Component);
+	
+	;
+	
+	var columns = ['id', 'date', 'distance', 'time', 'speed', 'edit'];
 	var customColumnMetadata = [{
 	  order: 1,
 	  columnName: 'id',
@@ -22163,20 +22190,26 @@
 	  displayName: 'Time'
 	}, {
 	  order: 5,
+	  columnName: 'speed',
+	  displayName: 'Speed',
+	  visible: true,
+	  customComponent: AverageSpeed
+	}, {
+	  order: 6,
 	  columnName: 'edit',
 	  displayName: 'Edit',
 	  visible: true,
 	  customComponent: EditButton
 	}];
 	
-	var JoggingSessionsList = (function (_React$Component2) {
+	var JoggingSessionsList = (function (_React$Component3) {
 	  function JoggingSessionsList(props) {
 	    _classCallCheck(this, JoggingSessionsList);
 	
 	    _get(Object.getPrototypeOf(JoggingSessionsList.prototype), 'constructor', this).call(this, props);
 	  }
 	
-	  _inherits(JoggingSessionsList, _React$Component2);
+	  _inherits(JoggingSessionsList, _React$Component3);
 	
 	  _createClass(JoggingSessionsList, [{
 	    key: 'render',

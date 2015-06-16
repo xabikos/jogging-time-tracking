@@ -19,7 +19,18 @@ class EditButton extends React.Component {
   }
 };
 
-let columns = ["id", "date", "distance", "time", "edit"];
+class AverageSpeed extends React.Component {
+  constructor(props) {
+		super(props);   
+	}
+  render() {
+    console.log(this.props.rowData);
+    let averageSpeed = this.props.rowData.distance / this.props.rowData.timeInTicks;
+    return <span>{averageSpeed}</span>;
+  }
+};
+
+let columns = ["id", "date", "distance", "time", "speed", "edit"];
 let customColumnMetadata = [
   {
     order: 1,
@@ -43,6 +54,13 @@ let customColumnMetadata = [
   },
   {
     order: 5,
+    columnName: "speed",
+    displayName: "Speed",
+    visible: true,
+    customComponent: AverageSpeed
+  },
+  {
+    order: 6,
     columnName: "edit",
     displayName: "Edit",
     visible: true,
