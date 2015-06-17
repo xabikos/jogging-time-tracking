@@ -1,4 +1,5 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
+import moment from 'moment';
 
 import JoggingSessionActions from '../actions/joggingSessionActions';
 
@@ -21,7 +22,7 @@ class JoggingSessionDetails extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
         id: nextProps.editingData.id,
-        date: nextProps.editingData.date,
+        date: moment(nextProps.editingData.date).format('YYYY-MM-DD'),
 			  distance: nextProps.editingData.distance,
 			  time: nextProps.editingData.time
 		  })
@@ -29,7 +30,7 @@ class JoggingSessionDetails extends React.Component {
 
 	handleChange(e) {
 		switch (e.target.id) {			
-			case 'date':
+			case 'date':      
 				this.setState({date: e.target.value});
 				break;
 			case 'distance':
@@ -74,7 +75,7 @@ class JoggingSessionDetails extends React.Component {
 		
     return (		
 			<ReactBootstrap.Panel header={header} bsStyle="primary">
-				<form className='form-horizontal'>          
+				<form className='form-horizontal'>
 					<ReactBootstrap.Input type='date' required id='date' value={this.state.date} onChange={this.handleChange} label='Date' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
 					<ReactBootstrap.Input type='number' required id='distance' value={this.state.distance} onChange={this.handleChange} label='distance' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
 					<ReactBootstrap.Input type='text' required id='time' value={this.state.time} onChange={this.handleChange} label='Time' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />

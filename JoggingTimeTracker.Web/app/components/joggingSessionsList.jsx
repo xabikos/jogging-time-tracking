@@ -1,7 +1,17 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
 import Griddle from 'griddle-react';
+import moment from 'moment';
 
 import JoggingSessionActions from '../actions/joggingSessionActions';
+
+class DateColumn extends React.Component {
+  constructor(props) {
+		super(props);   
+	}
+  render() {    
+    return <span>{moment(this.props.rowData.date).format('YYYY-MM-DD')}</span>;
+  }
+};
 
 class AverageSpeed extends React.Component {
   constructor(props) {
@@ -55,7 +65,8 @@ let customColumnMetadata = [
   {
     order: 2,
     columnName: "date",
-    displayName: "Date"    
+    displayName: "Date",
+    customComponent: DateColumn
   },
   {
     order: 3,
@@ -71,7 +82,6 @@ let customColumnMetadata = [
     order: 5,
     columnName: "speed",
     displayName: "Speed",
-    visible: true,
     customComponent: AverageSpeed
   },
   {
