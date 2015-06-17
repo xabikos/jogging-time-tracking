@@ -11,8 +11,12 @@ let Constants = {
     logOut: 'LOG_OUT',
 
     joggingSessionsInitialize: 'JOGGINGSESSIONS_INITIALIZE',
+    joggingSessionGetAll: 'JOGGINGSESSION_GETALL',
+    joggingSessionGetAllSuccessful: 'JOGGINGSESSION_GETALL_SUCCESSFUL',
+    joggingSessionGetAllFailed: 'JOGGINGSESSION_GETALL_FAILED',
+    joggingSessionEdit: 'JOGGINGSESSION_EDIT',
     joggingSessionAdd: 'JOGGINGSESSION_ADD',
-    joggingSessionEdit: 'JOGGINGSESSION_EDIT'
+    joggingSessionDelete: 'JOGGINGSESSION_DELETE'
   },
 
   PayloadSources: {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,6 +14,14 @@ namespace JoggingTimeTracker.Web.Controllers
     [Authorize]
     public class JoggingSessionsController : ApiController
     {
+
+        // GET api/joggingSessions/5
+        public IQueryable<JoggingSession> Get()
+        {
+            var dbContext = Request.GetOwinContext().Get<ApplicationDbContext>();
+            return dbContext.JoggingSessions;
+        }
+
         // GET api/joggingSessions/5
         [ResponseType(typeof(JoggingSession))]
         public async Task<IHttpActionResult> Get(int id)
@@ -46,7 +55,25 @@ namespace JoggingTimeTracker.Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            
+        }
+
+        // DELETE api/joggingSessions/5
+        [ResponseType(typeof(JoggingSession))]
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            if (id == default(int))
+            {
+                return BadRequest("You should provide a valid value for the Id");
+            }
+            var dbContext = Request.GetOwinContext().Get<ApplicationDbContext>();
+            var joggingSessionToDelete = await dbContext.JoggingSessions.FindAsync(id);
+            if (joggingSessionToDelete==null)
+            {
+                return NotFound();
+            }
+            dbContext.JoggingSessions.Remove(joggingSessionToDelete);
+            await dbContext.SaveChangesAsync();
+            return Ok(joggingSessionToDelete);
         }
 
     }

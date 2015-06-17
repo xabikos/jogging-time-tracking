@@ -8291,8 +8291,12 @@
 	    logOut: 'LOG_OUT',
 	
 	    joggingSessionsInitialize: 'JOGGINGSESSIONS_INITIALIZE',
+	    joggingSessionGetAll: 'JOGGINGSESSION_GETALL',
+	    joggingSessionGetAllSuccessful: 'JOGGINGSESSION_GETALL_SUCCESSFUL',
+	    joggingSessionGetAllFailed: 'JOGGINGSESSION_GETALL_FAILED',
+	    joggingSessionEdit: 'JOGGINGSESSION_EDIT',
 	    joggingSessionAdd: 'JOGGINGSESSION_ADD',
-	    joggingSessionEdit: 'JOGGINGSESSION_EDIT'
+	    joggingSessionDelete: 'JOGGINGSESSION_DELETE'
 	  },
 	
 	  PayloadSources: {
@@ -8687,7 +8691,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
-	  value: true
+		value: true
 	});
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -8703,24 +8707,48 @@
 	var actionTypes = _constants2['default'].ActionTypes;
 	
 	var JoggingSessionActions = {
-	  initializeStore: function initializeStore(joggingSessions) {
-	    _appDispatcher2['default'].handleViewAction({
-	      type: actionTypes.joggingSessionsInitialize,
-	      data: joggingSessions
-	    });
-	  },
-	  edit: function edit(joggingSessionId) {
-	    _appDispatcher2['default'].handleViewAction({
-	      type: actionTypes.joggingSessionEdit,
-	      data: joggingSessionId
-	    });
-	  },
-	  add: function add(joggingSessionInfo) {
-	    _appDispatcher2['default'].handleViewAction({
-	      type: actionTypes.joggingSessionAdd,
-	      data: joggingSessionInfo
-	    });
-	  }
+		initializeStore: function initializeStore(joggingSessions) {
+			_appDispatcher2['default'].handleViewAction({
+				type: actionTypes.joggingSessionsInitialize,
+				data: joggingSessions
+			});
+		},
+		getAll: function getAll() {
+			_appDispatcher2['default'].handleViewAction({
+				type: actionTypes.joggingSessionGetAll
+			});
+		},
+		getAllSuccessful: function getAllSuccessful(joggingSessions) {
+			_appDispatcher2['default'].handleViewAction({
+				type: actionTypes.joggingSessionGetAllSuccessful,
+				data: joggingSessions
+			});
+		},
+		getAllFailed: function getAllFailed(errorResponse) {
+			_appDispatcher2['default'].handleViewAction({
+				type: actionTypes.joggingSessionGetAllFailed,
+				data: errorResponse
+			});
+		},
+		edit: function edit(joggingSessionId) {
+			_appDispatcher2['default'].handleViewAction({
+				type: actionTypes.joggingSessionEdit,
+				data: joggingSessionId
+			});
+		},
+		add: function add(joggingSessionInfo) {
+			_appDispatcher2['default'].handleViewAction({
+				type: actionTypes.joggingSessionAdd,
+				data: joggingSessionInfo
+			});
+		},
+	
+		deleteSession: function deleteSession(joggingSessionId) {
+			_appDispatcher2['default'].handleViewAction({
+				type: actionTypes.joggingSessionDelete,
+				data: joggingSessionId
+			});
+		}
 	};
 	
 	exports['default'] = JoggingSessionActions;
@@ -9728,6 +9756,7 @@
 	var _servicesNotificationsService2 = _interopRequireDefault(_servicesNotificationsService);
 	
 	var changeEvent = 'SESSIONS_CHANGE';
+	var tokenKey = 'accessToken';
 	
 	var storeWithEvents = new _StoreWithEvents2['default'](changeEvent);
 	
@@ -9741,6 +9770,35 @@
 	  state.joggingSessions = initialSessions;
 	};
 	
+	var joggingSessionsGetAll = function joggingSessionsGetAll() {
+	  state.performApiCall = true;
+	  var token = sessionStorage.getItem(tokenKey);
+	  var headers = {};
+	  if (token) {
+	    headers.Authorization = 'Bearer ' + token;
+	  }
+	
+	  $.ajax({
+	    type: 'GET',
+	    url: '/api/joggingSessions/',
+	    headers: headers
+	  }).done(function (data) {
+	    _actionsJoggingSessionActions2['default'].getAllSuccessful(data);
+	  }).fail(function (errorResponse) {
+	    _actionsJoggingSessionActions2['default'].getAllFailed(errorResponse);
+	  });
+	};
+	
+	var joggingSessionsGetAllSuccessful = function joggingSessionsGetAllSuccessful(sessions) {
+	  state.performApiCall = false;
+	  state.joggingSessions = sessions;
+	};
+	
+	var joggingSessionsGetAllFailed = function joggingSessionsGetAllFailed(errorResponse) {
+	  state.performApiCall = false;
+	  _servicesNotificationsService2['default'].error('Get all jogging sessions failed. ' + errorResponse.responseText);
+	};
+	
 	var joggingSessionEdit = function joggingSessionEdit(sessionId) {
 	  state.editingSession = _lodash2['default'].find(state.joggingSessions, { 'id': sessionId });
 	};
@@ -9751,7 +9809,7 @@
 	  state.editingSession.distance = sessionInfo.distance;
 	  state.editingSession.time = sessionInfo.time;
 	
-	  var token = sessionStorage.getItem('accessToken');
+	  var token = sessionStorage.getItem(tokenKey);
 	  var headers = {};
 	  if (token) {
 	    headers.Authorization = 'Bearer ' + token;
@@ -9765,20 +9823,31 @@
 	    headers: headers
 	  }).done(function (data) {
 	    console.log(data);
-	  }).fail(function (error) {
-	    console.log(error);
-	  });
+	  }).fail(function (errorResponse) {});
 	};
 	
-	var registerSuccessful = function registerSuccessful(serverResponse) {
-	  state.performApiCall = false;
-	  state.isRegistered = true;
-	  _servicesNotificationsService2['default'].success('Successful registration', 'You successfully registered in the system. Use your credentials to log in now');
-	};
+	var deleteJoggingSession = function deleteJoggingSession(sessionId) {
+	  if (confirm('You are going to delete a Jogging Session. This action cannot be undone. Are you sure you want to proceed?')) {
+	    state.performApiCall = true;
 	
-	var registerFailed = function registerFailed(errorResponse) {
-	  state.performApiCall = false;
-	  _servicesNotificationsService2['default'].error('Registration failed. ' + errorResponse.responseText);
+	    var token = sessionStorage.getItem(tokenKey);
+	    var headers = {};
+	    if (token) {
+	      headers.Authorization = 'Bearer ' + token;
+	    }
+	
+	    $.ajax({
+	      type: 'DELETE',
+	      url: '/api/joggingSessions/' + sessionId,
+	      headers: headers
+	    }).done(function () {
+	      state.performApiCall = false;
+	      _actionsJoggingSessionActions2['default'].getAll();
+	    }).fail(function (errorResponse) {
+	      state.performApiCall = false;
+	      _servicesNotificationsService2['default'].error('Deletion failed. ' + errorResponse.responseText);
+	    });
+	  }
 	};
 	
 	var registeredCallback = function registeredCallback(payload) {
@@ -9789,12 +9858,29 @@
 	      joggingSessionsInitialize(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
+	    case actionTypes.joggingSessionGetAll:
+	      joggingSessionsGetAll();
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.joggingSessionGetAllSuccessful:
+	      joggingSessionsGetAllSuccessful(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.joggingSessionGetAllFailed:
+	      joggingSessionsGetAllFailed(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
 	    case actionTypes.joggingSessionEdit:
 	      joggingSessionEdit(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	    case actionTypes.joggingSessionAdd:
 	      addJoggingSession(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	
+	    case actionTypes.joggingSessionDelete:
+	      deleteJoggingSession(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
@@ -22113,7 +22199,34 @@
 	
 	var _actionsJoggingSessionActions2 = _interopRequireDefault(_actionsJoggingSessionActions);
 	
-	var EditButton = (function (_React$Component) {
+	var AverageSpeed = (function (_React$Component) {
+	  function AverageSpeed(props) {
+	    _classCallCheck(this, AverageSpeed);
+	
+	    _get(Object.getPrototypeOf(AverageSpeed.prototype), 'constructor', this).call(this, props);
+	  }
+	
+	  _inherits(AverageSpeed, _React$Component);
+	
+	  _createClass(AverageSpeed, [{
+	    key: 'render',
+	    value: function render() {
+	      console.log(this.props.rowData);
+	      var averageSpeed = this.props.rowData.distance / this.props.rowData.timeInTicks;
+	      return React.createElement(
+	        'span',
+	        null,
+	        averageSpeed
+	      );
+	    }
+	  }]);
+	
+	  return AverageSpeed;
+	})(React.Component);
+	
+	;
+	
+	var EditButton = (function (_React$Component2) {
 	  function EditButton(props) {
 	    _classCallCheck(this, EditButton);
 	
@@ -22122,7 +22235,7 @@
 	    this.edit = this.edit.bind(this);
 	  }
 	
-	  _inherits(EditButton, _React$Component);
+	  _inherits(EditButton, _React$Component2);
 	
 	  _createClass(EditButton, [{
 	    key: 'edit',
@@ -22145,34 +22258,39 @@
 	
 	;
 	
-	var AverageSpeed = (function (_React$Component2) {
-	  function AverageSpeed(props) {
-	    _classCallCheck(this, AverageSpeed);
+	var DeleteButton = (function (_React$Component3) {
+	  function DeleteButton(props) {
+	    _classCallCheck(this, DeleteButton);
 	
-	    _get(Object.getPrototypeOf(AverageSpeed.prototype), 'constructor', this).call(this, props);
+	    _get(Object.getPrototypeOf(DeleteButton.prototype), 'constructor', this).call(this, props);
+	
+	    this.deleteSession = this.deleteSession.bind(this);
 	  }
 	
-	  _inherits(AverageSpeed, _React$Component2);
+	  _inherits(DeleteButton, _React$Component3);
 	
-	  _createClass(AverageSpeed, [{
+	  _createClass(DeleteButton, [{
+	    key: 'deleteSession',
+	    value: function deleteSession(sessionId) {
+	      _actionsJoggingSessionActions2['default'].deleteSession(sessionId);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.rowData);
-	      var averageSpeed = this.props.rowData.distance / this.props.rowData.timeInTicks;
 	      return React.createElement(
-	        'span',
-	        null,
-	        averageSpeed
+	        _reactBootstrap2['default'].Button,
+	        { onClick: this.deleteSession.bind(null, this.props.rowData.id), bsStyle: 'warning', bsSize: 'small' },
+	        'Delete'
 	      );
 	    }
 	  }]);
 	
-	  return AverageSpeed;
+	  return DeleteButton;
 	})(React.Component);
 	
 	;
 	
-	var columns = ['id', 'date', 'distance', 'time', 'speed', 'edit'];
+	var columns = ['id', 'date', 'distance', 'time', 'speed', 'edit', 'delete'];
 	var customColumnMetadata = [{
 	  order: 1,
 	  columnName: 'id',
@@ -22199,18 +22317,22 @@
 	  order: 6,
 	  columnName: 'edit',
 	  displayName: 'Edit',
-	  visible: true,
 	  customComponent: EditButton
+	}, {
+	  order: 7,
+	  columnName: 'delete',
+	  displayName: 'Delete',
+	  customComponent: DeleteButton
 	}];
 	
-	var JoggingSessionsList = (function (_React$Component3) {
+	var JoggingSessionsList = (function (_React$Component4) {
 	  function JoggingSessionsList(props) {
 	    _classCallCheck(this, JoggingSessionsList);
 	
 	    _get(Object.getPrototypeOf(JoggingSessionsList.prototype), 'constructor', this).call(this, props);
 	  }
 	
-	  _inherits(JoggingSessionsList, _React$Component3);
+	  _inherits(JoggingSessionsList, _React$Component4);
 	
 	  _createClass(JoggingSessionsList, [{
 	    key: 'render',

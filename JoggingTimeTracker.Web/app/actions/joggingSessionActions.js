@@ -6,24 +6,48 @@ import Constants from '../constants';
 let actionTypes = Constants.ActionTypes;
 
 let JoggingSessionActions = {
-  initializeStore: (joggingSessions) => {
+	initializeStore: (joggingSessions) => {
+		Dispatcher.handleViewAction({
+			type: actionTypes.joggingSessionsInitialize,
+			data: joggingSessions
+		});
+	},
+	getAll: () => {
+		Dispatcher.handleViewAction({
+			type: actionTypes.joggingSessionGetAll
+		});
+  },
+  getAllSuccessful: (joggingSessions) => {
     Dispatcher.handleViewAction({
-      type: actionTypes.joggingSessionsInitialize,
+      type: actionTypes.joggingSessionGetAllSuccessful,
       data: joggingSessions
     });
   },
-  edit: (joggingSessionId) => {
+  getAllFailed: (errorResponse) => {
     Dispatcher.handleViewAction({
-      type: actionTypes.joggingSessionEdit,
-      data: joggingSessionId
+      type: actionTypes.joggingSessionGetAllFailed,
+      data: errorResponse
     });
   },
-  add: (joggingSessionInfo) => {
-    Dispatcher.handleViewAction({
-      type: actionTypes.joggingSessionAdd,
-      data: joggingSessionInfo
-    });
-  }
+	edit: (joggingSessionId) => {
+		Dispatcher.handleViewAction({
+			type: actionTypes.joggingSessionEdit,
+			data: joggingSessionId
+		});
+	},
+	add: (joggingSessionInfo) => {
+		Dispatcher.handleViewAction({
+			type: actionTypes.joggingSessionAdd,
+			data: joggingSessionInfo
+		});
+	},
+
+	deleteSession: (joggingSessionId) => {
+		Dispatcher.handleViewAction({
+			type: actionTypes.joggingSessionDelete,
+			data: joggingSessionId
+		});
+	}
 };
 
 export default JoggingSessionActions;

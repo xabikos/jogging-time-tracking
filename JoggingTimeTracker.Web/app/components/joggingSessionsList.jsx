@@ -3,6 +3,17 @@ import Griddle from 'griddle-react';
 
 import JoggingSessionActions from '../actions/joggingSessionActions';
 
+class AverageSpeed extends React.Component {
+  constructor(props) {
+		super(props);   
+	}
+  render() {
+    console.log(this.props.rowData);
+    let averageSpeed = this.props.rowData.distance / this.props.rowData.timeInTicks;
+    return <span>{averageSpeed}</span>;
+  }
+};
+
 class EditButton extends React.Component {
   constructor(props) {
 		super(props);
@@ -19,18 +30,23 @@ class EditButton extends React.Component {
   }
 };
 
-class AverageSpeed extends React.Component {
+class DeleteButton extends React.Component {
   constructor(props) {
-		super(props);   
+		super(props);
+
+    this.deleteSession = this.deleteSession.bind(this);
 	}
+
+  deleteSession(sessionId) {
+    JoggingSessionActions.deleteSession(sessionId)
+  }
+
   render() {
-    console.log(this.props.rowData);
-    let averageSpeed = this.props.rowData.distance / this.props.rowData.timeInTicks;
-    return <span>{averageSpeed}</span>;
+    return <ReactBootstrap.Button onClick={this.deleteSession.bind(null, this.props.rowData.id)} bsStyle='warning' bsSize='small'>Delete</ReactBootstrap.Button>
   }
 };
 
-let columns = ["id", "date", "distance", "time", "speed", "edit"];
+let columns = ["id", "date", "distance", "time", "speed", "edit", "delete"];
 let customColumnMetadata = [
   {
     order: 1,
@@ -63,8 +79,13 @@ let customColumnMetadata = [
     order: 6,
     columnName: "edit",
     displayName: "Edit",
-    visible: true,
     customComponent: EditButton
+  },
+  {
+    order: 7,
+    columnName: "delete",
+    displayName: "Delete",
+    customComponent: DeleteButton
   }
 ];
 
