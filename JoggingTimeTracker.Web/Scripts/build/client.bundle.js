@@ -8295,6 +8295,8 @@
 	    joggingSessionGetAllFailed: 'JOGGINGSESSION_GETALL_FAILED',
 	    joggingSessionEdit: 'JOGGINGSESSION_EDIT',
 	    joggingSessionAdd: 'JOGGINGSESSION_ADD',
+	    joggingSessionAddSuccessful: 'JOGGINGSESSION_ADD_SUCCESSFUL',
+	    joggingSessionAddFaild: 'JOGGINGSESSION_ADD_FAILED',
 	    joggingSessionDelete: 'JOGGINGSESSION_DELETE'
 	  },
 	
@@ -8707,7 +8709,7 @@
 	
 	var JoggingSessionActions = {
 		initializeStore: function initializeStore(joggingSessions) {
-			_appDispatcher2['default'].handleViewAction({
+			_appDispatcher2['default'].handleServerAction({
 				type: actionTypes.joggingSessionsInitialize,
 				data: joggingSessions
 			});
@@ -8718,13 +8720,13 @@
 			});
 		},
 		getAllSuccessful: function getAllSuccessful(joggingSessions) {
-			_appDispatcher2['default'].handleViewAction({
+			_appDispatcher2['default'].handleServerAction({
 				type: actionTypes.joggingSessionGetAllSuccessful,
 				data: joggingSessions
 			});
 		},
 		getAllFailed: function getAllFailed(errorResponse) {
-			_appDispatcher2['default'].handleViewAction({
+			_appDispatcher2['default'].handleServerAction({
 				type: actionTypes.joggingSessionGetAllFailed,
 				data: errorResponse
 			});
@@ -8739,6 +8741,18 @@
 			_appDispatcher2['default'].handleViewAction({
 				type: actionTypes.joggingSessionAdd,
 				data: joggingSessionInfo
+			});
+		},
+		addSuccessful: function addSuccessful(joggingSessionInfo) {
+			_appDispatcher2['default'].handleServerAction({
+				type: actionTypes.joggingSessionAddSuccessful,
+				data: joggingSessionInfo
+			});
+		},
+		addFailed: function addFailed(errorResponse) {
+			_appDispatcher2['default'].handleServerAction({
+				type: actionTypes.joggingSessionAddFaild,
+				data: errorResponse
 			});
 		},
 	
@@ -9813,7 +9827,7 @@
 	  if (token) {
 	    headers.Authorization = 'Bearer ' + token;
 	  }
-	
+	  delete sessionInfo.id;
 	  $.ajax({
 	    type: 'POST',
 	    url: '/api/joggingSessions',
@@ -9821,8 +9835,22 @@
 	    data: JSON.stringify(sessionInfo),
 	    headers: headers
 	  }).done(function (data) {
-	    console.log(data);
-	  }).fail(function (errorResponse) {});
+	    _actionsJoggingSessionActions2['default'].getAll();
+	    _actionsJoggingSessionActions2['default'].addSuccessful(data);
+	  }).fail(function (errorResponse) {
+	    _actionsJoggingSessionActions2['default'].addFailed(errorResponse);
+	  });
+	};
+	
+	var addJoggingSessionSuccessful = function addJoggingSessionSuccessful(sessionInfo) {
+	  state.performApiCall = false;
+	  state.editingSession = {};
+	  _servicesNotificationsService2['default'].success('Successful session addition', 'You successfully added a new session.');
+	};
+	
+	var addJoggingSessionFailed = function addJoggingSessionFailed(errorResponse) {
+	  state.performApiCall = false;
+	  _servicesNotificationsService2['default'].error('Addition of new session failed. ' + errorResponse.responseText);
 	};
 	
 	var deleteJoggingSession = function deleteJoggingSession(sessionId) {
@@ -9857,6 +9885,7 @@
 	      joggingSessionsInitialize(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
+	
 	    case actionTypes.joggingSessionGetAll:
 	      joggingSessionsGetAll();
 	      storeWithEvents.emitChange();
@@ -9869,12 +9898,22 @@
 	      joggingSessionsGetAllFailed(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
+	
 	    case actionTypes.joggingSessionEdit:
 	      joggingSessionEdit(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
+	
 	    case actionTypes.joggingSessionAdd:
 	      addJoggingSession(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.joggingSessionAddSuccessful:
+	      addJoggingSessionSuccessful(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case actionTypes.joggingSessionAddFaild:
+	      addJoggingSessionFailed(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
@@ -22210,7 +22249,6 @@
 	  _createClass(AverageSpeed, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.rowData);
 	      var averageSpeed = this.props.rowData.distance / this.props.rowData.timeInTicks;
 	      return React.createElement(
 	        'span',
@@ -25890,7 +25928,6 @@
 			_get(Object.getPrototypeOf(JoggingSessionDetails.prototype), 'constructor', this).call(this, props);
 	
 			this.state = {
-				id: '',
 				date: '',
 				distance: '',
 				time: ''
@@ -25906,7 +25943,12 @@
 		_createClass(JoggingSessionDetails, [{
 			key: 'componentWillReceiveProps',
 			value: function componentWillReceiveProps(nextProps) {
-				this.setState(nextProps.editingData);
+				this.setState({
+					id: nextProps.editingData.id,
+					date: nextProps.editingData.date,
+					distance: nextProps.editingData.distance,
+					time: nextProps.editingData.time
+				});
 			}
 		}, {
 			key: 'handleChange',
@@ -25926,7 +25968,7 @@
 		}, {
 			key: 'save',
 			value: function save() {
-				if (this.state.id === '') {
+				if (this.state.id) {} else {
 					_actionsJoggingSessionActions2['default'].add(this.state);
 				}
 			}
@@ -25951,7 +25993,7 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var isEditing = this.state.id !== '' ? true : false;
+				var isEditing = this.state.id && this.state.id !== '' ? true : false;
 				var header = isEditing ? 'Edit session with Id: ' + this.state.id : 'Add new session';
 				var saveButtonText = isEditing ? 'Edit session' : 'Add new session';
 				var cancelButtonText = isEditing ? 'Cancel' : 'Clear';

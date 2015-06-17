@@ -16,6 +16,8 @@ let Constants = {
     joggingSessionGetAllFailed: 'JOGGINGSESSION_GETALL_FAILED',
     joggingSessionEdit: 'JOGGINGSESSION_EDIT',
     joggingSessionAdd: 'JOGGINGSESSION_ADD',
+    joggingSessionAddSuccessful: 'JOGGINGSESSION_ADD_SUCCESSFUL',
+    joggingSessionAddFaild: 'JOGGINGSESSION_ADD_FAILED',
     joggingSessionDelete: 'JOGGINGSESSION_DELETE'
   },
 

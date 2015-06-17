@@ -8,7 +8,6 @@ class JoggingSessionDetails extends React.Component {
 		super(props);
 		
 		this.state = {			
-			id: '',
       date: '',
 			distance: '',
 			time: ''
@@ -20,7 +19,12 @@ class JoggingSessionDetails extends React.Component {
 	}
 
   componentWillReceiveProps(nextProps) {
-    this.setState(nextProps.editingData);
+    this.setState({
+        id: nextProps.editingData.id,
+        date: nextProps.editingData.date,
+			  distance: nextProps.editingData.distance,
+			  time: nextProps.editingData.time
+		  })
   }
 
 	handleChange(e) {
@@ -38,9 +42,11 @@ class JoggingSessionDetails extends React.Component {
 	}
 
 	save() {
-		if(this.state.id === '') {
-			JoggingSessionActions.add(this.state);
-		}
+		if(this.state.id) {
+			
+		} else{
+      JoggingSessionActions.add(this.state);
+    }
 	}
 
   cancel() {
@@ -61,7 +67,7 @@ class JoggingSessionDetails extends React.Component {
   }
 
 	render() {
-    let isEditing = this.state.id !== '' ? true : false;
+    let isEditing = (this.state.id && this.state.id !== '') ? true : false;
     let header = isEditing ? 'Edit session with Id: ' + this.state.id : 'Add new session';
     let saveButtonText = isEditing ? 'Edit session' : 'Add new session';
     let cancelButtonText = isEditing ? 'Cancel' : 'Clear';

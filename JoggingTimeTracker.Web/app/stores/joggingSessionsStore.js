@@ -67,7 +67,7 @@ const addJoggingSession = (sessionInfo) => {
   if (token) {
     headers.Authorization = 'Bearer ' + token;
   }
-
+  delete sessionInfo.id;
   $.ajax({
     type: 'POST',
     url: '/api/joggingSessions',
@@ -75,10 +75,22 @@ const addJoggingSession = (sessionInfo) => {
     data: JSON.stringify(sessionInfo),
     headers: headers
   }).done((data) => {
-    console.log(data);
+    JoggingSessionActions.getAll();
+    JoggingSessionActions.addSuccessful(data);
   }).fail((errorResponse) => {
-    
+    JoggingSessionActions.addFailed(errorResponse);
   });
+};
+
+const addJoggingSessionSuccessful = (sessionInfo) => {
+  state.performApiCall = false;
+  state.editingSession = {};
+  NotificationsService.success('Successful session addition', 'You successfully added a new session.');
+};
+
+const addJoggingSessionFailed = (errorResponse) => {
+  state.performApiCall = false;
+  NotificationsService.error('Addition of new session failed. ' + errorResponse.responseText);
 };
 
 const deleteJoggingSession = (sessionId) => {
@@ -113,6 +125,7 @@ const registeredCallback = (payload) => {
       joggingSessionsInitialize(payload.action.data);
       storeWithEvents.emitChange();
       break;
+
     case actionTypes.joggingSessionGetAll:
       joggingSessionsGetAll();
       storeWithEvents.emitChange();
@@ -125,12 +138,22 @@ const registeredCallback = (payload) => {
       joggingSessionsGetAllFailed(payload.action.data);
       storeWithEvents.emitChange();
       break;
+
     case actionTypes.joggingSessionEdit:
       joggingSessionEdit(payload.action.data);
       storeWithEvents.emitChange();
       break;
+
     case actionTypes.joggingSessionAdd:
       addJoggingSession(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+    case actionTypes.joggingSessionAddSuccessful:
+      addJoggingSessionSuccessful(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+    case actionTypes.joggingSessionAddFaild:
+      addJoggingSessionFailed(payload.action.data);
       storeWithEvents.emitChange();
       break;
 

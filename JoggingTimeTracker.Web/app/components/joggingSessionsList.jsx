@@ -7,8 +7,7 @@ class AverageSpeed extends React.Component {
   constructor(props) {
 		super(props);   
 	}
-  render() {
-    console.log(this.props.rowData);
+  render() {    
     let averageSpeed = this.props.rowData.distance / this.props.rowData.timeInTicks;
     return <span>{averageSpeed}</span>;
   }

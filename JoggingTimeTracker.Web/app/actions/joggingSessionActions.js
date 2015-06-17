@@ -7,7 +7,7 @@ let actionTypes = Constants.ActionTypes;
 
 let JoggingSessionActions = {
 	initializeStore: (joggingSessions) => {
-		Dispatcher.handleViewAction({
+	  Dispatcher.handleServerAction({
 			type: actionTypes.joggingSessionsInitialize,
 			data: joggingSessions
 		});
@@ -18,13 +18,13 @@ let JoggingSessionActions = {
 		});
   },
   getAllSuccessful: (joggingSessions) => {
-    Dispatcher.handleViewAction({
+    Dispatcher.handleServerAction({
       type: actionTypes.joggingSessionGetAllSuccessful,
       data: joggingSessions
     });
   },
   getAllFailed: (errorResponse) => {
-    Dispatcher.handleViewAction({
+    Dispatcher.handleServerAction({
       type: actionTypes.joggingSessionGetAllFailed,
       data: errorResponse
     });
@@ -40,7 +40,19 @@ let JoggingSessionActions = {
 			type: actionTypes.joggingSessionAdd,
 			data: joggingSessionInfo
 		});
-	},
+  },
+  addSuccessful: (joggingSessionInfo) => {
+    Dispatcher.handleServerAction({
+      type: actionTypes.joggingSessionAddSuccessful,
+      data: joggingSessionInfo
+    });
+  },
+  addFailed: (errorResponse) => {
+    Dispatcher.handleServerAction({
+      type: actionTypes.joggingSessionAddFaild,
+      data: errorResponse
+    });
+  },
 
 	deleteSession: (joggingSessionId) => {
 		Dispatcher.handleViewAction({
