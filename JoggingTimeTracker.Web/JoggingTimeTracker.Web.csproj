@@ -272,12 +272,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\JoggingSessionsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataAccess\MapConfiguration\JoggingSessionConfiguration.cs" />
     <Compile Include="Entities\JoggingSession.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\JoggingSessionExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -295,6 +298,7 @@
     <Content Include="app\actions\userActions.js" />
     <Content Include="app\appDispatcher.js" />
     <Content Include="app\components\filterControl.jsx" />
+    <Content Include="app\components\reportControl.jsx" />
     <None Include="app\components\numberInput.jsx" />
     <Content Include="app\constants.js" />
     <Content Include="app\services\notificationsService.js" />
@@ -400,6 +404,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

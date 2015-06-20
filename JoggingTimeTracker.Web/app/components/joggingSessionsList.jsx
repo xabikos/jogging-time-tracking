@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import JoggingSessionActions from '../actions/joggingSessionActions';
 import FilterControl from './filterControl';
+import ReportControl from './reportControl';
 
 class DateColumn extends React.Component {
 	constructor(props) {
@@ -16,7 +17,7 @@ class DateColumn extends React.Component {
 
 class AverageSpeed extends React.Component {
 	constructor(props) {
-		super(props);   
+		super(props);
 	}
 	render() {
 		let averageSpeed = (this.props.rowData.distance /1000) / (this.props.rowData.timeInTicks / 36000000000);
@@ -107,19 +108,22 @@ class JoggingSessionsList extends React.Component {
 	}
 
 	render() {    
-    let Row = ReactBootstrap.Row;
-    let Col = ReactBootstrap.Col;
+		let Row = ReactBootstrap.Row;
+		let Col = ReactBootstrap.Col;
 
 		return (		
 			<div>
-        <Row>
-				  <Griddle results={this.props.joggingSessions} columnMetadata={customColumnMetadata} columns={columns} />
-        </Row>
-        <Row>
-          <Col xs={12} md={4}>
-            <FilterControl />
-          </Col>
-        </Row>
+				<Row>
+					<Griddle results={this.props.joggingSessions} columnMetadata={customColumnMetadata} columns={columns} />
+				</Row>
+				<Row>
+					<Col xs={12} md={4}>
+						<FilterControl />
+					</Col>
+					<Col xs={12} md={8}>
+						<ReportControl />
+					</Col>
+				</Row>
 			</div>
 		);
 	}

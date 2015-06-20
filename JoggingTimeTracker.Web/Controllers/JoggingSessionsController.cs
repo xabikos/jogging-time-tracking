@@ -18,8 +18,9 @@ namespace JoggingTimeTracker.Web.Controllers
         // GET api/joggingSessions/5
         public IQueryable<JoggingSession> Get()
         {
+            var userId = User.Identity.GetUserId();
             var dbContext = Request.GetOwinContext().Get<ApplicationDbContext>();
-            return dbContext.JoggingSessions.OrderByDescending(js=>js.Date);
+            return dbContext.JoggingSessions.Where(js=>js.UserId == userId).OrderByDescending(js=>js.Date);
         }
 
         // GET api/joggingSessions/5
