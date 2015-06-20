@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 let Constants = {
-  ActionTypes: {
+  actionTypes: {
     registerUser: 'REGISTER_USER',
     registerSuccessful: 'REGISTER_SUCCESSFUL',
     registerFailed: 'REGISTER_FAILED',
@@ -18,6 +18,9 @@ let Constants = {
     joggingSessionAdd: 'JOGGINGSESSION_ADD',
     joggingSessionAddSuccessful: 'JOGGINGSESSION_ADD_SUCCESSFUL',
     joggingSessionAddFaild: 'JOGGINGSESSION_ADD_FAILED',
+    joggingSessionUpdate: 'JOGGINGSESSION_UPDATE',
+    joggingSessionUpdateSuccessful: 'JOGGINGSESSION_UPDATE_SUCCESSFUL',
+    joggingSessionUpdateFaild: 'JOGGINGSESSION_UPDATE_FAILED',
     joggingSessionDelete: 'JOGGINGSESSION_DELETE'
   },
 

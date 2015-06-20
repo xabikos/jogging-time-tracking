@@ -3,7 +3,7 @@
 import AppDispatcher from '../appDispatcher';
 import StoreWithEvents from './StoreWithEvents';
 import UserActions from '../actions/userActions';
-import Constants from '../constants';
+import {actionTypes} from '../constants';
 import NotificationsService from '../services/notificationsService';
 
 let changeEvent = 'USERS_CHANGE';
@@ -95,7 +95,6 @@ const logout = () => {
 };
 
 const registeredCallback = (payload) => {
-  let actionTypes = Constants.ActionTypes;
 
   switch (payload.action.type) {
     case actionTypes.registerUser:

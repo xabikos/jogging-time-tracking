@@ -5,7 +5,7 @@ import _ from 'lodash';
 import AppDispatcher from '../appDispatcher';
 import StoreWithEvents from './StoreWithEvents';
 import JoggingSessionActions from '../actions/joggingSessionActions';
-import Constants from '../constants';
+import {actionTypes} from '../constants';
 import NotificationsService from '../services/notificationsService';
 
 let changeEvent = 'SESSIONS_CHANGE';
@@ -93,6 +93,43 @@ const addJoggingSessionFailed = (errorResponse) => {
   NotificationsService.error('Addition of new session failed. ' + errorResponse.responseText);
 };
 
+const updateJoggingSession = (sessionInfo) => {
+  state.performApiCall = true;
+  state.editingSession.id = sessionInfo.id;  
+  state.editingSession.date = sessionInfo.date;
+  state.editingSession.distance = sessionInfo.distance;
+  state.editingSession.time = sessionInfo.time;
+
+  let token = sessionStorage.getItem(tokenKey);
+  let headers = {};
+  if (token) {
+    headers.Authorization = 'Bearer ' + token;
+  }
+  $.ajax({
+    type: 'PUT',
+    url: '/api/joggingSessions',
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify(sessionInfo),
+    headers: headers
+  }).done((data) => {
+    JoggingSessionActions.getAll();
+    JoggingSessionActions.updateSuccessful(data);
+  }).fail((errorResponse) => {
+    JoggingSessionActions.updateFailed(errorResponse);
+  });
+};
+
+const updateJoggingSessionSuccessful = (sessionInfo) => {
+  state.performApiCall = false;
+  state.editingSession = {};
+  NotificationsService.success('Successful update of session', 'You successfully updated the session.');
+};
+
+const updateJoggingSessionFailed = (errorResponse) => {
+  state.performApiCall = false;
+  NotificationsService.error('Update of session failed. ' + errorResponse.responseText);
+};
+
 const deleteJoggingSession = (sessionId) => {
   if (confirm('You are going to delete a Jogging Session. This action cannot be undone. Are you sure you want to proceed?')) {
     state.performApiCall = true;
@@ -118,7 +155,6 @@ const deleteJoggingSession = (sessionId) => {
 };
 
 const registeredCallback = (payload) => {
-  let actionTypes = Constants.ActionTypes;
   
   switch (payload.action.type) {
     case actionTypes.joggingSessionsInitialize:
@@ -154,6 +190,19 @@ const registeredCallback = (payload) => {
       break;
     case actionTypes.joggingSessionAddFaild:
       addJoggingSessionFailed(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+
+    case actionTypes.joggingSessionUpdate:
+      updateJoggingSession(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+    case actionTypes.joggingSessionUpdateSuccessful:
+      updateJoggingSessionSuccessful(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+    case actionTypes.joggingSessionUpdateFaild:
+      updateJoggingSessionFailed(payload.action.data);
       storeWithEvents.emitChange();
       break;
 

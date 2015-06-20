@@ -8160,56 +8160,52 @@
 	
 	var _constants = __webpack_require__(81);
 	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	var actionTypes = _constants2['default'].ActionTypes;
-	
 	var UserActions = {
 	  register: function register(userInfo) {
 	    _appDispatcher2['default'].handleViewAction({
-	      type: actionTypes.registerUser,
+	      type: _constants.actionTypes.registerUser,
 	      data: userInfo
 	    });
 	  },
 	
 	  registerSuccessful: function registerSuccessful(serverResponse) {
 	    _appDispatcher2['default'].handleServerAction({
-	      type: actionTypes.registerSuccessful,
+	      type: _constants.actionTypes.registerSuccessful,
 	      data: serverResponse
 	    });
 	  },
 	
 	  registerFailed: function registerFailed(errorResponse) {
 	    _appDispatcher2['default'].handleServerAction({
-	      type: actionTypes.registerFailed,
+	      type: _constants.actionTypes.registerFailed,
 	      data: errorResponse
 	    });
 	  },
 	
 	  logIn: function logIn(credentials) {
 	    _appDispatcher2['default'].handleServerAction({
-	      type: actionTypes.logInUser,
+	      type: _constants.actionTypes.logInUser,
 	      data: credentials
 	    });
 	  },
 	
 	  logInSuccessful: function logInSuccessful(serverResponse) {
 	    _appDispatcher2['default'].handleServerAction({
-	      type: actionTypes.loginSuccessful,
+	      type: _constants.actionTypes.loginSuccessful,
 	      data: serverResponse
 	    });
 	  },
 	
 	  logInFailed: function logInFailed(errorResponse) {
 	    _appDispatcher2['default'].handleServerAction({
-	      type: actionTypes.loginFailed,
+	      type: _constants.actionTypes.loginFailed,
 	      data: errorResponse
 	    });
 	  },
 	
 	  logOut: function logOut() {
 	    _appDispatcher2['default'].handleServerAction({
-	      type: actionTypes.logOut
+	      type: _constants.actionTypes.logOut
 	    });
 	  }
 	};
@@ -8280,7 +8276,7 @@
 	  value: true
 	});
 	var Constants = {
-	  ActionTypes: {
+	  actionTypes: {
 	    registerUser: 'REGISTER_USER',
 	    registerSuccessful: 'REGISTER_SUCCESSFUL',
 	    registerFailed: 'REGISTER_FAILED',
@@ -8297,6 +8293,9 @@
 	    joggingSessionAdd: 'JOGGINGSESSION_ADD',
 	    joggingSessionAddSuccessful: 'JOGGINGSESSION_ADD_SUCCESSFUL',
 	    joggingSessionAddFaild: 'JOGGINGSESSION_ADD_FAILED',
+	    joggingSessionUpdate: 'JOGGINGSESSION_UPDATE',
+	    joggingSessionUpdateSuccessful: 'JOGGINGSESSION_UPDATE_SUCCESSFUL',
+	    joggingSessionUpdateFaild: 'JOGGINGSESSION_UPDATE_FAILED',
 	    joggingSessionDelete: 'JOGGINGSESSION_DELETE'
 	  },
 	
@@ -8703,62 +8702,80 @@
 	
 	var _constants = __webpack_require__(81);
 	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	var actionTypes = _constants2['default'].ActionTypes;
-	
 	var JoggingSessionActions = {
 		initializeStore: function initializeStore(joggingSessions) {
 			_appDispatcher2['default'].handleServerAction({
-				type: actionTypes.joggingSessionsInitialize,
+				type: _constants.actionTypes.joggingSessionsInitialize,
 				data: joggingSessions
 			});
 		},
+	
+		edit: function edit(joggingSessionId) {
+			_appDispatcher2['default'].handleViewAction({
+				type: _constants.actionTypes.joggingSessionEdit,
+				data: joggingSessionId
+			});
+		},
+	
 		getAll: function getAll() {
 			_appDispatcher2['default'].handleViewAction({
-				type: actionTypes.joggingSessionGetAll
+				type: _constants.actionTypes.joggingSessionGetAll
 			});
 		},
 		getAllSuccessful: function getAllSuccessful(joggingSessions) {
 			_appDispatcher2['default'].handleServerAction({
-				type: actionTypes.joggingSessionGetAllSuccessful,
+				type: _constants.actionTypes.joggingSessionGetAllSuccessful,
 				data: joggingSessions
 			});
 		},
 		getAllFailed: function getAllFailed(errorResponse) {
 			_appDispatcher2['default'].handleServerAction({
-				type: actionTypes.joggingSessionGetAllFailed,
+				type: _constants.actionTypes.joggingSessionGetAllFailed,
 				data: errorResponse
 			});
 		},
-		edit: function edit(joggingSessionId) {
-			_appDispatcher2['default'].handleViewAction({
-				type: actionTypes.joggingSessionEdit,
-				data: joggingSessionId
-			});
-		},
+	
 		add: function add(joggingSessionInfo) {
 			_appDispatcher2['default'].handleViewAction({
-				type: actionTypes.joggingSessionAdd,
+				type: _constants.actionTypes.joggingSessionAdd,
 				data: joggingSessionInfo
 			});
 		},
 		addSuccessful: function addSuccessful(joggingSessionInfo) {
 			_appDispatcher2['default'].handleServerAction({
-				type: actionTypes.joggingSessionAddSuccessful,
+				type: _constants.actionTypes.joggingSessionAddSuccessful,
 				data: joggingSessionInfo
 			});
 		},
 		addFailed: function addFailed(errorResponse) {
 			_appDispatcher2['default'].handleServerAction({
-				type: actionTypes.joggingSessionAddFaild,
+				type: _constants.actionTypes.joggingSessionAddFaild,
+				data: errorResponse
+			});
+		},
+	
+		update: function update(joggingSessionInfo) {
+			_appDispatcher2['default'].handleViewAction({
+				type: _constants.actionTypes.joggingSessionUpdate,
+				data: joggingSessionInfo
+			});
+		},
+		updateSuccessful: function updateSuccessful(joggingSessionInfo) {
+			_appDispatcher2['default'].handleServerAction({
+				type: _constants.actionTypes.joggingSessionUpdateSuccessful,
+				data: joggingSessionInfo
+			});
+		},
+		updateFailed: function updateFailed(errorResponse) {
+			_appDispatcher2['default'].handleServerAction({
+				type: _constants.actionTypes.joggingSessionUpdateFaild,
 				data: errorResponse
 			});
 		},
 	
 		deleteSession: function deleteSession(joggingSessionId) {
 			_appDispatcher2['default'].handleViewAction({
-				type: actionTypes.joggingSessionDelete,
+				type: _constants.actionTypes.joggingSessionDelete,
 				data: joggingSessionId
 			});
 		}
@@ -8792,8 +8809,6 @@
 	var _actionsUserActions2 = _interopRequireDefault(_actionsUserActions);
 	
 	var _constants = __webpack_require__(81);
-	
-	var _constants2 = _interopRequireDefault(_constants);
 	
 	var _servicesNotificationsService = __webpack_require__(90);
 	
@@ -8888,34 +8903,33 @@
 	};
 	
 	var registeredCallback = function registeredCallback(payload) {
-	  var actionTypes = _constants2['default'].ActionTypes;
 	
 	  switch (payload.action.type) {
-	    case actionTypes.registerUser:
+	    case _constants.actionTypes.registerUser:
 	      register(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.registerSuccessful:
+	    case _constants.actionTypes.registerSuccessful:
 	      registerSuccessful(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.registerFailed:
+	    case _constants.actionTypes.registerFailed:
 	      registerFailed(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.logInUser:
+	    case _constants.actionTypes.logInUser:
 	      logIn(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.loginSuccessful:
+	    case _constants.actionTypes.loginSuccessful:
 	      logInSuccessful(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.loginFailed:
+	    case _constants.actionTypes.loginFailed:
 	      loginFailed(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.logOut:
+	    case _constants.actionTypes.logOut:
 	      logout();
 	      storeWithEvents.emitChange();
 	      break;
@@ -9762,8 +9776,6 @@
 	
 	var _constants = __webpack_require__(81);
 	
-	var _constants2 = _interopRequireDefault(_constants);
-	
 	var _servicesNotificationsService = __webpack_require__(90);
 	
 	var _servicesNotificationsService2 = _interopRequireDefault(_servicesNotificationsService);
@@ -9853,6 +9865,43 @@
 	  _servicesNotificationsService2['default'].error('Addition of new session failed. ' + errorResponse.responseText);
 	};
 	
+	var updateJoggingSession = function updateJoggingSession(sessionInfo) {
+	  state.performApiCall = true;
+	  state.editingSession.id = sessionInfo.id;
+	  state.editingSession.date = sessionInfo.date;
+	  state.editingSession.distance = sessionInfo.distance;
+	  state.editingSession.time = sessionInfo.time;
+	
+	  var token = sessionStorage.getItem(tokenKey);
+	  var headers = {};
+	  if (token) {
+	    headers.Authorization = 'Bearer ' + token;
+	  }
+	  $.ajax({
+	    type: 'PUT',
+	    url: '/api/joggingSessions',
+	    contentType: 'application/json; charset=utf-8',
+	    data: JSON.stringify(sessionInfo),
+	    headers: headers
+	  }).done(function (data) {
+	    _actionsJoggingSessionActions2['default'].getAll();
+	    _actionsJoggingSessionActions2['default'].updateSuccessful(data);
+	  }).fail(function (errorResponse) {
+	    _actionsJoggingSessionActions2['default'].updateFailed(errorResponse);
+	  });
+	};
+	
+	var updateJoggingSessionSuccessful = function updateJoggingSessionSuccessful(sessionInfo) {
+	  state.performApiCall = false;
+	  state.editingSession = {};
+	  _servicesNotificationsService2['default'].success('Successful update of session', 'You successfully updated the session.');
+	};
+	
+	var updateJoggingSessionFailed = function updateJoggingSessionFailed(errorResponse) {
+	  state.performApiCall = false;
+	  _servicesNotificationsService2['default'].error('Update of session failed. ' + errorResponse.responseText);
+	};
+	
 	var deleteJoggingSession = function deleteJoggingSession(sessionId) {
 	  if (confirm('You are going to delete a Jogging Session. This action cannot be undone. Are you sure you want to proceed?')) {
 	    state.performApiCall = true;
@@ -9878,46 +9927,58 @@
 	};
 	
 	var registeredCallback = function registeredCallback(payload) {
-	  var actionTypes = _constants2['default'].ActionTypes;
 	
 	  switch (payload.action.type) {
-	    case actionTypes.joggingSessionsInitialize:
+	    case _constants.actionTypes.joggingSessionsInitialize:
 	      joggingSessionsInitialize(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
-	    case actionTypes.joggingSessionGetAll:
+	    case _constants.actionTypes.joggingSessionGetAll:
 	      joggingSessionsGetAll();
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.joggingSessionGetAllSuccessful:
+	    case _constants.actionTypes.joggingSessionGetAllSuccessful:
 	      joggingSessionsGetAllSuccessful(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.joggingSessionGetAllFailed:
+	    case _constants.actionTypes.joggingSessionGetAllFailed:
 	      joggingSessionsGetAllFailed(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
-	    case actionTypes.joggingSessionEdit:
+	    case _constants.actionTypes.joggingSessionEdit:
 	      joggingSessionEdit(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
-	    case actionTypes.joggingSessionAdd:
+	    case _constants.actionTypes.joggingSessionAdd:
 	      addJoggingSession(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.joggingSessionAddSuccessful:
+	    case _constants.actionTypes.joggingSessionAddSuccessful:
 	      addJoggingSessionSuccessful(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
-	    case actionTypes.joggingSessionAddFaild:
+	    case _constants.actionTypes.joggingSessionAddFaild:
 	      addJoggingSessionFailed(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
 	
-	    case actionTypes.joggingSessionDelete:
+	    case _constants.actionTypes.joggingSessionUpdate:
+	      updateJoggingSession(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case _constants.actionTypes.joggingSessionUpdateSuccessful:
+	      updateJoggingSessionSuccessful(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	    case _constants.actionTypes.joggingSessionUpdateFaild:
+	      updateJoggingSessionFailed(payload.action.data);
+	      storeWithEvents.emitChange();
+	      break;
+	
+	    case _constants.actionTypes.joggingSessionDelete:
 	      deleteJoggingSession(payload.action.data);
 	      storeWithEvents.emitChange();
 	      break;
@@ -37178,7 +37239,9 @@
 		}, {
 			key: 'save',
 			value: function save() {
-				if (this.state.id) {} else {
+				if (this.state.id) {
+					_actionsJoggingSessionActions2['default'].update(this.state);
+				} else {
 					_actionsJoggingSessionActions2['default'].add(this.state);
 				}
 			}

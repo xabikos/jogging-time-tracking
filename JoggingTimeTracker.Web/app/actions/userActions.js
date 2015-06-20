@@ -1,9 +1,7 @@
 ﻿'use strict';
 
 import Dispatcher from '../appDispatcher';
-import Constants from '../constants';
-
-let actionTypes = Constants.ActionTypes;
+import {actionTypes} from '../constants';
 
 let UserActions = {
   register: (userInfo) => {

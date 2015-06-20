@@ -57,6 +57,37 @@ namespace JoggingTimeTracker.Web.Controllers
             }
         }
 
+        // PUT: api/joggingSessions
+        [ResponseType(typeof(JoggingSession))]
+        public async Task<IHttpActionResult> Put(JoggingSession session)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (session.Id == default(int))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var dbContext = Request.GetOwinContext().Get<ApplicationDbContext>();
+                var sessionToUpdate = await dbContext.JoggingSessions.FindAsync(session.Id);
+                sessionToUpdate.Date = session.Date;
+                sessionToUpdate.Distance = session.Distance;
+                sessionToUpdate.TimeInTicks = session.TimeInTicks;
+                await dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(session);
+        }
+
         // DELETE api/joggingSessions/5
         [ResponseType(typeof(JoggingSession))]
         public async Task<IHttpActionResult> Delete(int id)

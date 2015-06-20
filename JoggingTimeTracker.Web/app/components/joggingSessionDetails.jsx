@@ -45,7 +45,7 @@ class JoggingSessionDetails extends React.Component {
 
 	save() {
 		if(this.state.id) {
-			
+			JoggingSessionActions.update(this.state);
 		} else{
 			JoggingSessionActions.add(this.state);
 		}
