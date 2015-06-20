@@ -79,6 +79,13 @@ let JoggingSessionActions = {
 			type: actionTypes.joggingSessionDelete,
 			data: joggingSessionId
 		});
+	},
+	
+	filterSessions: (filter) => {
+		Dispatcher.handleViewAction({
+			type: actionTypes.joggingSessionFilter,
+			data: filter
+		});
 	}
 };
 

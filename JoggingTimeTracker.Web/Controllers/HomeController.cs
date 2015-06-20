@@ -17,7 +17,8 @@ namespace JoggingTimeTracker.Web.Controllers
             {
                 var dbContext = Request.GetOwinContext().Get<ApplicationDbContext>();
                 var userId = User.Identity.GetUserId();
-                ViewBag.JoggingSessions = dbContext.JoggingSessions.Where(js => js.UserId == userId).ToList();
+                ViewBag.JoggingSessions =
+                    dbContext.JoggingSessions.Where(js => js.UserId == userId).OrderByDescending(js => js.Date).ToList();
             }
             return View();
         }

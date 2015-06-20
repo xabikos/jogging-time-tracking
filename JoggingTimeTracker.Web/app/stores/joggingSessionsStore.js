@@ -154,6 +154,37 @@ const deleteJoggingSession = (sessionId) => {
   }
 };
 
+const filterSessions = (filter) => {
+  state.performApiCall = true;
+  let token = sessionStorage.getItem(tokenKey);
+  let headers = {};
+  if (token) {
+    headers.Authorization = 'Bearer ' + token;
+  }
+
+  let urlFilter = '';
+  if (filter.dateFrom !== '') {
+    urlFilter = '$filter=Date gt DateTime\''+ filter.dateFrom + '\'';
+  }
+  if (filter.dateTo !== '') {
+    if (urlFilter !== '') {
+      urlFilter += ' and Date lt DateTime\'' + filter.dateTo + '\'';
+    } else {
+      urlFilter = '$filter=Date lt DateTime\'' + filter.dateTo + '\'';
+    }
+  }
+
+  $.ajax({
+    type: 'GET',
+    url: '/api/joggingSessions/?' + urlFilter,
+    headers: headers
+  }).done((data) => {
+    JoggingSessionActions.getAllSuccessful(data);
+  }).fail((errorResponse) => {
+    JoggingSessionActions.getAllFailed(errorResponse);
+  });  
+};
+
 const registeredCallback = (payload) => {
   
   switch (payload.action.type) {
@@ -208,6 +239,11 @@ const registeredCallback = (payload) => {
 
     case actionTypes.joggingSessionDelete:
       deleteJoggingSession(payload.action.data);
+      storeWithEvents.emitChange();
+      break;
+
+    case actionTypes.joggingSessionFilter:
+      filterSessions(payload.action.data);
       storeWithEvents.emitChange();
       break;
     

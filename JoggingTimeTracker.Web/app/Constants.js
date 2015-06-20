@@ -21,7 +21,8 @@ let Constants = {
     joggingSessionUpdate: 'JOGGINGSESSION_UPDATE',
     joggingSessionUpdateSuccessful: 'JOGGINGSESSION_UPDATE_SUCCESSFUL',
     joggingSessionUpdateFaild: 'JOGGINGSESSION_UPDATE_FAILED',
-    joggingSessionDelete: 'JOGGINGSESSION_DELETE'
+    joggingSessionDelete: 'JOGGINGSESSION_DELETE',
+    joggingSessionFilter: 'JOGGINGSESSION_FILTER'
   },
 
   PayloadSources: {

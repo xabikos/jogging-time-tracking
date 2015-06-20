@@ -37,7 +37,7 @@ class JoggingSessionsController extends React.Component {
 						<Col xs={12} md={3}>
 							<JoggingSessionDetails {...this.state.editingSession} />
 						</Col>
-					</Row>
+					</Row>          
 			</Grid>			
 		);    		
 	}

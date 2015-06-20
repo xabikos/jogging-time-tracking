@@ -3,6 +3,7 @@ import Griddle from 'griddle-react';
 import moment from 'moment';
 
 import JoggingSessionActions from '../actions/joggingSessionActions';
+import FilterControl from './filterControl';
 
 class DateColumn extends React.Component {
 	constructor(props) {
@@ -106,9 +107,19 @@ class JoggingSessionsList extends React.Component {
 	}
 
 	render() {    
+    let Row = ReactBootstrap.Row;
+    let Col = ReactBootstrap.Col;
+
 		return (		
 			<div>
-				<Griddle results={this.props.joggingSessions} columnMetadata={customColumnMetadata} columns={columns} />
+        <Row>
+				  <Griddle results={this.props.joggingSessions} columnMetadata={customColumnMetadata} columns={columns} />
+        </Row>
+        <Row>
+          <Col xs={12} md={4}>
+            <FilterControl />
+          </Col>
+        </Row>
 			</div>
 		);
 	}

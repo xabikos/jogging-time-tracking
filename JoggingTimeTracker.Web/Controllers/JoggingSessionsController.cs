@@ -19,7 +19,7 @@ namespace JoggingTimeTracker.Web.Controllers
         public IQueryable<JoggingSession> Get()
         {
             var dbContext = Request.GetOwinContext().Get<ApplicationDbContext>();
-            return dbContext.JoggingSessions;
+            return dbContext.JoggingSessions.OrderByDescending(js=>js.Date);
         }
 
         // GET api/joggingSessions/5
