@@ -21,7 +21,7 @@ namespace JoggingTimeTracker.Web
 			// your components as well as all of their dependencies.
 			// See http://reactjs.net/ for more information. Example:
 			ReactSiteConfiguration.Configuration
-			    .AddScriptWithoutTransform("~/Scripts/build/server.bundle.js");
+			    .AddScriptWithoutTransform("~/Scripts/build/app.bundle.js");
 		}
 	}
 }

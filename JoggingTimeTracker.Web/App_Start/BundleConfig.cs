@@ -18,7 +18,7 @@ namespace JoggingTimeTracker.Web
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/build/client.bundle.js"));
+                      "~/Scripts/build/app.bundle.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
