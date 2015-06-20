@@ -1,6 +1,7 @@
 ﻿import ReactBootstrap from 'react-bootstrap';
 import moment from 'moment';
 
+import NumberInput from './numberInput';
 import JoggingSessionActions from '../actions/joggingSessionActions';
 
 class JoggingSessionDetails extends React.Component {
@@ -9,80 +10,104 @@ class JoggingSessionDetails extends React.Component {
 		super(props);
 		
 		this.state = {			
-      date: '',
+			date: '',
 			distance: '',
-			time: ''
+			timeInTicks: ''
 		};		 
 
-		this.handleChange = this.handleChange.bind(this);
+		this.handleDateChange = this.handleDateChange.bind(this);
+		this.handleDistanceChange = this.handleDistanceChange.bind(this);
+		this.handleTimeChange = this.handleTimeChange.bind(this);
 		this.save = this.save.bind(this);
 		this.cancel = this.cancel.bind(this);
 	}
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-        id: nextProps.editingData.id,
-        date: moment(nextProps.editingData.date).format('YYYY-MM-DD'),
-			  distance: nextProps.editingData.distance,
-			  time: nextProps.editingData.time
-		  })
-  }
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+				id: nextProps.id,
+				date: moment(nextProps.date).format('YYYY-MM-DD'),
+				distance: nextProps.distance,
+				timeInTicks: nextProps.timeInTicks
+			})
+	}
 
-	handleChange(e) {
-		switch (e.target.id) {			
-			case 'date':      
-				this.setState({date: e.target.value});
-				break;
-			case 'distance':
-				this.setState({distance: e.target.value});
-				break;
-			case 'time':
-				this.setState({time: e.target.value});
-				break;
-		}
+	handleDateChange(e) {
+		this.setState({date: e.target.value});		
+	}
+
+	handleDistanceChange(val) {
+		this.setState({distance: val});
+	}
+
+	handleTimeChange(val) {
+		this.setState({timeInTicks: val * 600000000})
 	}
 
 	save() {
 		if(this.state.id) {
 			
 		} else{
-      JoggingSessionActions.add(this.state);
-    }
+			JoggingSessionActions.add(this.state);
+		}
 	}
 
-  cancel() {
-    if(this.state.id === '') {
+	cancel() {
+		if(this.state.id === '') {
 			this.setState({			
-        date: '',
-			  distance: '',
-			  time: ''
-		  });	
+				date: '',
+				distance: '',
+				timeInTicks: ''
+			});	
 		} else {
-      this.setState({			
-			  id: '',
-        date: '',
-			  distance: '',
-			  time: ''
-		  });	
-    }
-  }
+			this.setState({			
+				id: '',
+				date: '',
+				distance: '',
+				timeInTicks: ''
+			});	
+		}
+	}
 
 	render() {
-    let isEditing = (this.state.id && this.state.id !== '') ? true : false;
-    let header = isEditing ? 'Edit session with Id: ' + this.state.id : 'Add new session';
-    let saveButtonText = isEditing ? 'Edit session' : 'Add new session';
-    let cancelButtonText = isEditing ? 'Cancel' : 'Clear';
+		let isEditing = (this.state.id && this.state.id !== '') ? true : false;
+		let header = isEditing ? 'Edit session with Id: ' + this.state.id : 'Add new session';
+		let saveButtonText = isEditing ? 'Edit session' : 'Add new session';
+		let cancelButtonText = isEditing ? 'Cancel' : 'Clear';
 		
-    return (		
+		return (		
 			<ReactBootstrap.Panel header={header} bsStyle="primary">
 				<form className='form-horizontal'>
-					<ReactBootstrap.Input type='date' required id='date' value={this.state.date} onChange={this.handleChange} label='Date' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
-					<ReactBootstrap.Input type='number' required id='distance' value={this.state.distance} onChange={this.handleChange} label='distance' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
-					<ReactBootstrap.Input type='text' required id='time' value={this.state.time} onChange={this.handleChange} label='Time' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
+					<ReactBootstrap.Input type='date' required id='date' value={this.state.date} onChange={this.handleDateChange} label='Date' labelClassName='col-xs-2' wrapperClassName='col-xs-12' />
+					<div className="form-group">
+						<label className="control-label col-xs-2">
+							<span>Distance (in meters)</span>
+						</label>
+						<div className="col-xs-12">
+							<NumberInput ref="distance" 
+														value={this.state.distance}
+														onValueChange={this.handleDistanceChange}
+														min={0}
+														name="distance"
+														placeholder="The distance in meters" />
+						</div>
+					</div>
+					<div className="form-group">
+						<label className="control-label col-xs-2">
+							<span>Time in minutes</span>
+						</label>
+						<div className="col-xs-12">							
+							<NumberInput ref="distance" 
+														value={this.state.timeInTicks / 600000000}
+														onValueChange={this.handleTimeChange}
+														min={0}
+														name="time"
+														placeholder="The time in minutes" />
+						</div>
+					</div>
 					<ReactBootstrap.ButtonToolbar>
-            <ReactBootstrap.Button onClick={this.save} bsStyle='primary'>{saveButtonText}</ReactBootstrap.Button>
-            <ReactBootstrap.Button onClick={this.cancel}>{cancelButtonText}</ReactBootstrap.Button>
-          </ReactBootstrap.ButtonToolbar>
+						<ReactBootstrap.Button onClick={this.save} bsStyle='primary'>{saveButtonText}</ReactBootstrap.Button>
+						<ReactBootstrap.Button onClick={this.cancel}>{cancelButtonText}</ReactBootstrap.Button>
+					</ReactBootstrap.ButtonToolbar>
 				</form>
 			</ReactBootstrap.Panel>
 		);

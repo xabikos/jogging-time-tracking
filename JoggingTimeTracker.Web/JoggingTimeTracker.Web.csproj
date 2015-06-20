@@ -278,6 +278,7 @@
     <Content Include="app\actions\joggingSessionActions.js" />
     <Content Include="app\actions\userActions.js" />
     <Content Include="app\appDispatcher.js" />
+    <None Include="app\components\numberInput.jsx" />
     <Content Include="app\constants.js" />
     <Content Include="app\services\notificationsService.js" />
     <Content Include="app\stores\StoreWithEvents.js" />
